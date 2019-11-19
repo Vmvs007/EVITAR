@@ -1,0 +1,7 @@
+rspec:
+  stage: test
+  script: bundle exec rspec
+
+staging:
+  stage: deploy
+  trigger: my/deployment
