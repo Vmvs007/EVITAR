@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using EvitarBackEnd.Models;
+using Microsoft.OpenApi.Models;
 
 namespace EvitarBackEnd
 {
@@ -33,6 +34,11 @@ namespace EvitarBackEnd
 
             services.AddDbContext<EVITARContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EVITARContext")));
+
+            services.AddSwaggerGen(c=>{
+                c.SwaggerDoc("v1",new OpenApiInfo {Title="EvitarBackEnd",Version="v1"});
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +59,13 @@ namespace EvitarBackEnd
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c=>{
+                c.SwaggerEndpoint("/swagger/v1/swagger.json","EvitarBackEnd V1");
+                c.RoutePrefix = string.Empty;
+            });
+            
         }
     }
 }
