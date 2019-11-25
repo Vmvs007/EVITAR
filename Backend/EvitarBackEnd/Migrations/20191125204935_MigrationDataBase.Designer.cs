@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    [Migration("20191121184025_MigrationDataBase")]
+    [Migration("20191125204935_MigrationDataBase")]
     partial class MigrationDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeCargo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZonaCargo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdCargo");
@@ -70,8 +73,14 @@ namespace EvitarBackEnd.Migrations
                     b.Property<string>("NomeColaborador")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PrimeiroNomeCol")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("TelefoneCol")
                         .HasColumnType("int");
+
+                    b.Property<string>("UltimoNomeCol")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ccColaborador")
                         .HasColumnType("int");

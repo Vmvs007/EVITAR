@@ -14,7 +14,8 @@ namespace EvitarBackEnd.Migrations
                     IdCargo = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TypeCargo = table.Column<string>(nullable: true),
-                    NomeCargo = table.Column<string>(nullable: true)
+                    NomeCargo = table.Column<string>(nullable: true),
+                    ZonaCargo = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,6 +44,8 @@ namespace EvitarBackEnd.Migrations
                     IdColaborador = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NomeColaborador = table.Column<string>(nullable: true),
+                    PrimeiroNomeCol = table.Column<string>(nullable: true),
+                    UltimoNomeCol = table.Column<string>(nullable: true),
                     DataNasc = table.Column<DateTime>(nullable: false),
                     ccColaborador = table.Column<int>(nullable: false),
                     NifColaborador = table.Column<int>(nullable: false),

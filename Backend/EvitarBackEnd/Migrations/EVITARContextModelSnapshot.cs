@@ -32,6 +32,9 @@ namespace EvitarBackEnd.Migrations
                     b.Property<string>("TypeCargo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ZonaCargo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("IdCargo");
 
                     b.ToTable("CargoModels");
@@ -68,8 +71,14 @@ namespace EvitarBackEnd.Migrations
                     b.Property<string>("NomeColaborador")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PrimeiroNomeCol")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("TelefoneCol")
                         .HasColumnType("int");
+
+                    b.Property<string>("UltimoNomeCol")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ccColaborador")
                         .HasColumnType("int");
