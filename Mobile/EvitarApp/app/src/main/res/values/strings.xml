@@ -2,7 +2,7 @@
     <string name="app_name">EvitarApp</string>
     <string name="app_slogan">Individual Protection Equipment Platform</string>
     <string name="walkthrough_slogan">Individual Protection Equipment Platform in Your Pocket</string>
-    <string name="title_activity_login">Log In</string>
+    <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
