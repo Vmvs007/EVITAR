@@ -1,4 +1,37 @@
-trigger_build:
-  stage: deploy
+stages:
+  - build
+  - test
+before_script:
+  - echo "Start Automated Build"
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - chmod +x ./gradlew
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+build:
+  stage: build
   script:
-    - "curl -X POST -F token=TOKEN -F ref=REF_NAME https://gitlab.com/api/v4/projects/14935827/trigger/pipeline
+    - ./gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
+
+test_black_box:
+  stage: test
+  script:
+    - ./gradlew test
+  artifacts:
+    paths:
+      - build/test-results/test/TEST-*.xml
+
+test_white_box:
+  stage: test
+  script:
+    - ./gradlew jacocoTestReport
+  artifacts:
+    paths:
+      - build/reports/jacoco*
+after_script:
+  - echo "End Automated Build
