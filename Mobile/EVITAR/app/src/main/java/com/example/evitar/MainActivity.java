@@ -2,6 +2,7 @@ package com.example.evitar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -52,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 skip.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
-                        setContentView(R.layout.login);
+                        //setContentView(R.layout.login);
+                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                        startActivity(intent);
                     }
                 });
             }
