@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
@@ -22,7 +21,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/Movimento
-        [Authorize] //Podem todos ver desde que estejam autenticados
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovimentoModel>>> GetMovimentoModels()
         {
@@ -30,7 +28,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/Movimento/5
-        [Authorize] //Podem todos ver desde que estejam autenticados 
         [HttpGet("{id}")]
         public async Task<ActionResult<MovimentoModel>> GetMovimentoModel(int id)
         {
@@ -47,7 +44,6 @@ namespace EvitarBackEnd.Controllers
         // PUT: api/Movimento/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [Authorize(Roles = "1")]//Só podem editar os Admins
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovimentoModel(int id, MovimentoModel movimentoModel)
         {
@@ -80,7 +76,6 @@ namespace EvitarBackEnd.Controllers
         // POST: api/Movimento
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [Authorize]//Adicionar Movimento, pode toda a gente (Temos que rever)
         [HttpPost]
         public async Task<ActionResult<MovimentoModel>> PostMovimentoModel(MovimentoModel movimentoModel)
         {
@@ -91,7 +86,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/Movimento/5
-        [Authorize(Roles = "1")]//Só podem apagar Admins
         [HttpDelete("{id}")]
         public async Task<ActionResult<MovimentoModel>> DeleteMovimentoModel(int id)
         {

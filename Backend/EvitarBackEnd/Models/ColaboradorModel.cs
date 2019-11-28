@@ -9,8 +9,6 @@ namespace EvitarBackEnd.Models
         [Key]
         public int IdColaborador {get;set;}
         public string NomeColaborador {get;set;}
-        public string PrimeiroNomeCol {get;set;}
-        public string UltimoNomeCol {get;set;}
         public DateTime DataNasc {get;set;}
         public int ccColaborador {get;set;}
         public int NifColaborador {get;set;}

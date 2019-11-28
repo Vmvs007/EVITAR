@@ -13,12 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using EvitarBackEnd.Models;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
-using EvitarBackEnd.Helpers;
-using EvitarBackEnd.Services;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace EvitarBackEnd
 {
@@ -38,58 +32,12 @@ namespace EvitarBackEnd
             services.AddDbContext<EVITARContext>(opt =>opt.UseSqlServer(connectionString));
             services.AddControllers();
 
-            services.AddCors();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             services.AddDbContext<EVITARContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EVITARContext")));
 
             services.AddSwaggerGen(c=>{
                 c.SwaggerDoc("v1",new OpenApiInfo {Title="EvitarBackEnd",Version="v1"});
             });
-
-            // configure strongly typed settings objects
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                        var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
-                        if (user == null)
-                        {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
             
         }
 
@@ -104,15 +52,6 @@ namespace EvitarBackEnd
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
-
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-
-            app.UseAuthentication();
 
             app.UseAuthorization();
 

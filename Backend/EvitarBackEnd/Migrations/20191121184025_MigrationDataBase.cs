@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EvitarBackEnd.Migrations
 {
-    public partial class Mg : Migration
+    public partial class MigrationDataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -93,30 +93,6 @@ namespace EvitarBackEnd.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
-                    IdColaborador = table.Column<int>(nullable: false),
-                    PasswordHash = table.Column<byte[]>(nullable: true),
-                    PasswordSalt = table.Column<byte[]>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_ColaboradorModels_IdColaborador",
-                        column: x => x.IdColaborador,
-                        principalTable: "ColaboradorModels",
-                        principalColumn: "IdColaborador",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_ColaboradorModels_IdCargo",
                 table: "ColaboradorModels",
@@ -131,11 +107,6 @@ namespace EvitarBackEnd.Migrations
                 name: "IX_MovimentoModels_IdEPI",
                 table: "MovimentoModels",
                 column: "IdEPI");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_IdColaborador",
-                table: "Users",
-                column: "IdColaborador");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -144,13 +115,10 @@ namespace EvitarBackEnd.Migrations
                 name: "MovimentoModels");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "ColaboradorModels");
 
             migrationBuilder.DropTable(
                 name: "EPIModels");
-
-            migrationBuilder.DropTable(
-                name: "ColaboradorModels");
 
             migrationBuilder.DropTable(
                 name: "CargoModels");

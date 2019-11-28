@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
-    
     [Route("api/Colaborador")]
     [ApiController]
     public class ColaboradorController : ControllerBase
@@ -21,10 +19,8 @@ namespace EvitarBackEnd.Controllers
         {
             _context = context;
         }
-        
 
         // GET: api/Colaborador
-        [Authorize]//Toda a gente pode ver os colaboradores
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ColaboradorModel>>> GetColaboradorModel()
         {
@@ -32,7 +28,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/Colaborador/5
-        [Authorize]//Toda a gente pode ver os colaboradores
         [HttpGet("{id}")]
         public async Task<ActionResult<ColaboradorModel>> GetColaboradorModel(int id)
         {
@@ -49,7 +44,6 @@ namespace EvitarBackEnd.Controllers
         // PUT: api/Colaborador/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [Authorize(Roles = "1, 2")]//Pode editar Colaboradores Admins e RH
         [HttpPut("{id}")]
         public async Task<IActionResult> PutColaboradorModel(int id, ColaboradorModel colaboradorModel)
         {
@@ -82,7 +76,6 @@ namespace EvitarBackEnd.Controllers
         // POST: api/Colaborador
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [Authorize(Roles = "1, 2")]//Pode adicionar colaboradores os Admins e RH
         [HttpPost]
         public async Task<ActionResult<ColaboradorModel>> PostColaboradorModel(ColaboradorModel colaboradorModel)
         {
@@ -93,7 +86,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/Colaborador/5
-        [Authorize(Roles = "1, 2")]//Pode remover colaborador os Admins e o RH
         [HttpDelete("{id}")]
         public async Task<ActionResult<ColaboradorModel>> DeleteColaboradorModel(int id)
         {

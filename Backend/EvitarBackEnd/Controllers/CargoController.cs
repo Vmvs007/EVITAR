@@ -6,11 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
-    
     [Route("api/Cargo")]
     [ApiController]
     public class CargoController : ControllerBase
@@ -23,7 +21,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/Cargo
-        [Authorize]//Toda a gente pode ver os cargos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CargoModel>>> GetCargoModel()
         {
@@ -31,7 +28,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/Cargo/5
-        [Authorize]//Toda a gente pode ver os cargos
         [HttpGet("{id}")]
         public async Task<ActionResult<CargoModel>> GetCargoModel(int id)
         {
@@ -48,7 +44,6 @@ namespace EvitarBackEnd.Controllers
         // PUT: api/Cargo/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [Authorize(Roles = "1, 2")]//Pode editar cargos os Admins e o RH
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCargoModel(int id, CargoModel cargoModel)
         {
@@ -81,7 +76,6 @@ namespace EvitarBackEnd.Controllers
         // POST: api/Cargo
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
-        [Authorize(Roles = "1, 2")]//Pode adicionar Cargos os Admins e o RH
         [HttpPost]
         public async Task<ActionResult<CargoModel>> PostCargoModel(CargoModel cargoModel)
         {
@@ -92,7 +86,6 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/Cargo/5
-        [Authorize(Roles = "1, 2")]//Pode eliminar cargos os Admins e o RH
         [HttpDelete("{id}")]
         public async Task<ActionResult<CargoModel>> DeleteCargoModel(int id)
         {
