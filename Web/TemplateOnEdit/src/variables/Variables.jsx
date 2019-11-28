@@ -260,20 +260,40 @@ var style = {
     }
   }
 };
-
+const jobs=[["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]],["Industrial Oven Operator",["Protextive Glasses","Protective Gloves"]],["Water Jet Glass Cutter",["Glasses","Gloves","Boots"]]]
 //
 // //
 // // // For tables
 // //
 //
-const thArray = ["ID", "Name", "Salary", "Country", "City"];
+const thArray = ["Zone", "DateTime", "ID", "Name", "Job","EPI Check"];
 const tdArray = [
-  ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-  ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-  ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-  ["4", "Philip Chaney", "$38,735", "Korea, South", "Overland Park"],
-  ["5", "Doris Greene", "$63,542", "Malawi", "Feldkirchen in Kärnten"],
-  ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
+  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]]
 ];
 
 //
@@ -609,6 +629,7 @@ module.exports = {
   optionsSales,
   responsiveSales,
   legendSales,
+  jobs,
   dataBar,
   optionsBar,
   responsiveBar,

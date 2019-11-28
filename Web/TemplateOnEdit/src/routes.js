@@ -17,15 +17,20 @@
 */
 import Dashboard from "views/Dashboard.jsx";
 import UserProfile from "views/UserProfile.jsx";
-import TableList from "views/TableList.jsx";
-import Typography from "views/Typography.jsx";
-import Icons from "views/Icons.jsx";
-import Maps from "views/Maps.jsx";
-import Notifications from "views/Notifications.jsx";
+//import TableList from "views/TableList.jsx";
+//import Typography from "views/Typography.jsx";
+//import Icons from "views/Icons.jsx";
+//import Maps from "views/Maps.jsx";
+//import Notifications from "views/Notifications.jsx";
+import JobManagement from "views/JobManagement.jsx";
+import EPIManagement from "views/EpiManagement.jsx";
+import EmployeeManagement from "views/EmployeeManagement.jsx";
 import Upgrade from "views/Upgrade.jsx";
+import Arquive from "views/Arquive.jsx";
 import Home from "views/Home.jsx";
 
 const dashboardRoutes = [
+  
   {
     path: "/home",
     name: "Home",
@@ -41,12 +46,50 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
+    path:"/arquive",
+    name:"Arquive",
+    icon:"pe-7s-date",
+    component: Arquive,
+    layout: "/admin"
+  },
+  {
+    path:"/jobs",
+    name:"Job Management",
+    icon:"pe-7s-portfolio",
+    component: JobManagement,
+    layout: "/admin"
+  },
+  {
+    path:"/employees",
+    name:"Employee Management",
+    icon:"pe-7s-id",
+    component: EmployeeManagement,
+    layout: "/admin"
+  },
+  {
+    path:"/epis",
+    name:"EPI Management",
+    icon:"pe-7s-global",
+    component: EPIManagement,
+    layout: "/admin"
+  },
+  {
     path: "/user",
     name: "User Profile",
     icon: "pe-7s-user",
     component: UserProfile,
+    layout: "/admin",
+    invisible:true
+  },
+  /*{
+    path:"/",
+    name:"Arquive",
+    icon:"pe-7s-date",
+    component: Arquive,
     layout: "/admin"
   },
+  
+  ,
   {
     path: "/table",
     name: "Table List",
@@ -81,15 +124,17 @@ const dashboardRoutes = [
     icon: "pe-7s-bell",
     component: Notifications,
     layout: "/admin"
-  },
+  },*/
   {
-    upgrade: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "pe-7s-rocket",
+    path: "",
+    name: "Home",
+    icon: "pe-7s-home",
     component: Upgrade,
-    layout: "/admin"
+    layout: "/admin",
+    invisible:true,
+    
   }
+  
 ];
 
 export default dashboardRoutes;
