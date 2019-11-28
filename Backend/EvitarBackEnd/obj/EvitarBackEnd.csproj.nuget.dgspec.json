@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\OneDrive\\Documentos\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj": {}
+    "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\OneDrive\\Documentos\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj": {
+    "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\OneDrive\\Documentos\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj",
         "projectName": "EvitarBackEnd",
-        "projectPath": "C:\\Users\\ASUS\\OneDrive\\Documentos\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj",
+        "projectPath": "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\OneDrive\\Documentos\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
