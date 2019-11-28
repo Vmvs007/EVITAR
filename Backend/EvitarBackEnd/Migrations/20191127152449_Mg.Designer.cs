@@ -4,14 +4,16 @@ using EvitarBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    partial class EVITARContextModelSnapshot : ModelSnapshot
+    [Migration("20191127152449_Mg")]
+    partial class Mg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +66,6 @@ namespace EvitarBackEnd.Migrations
                     b.Property<string>("TypeCargo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ZonaCargo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("IdCargo");
 
                     b.ToTable("CargoModels");
@@ -103,14 +102,8 @@ namespace EvitarBackEnd.Migrations
                     b.Property<string>("NomeColaborador")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PrimeiroNomeCol")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("TelefoneCol")
                         .HasColumnType("int");
-
-                    b.Property<string>("UltimoNomeCol")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ccColaborador")
                         .HasColumnType("int");
@@ -120,21 +113,6 @@ namespace EvitarBackEnd.Migrations
                     b.HasIndex("IdCargo");
 
                     b.ToTable("ColaboradorModels");
-                });
-
-            modelBuilder.Entity("EvitarBackEnd.Models.EPICargoModel", b =>
-                {
-                    b.Property<int>("IdCargo")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdEPI")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdCargo", "IdEPI");
-
-                    b.HasIndex("IdEPI");
-
-                    b.ToTable("EPICargoModels");
                 });
 
             modelBuilder.Entity("EvitarBackEnd.Models.EPIModel", b =>
@@ -203,21 +181,6 @@ namespace EvitarBackEnd.Migrations
                     b.HasOne("EvitarBackEnd.Models.CargoModel", "IdCargoForeignKey")
                         .WithMany()
                         .HasForeignKey("IdCargo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EvitarBackEnd.Models.EPICargoModel", b =>
-                {
-                    b.HasOne("EvitarBackEnd.Models.CargoModel", "IdCargoForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdCargo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdEPI")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj": {}
+    "C:\\Users\\Ricardo\\Documents\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj": {
+    "C:\\Users\\Ricardo\\Documents\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj",
+        "projectUniqueName": "C:\\Users\\Ricardo\\Documents\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj",
         "projectName": "EvitarBackEnd",
-        "projectPath": "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\EvitarBackEnd.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\OneDrive\\Ambiente de Trabalho\\ESTG\\2019-2020\\LDS\\EvitarBackEnd\\obj\\",
+        "projectPath": "C:\\Users\\Ricardo\\Documents\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\EvitarBackEnd.csproj",
+        "packagesPath": "C:\\Users\\Ricardo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ricardo\\Documents\\GitHub\\EVITAR\\Backend\\EvitarBackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Ricardo\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -36,6 +36,18 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -54,9 +66,25 @@
               "target": "Package",
               "version": "[3.0.0, )"
             },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[106.6.10, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.0.0-rc4, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.5.0, )"
+            },
+            "System.Linq": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [

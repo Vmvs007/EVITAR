@@ -7,5 +7,6 @@ namespace EvitarBackEnd.Models
         public int IdCargo {get;set;}
         public string TypeCargo {get;set;}
         public string NomeCargo {get;set;}
+        public string ZonaCargo {get;set;}
     }
 }
