@@ -3,9 +3,11 @@ package com.example.evitar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -26,11 +28,18 @@ public class NotificationDetailsDialog extends AppCompatDialogFragment {
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        listener.cancel();
                     }
                 });
 
-        return builder.create();
+        AlertDialog dialog=builder.create();
+
+        dialog.show();
+
+        Button cancel = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        cancel.setBackgroundColor(Color.GRAY);
+        cancel.setWidth(1000);
+
+        return dialog;
     }
 
     @Override
@@ -46,7 +55,6 @@ public class NotificationDetailsDialog extends AppCompatDialogFragment {
     }
 
     public interface ExampleDialogListener {
-        void cancel();
     }
 }
 

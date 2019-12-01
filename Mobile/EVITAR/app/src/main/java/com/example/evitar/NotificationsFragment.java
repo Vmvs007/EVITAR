@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class NotificationsFragment extends Fragment implements NotificationDialog.ExampleDialogListener{
+public class NotificationsFragment extends Fragment implements NotificationDialog.ExampleDialogListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -20,8 +20,5 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
         notifDialog.show(getFragmentManager(), "notif dialog");
     }
 
-    @Override
-    public void seeDetails() {
-    }
 
 }
