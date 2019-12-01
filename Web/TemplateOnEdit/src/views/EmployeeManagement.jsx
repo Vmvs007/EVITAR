@@ -17,81 +17,53 @@
 */
 import React, { Component } from "react";
 import { Grid, Row, Col, Table } from "react-bootstrap";
+import { employees } from "variables/Variables.jsx";
 
 import Card from "components/Card/Card.jsx";
-import { thArray, tdArray } from "variables/Variables.jsx";
-
 class TableList extends Component {
+  thArray=["Nome","ID","Job","Details"];
   render() {
     return (
       <div className="content">
-        <Grid fluid>
-          <Row>
-            <Col md={12}>
-              <Card
-                title="Striped Table with Hover"
-                category="Here is a subtitle for this table"
-                ctTableFullWidth
-                ctTableResponsive
-                content={
-                  <Table striped hover>
-                    <thead>
-                      <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tdArray.map((prop, key) => {
-                        return (
-                          <tr key={key}>
-                            {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
-                            })}
-                          </tr>
-                        );
+      <Grid fluid>
+        <Row>
+          <Col md={12}>
+            <Card
+              title="Employee Management"
+              ctTableFullWidth
+              ctTableResponsive
+              content={
+                <div className="tabela">
+                <Table striped hover>
+                  <thead>
+                    <tr>
+                      {this.thArray.map((prop, key) => {
+                        return <th key={key}>{prop}</th>;
                       })}
-                    </tbody>
-                  </Table>
-                }
-              />
-            </Col>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {employees.map((prop, key) => {
+                      return (
+                        <tr key={key}>
+                    <td>{prop[0]}</td>
+                    <td>{prop[1]}</td>
+                    <td>{prop[2]}</td>
+                    <td><a href={"/employee/"+prop[1]}>Details</a></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+                </div>
+              }
+            />
+          </Col>
 
-            <Col md={12}>
-              <Card
-                plain
-                title="Striped Table with Hover"
-                category="Here is a subtitle for this table"
-                ctTableFullWidth
-                ctTableResponsive
-                content={
-                  <Table hover>
-                    <thead>
-                      <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tdArray.map((prop, key) => {
-                        return (
-                          <tr key={key}>
-                            {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
-                            })}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                }
-              />
-            </Col>
-          </Row>
-        </Grid>
-      </div>
+          
+        </Row>
+      </Grid>
+    </div>
     );
   }
 }

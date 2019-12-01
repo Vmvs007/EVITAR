@@ -26,7 +26,7 @@ import JobManagement from "views/JobManagement.jsx";
 import EPIManagement from "views/EpiManagement.jsx";
 import EmployeeManagement from "views/EmployeeManagement.jsx";
 import Upgrade from "views/Upgrade.jsx";
-import Arquive from "views/Arquive.jsx";
+import Archive from "views/Archive.jsx";
 import Home from "views/Home.jsx";
 
 const dashboardRoutes = [
@@ -46,10 +46,10 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path:"/arquive",
-    name:"Arquive",
+    path:"/archive",
+    name:"Archive",
     icon:"pe-7s-date",
-    component: Arquive,
+    component: Archive,
     layout: "/admin"
   },
   {

@@ -25,7 +25,7 @@ class TableList extends Component {
     return (
       <div className="content">
         <Row>
-        <Col lg={10}><h2>Arquive</h2></Col><Col lg={2}><a href="#"><h6>Adicionar<i className="fa fa-plus-circle fa-3x" /></h6></a></Col>
+        <Col lg={10}><h2>Job Management</h2></Col><Col lg={2}><a href="#"><h6>Adicionar<i className="fa fa-plus-circle fa-3x" /></h6></a></Col>
         </Row>
         <CardColumns>
         {
