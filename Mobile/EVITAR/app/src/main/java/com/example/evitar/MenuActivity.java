@@ -1,11 +1,8 @@
 package com.example.evitar;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +34,6 @@ public class MenuActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
-                .addToBackStack("Home")
                 .commit();
 
         navigationView=(SpaceNavigationView) findViewById(R.id.space);
@@ -47,6 +43,8 @@ public class MenuActivity extends AppCompatActivity {
         navigationView.addSpaceItem(new SpaceItem("Dashboard", R.drawable.ic_dashboard_white_24dp));
         navigationView.addSpaceItem(new SpaceItem("Archive", R.drawable.ic_archive_white_24dp));
         navigationView.addSpaceItem(new SpaceItem("Settings", R.drawable.ic_settings_white_24dp));
+
+
 
         navigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
@@ -58,7 +56,6 @@ public class MenuActivity extends AppCompatActivity {
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, fragment)
-                            .addToBackStack("Notifications")
                             .commit();
                 }
             }
@@ -81,7 +78,7 @@ public class MenuActivity extends AppCompatActivity {
                         fragment=new SettingsFragment();
                         break;
                 }
-                setFragment(itemName);
+                setFragment(itemIndex);
             }
 
             @Override
@@ -93,44 +90,16 @@ public class MenuActivity extends AppCompatActivity {
 
 
 
+
     }
 
-    public void setFragment(String itemName){
+    public void setFragment(int itemIndex){
+        String num=Integer.toString(itemIndex);
         if (fragment!=null){
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
-                    .addToBackStack(itemName)
                     .commit();
-        }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        int count = fragmentManager.getBackStackEntryCount();
-        if (count <= 1) {
-            finish();
-        }
-        else {
-            String title = fragmentManager.getBackStackEntryAt(count-2).getName();
-            super.onBackPressed();
-            //toolbarText.setText(title);
-            if(title.equals("Home")) {
-                navigationView.changeCurrentItem(0);
-            }else if(title.equals("Dashboard")) {
-                navigationView.changeCurrentItem(1);
-            }else if(title.equals("Archive")) {
-                navigationView.changeCurrentItem(2);
-            }else if(title.equals("Settings")) {
-                navigationView.changeCurrentItem(3);
-            }
         }
     }
 }

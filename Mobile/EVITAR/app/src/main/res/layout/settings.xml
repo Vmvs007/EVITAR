@@ -3,9 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView4"
+    <Switch
+        android:id="@+id/switch1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="settings" />
+        android:checked="true"
+        android:padding="20dp"
+        android:showText="true"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:text="Notifications"
+        android:textOff="Off"
+        android:textOn="On"
+        android:textSize="30dp" />
+
 </LinearLayout>
