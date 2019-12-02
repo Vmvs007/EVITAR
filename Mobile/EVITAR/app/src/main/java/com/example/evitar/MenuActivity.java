@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,10 +105,10 @@ public class MenuActivity extends AppCompatActivity implements NotificationsFrag
     }
     @Override
     public void onButtonclick(Notification notif) {
-        openDialog();
+        openDialog(notif);
     }
-    public void openDialog() {
-        NotificationDialog notifDialog = new NotificationDialog();
+    public void openDialog(Notification notif) {
+        NotificationDialog notifDialog = new NotificationDialog(notif);
         notifDialog.show(getSupportFragmentManager(), "notif dialog");
     }
 

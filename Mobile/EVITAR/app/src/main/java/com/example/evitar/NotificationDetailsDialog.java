@@ -15,6 +15,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class NotificationDetailsDialog extends AppCompatDialogFragment {
 
     private ExampleDialogListener listener;
+    Notification notif;
+
+    public NotificationDetailsDialog(Notification notif) {
+        this.notif = notif;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

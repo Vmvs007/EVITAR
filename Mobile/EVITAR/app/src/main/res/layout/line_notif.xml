@@ -11,7 +11,8 @@
         android:text="June 29, 2019"
         android:textColor="@color/colorPrimary"
         android:textSize="15dp"
-        android:padding="20dp"/>
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"/>
 
     <TextView
         android:id="@+id/textView22"
@@ -27,5 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="description"
-        android:paddingLeft="20dp"/>
+        android:paddingLeft="20dp"
+        android:paddingBottom="10dp"/>
 </LinearLayout>

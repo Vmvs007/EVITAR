@@ -13,6 +13,8 @@
             android:id="@+id/imageView11"
             android:layout_width="match_parent"
             android:layout_height="228dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/retangulobackground" />
@@ -25,7 +27,7 @@
             android:layout_marginTop="87dp"
             android:text="See what happened"
             android:textColor="@color/colorAccent"
-            android:textSize="40dp"
+            android:textSize="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +39,7 @@
             android:layout_marginTop="140dp"
             android:text="Start from 30/06/2019"
             android:textColor="@color/colorAccent"
-            android:textSize="25dp"
+            android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

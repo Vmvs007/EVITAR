@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -15,6 +16,12 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class NotificationDialog extends AppCompatDialogFragment {
 
     private ExampleDialogListener listener;
+    TextView data, tipo, texto;
+    Notification notif;
+
+    public NotificationDialog(Notification notif) {
+        this.notif = notif;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -23,6 +30,13 @@ public class NotificationDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.notifdialog, null);
 
+        data=(TextView) view.findViewById(R.id.textView7);
+        tipo=(TextView) view.findViewById(R.id.textView12);
+        texto=(TextView) view.findViewById(R.id.textView13);
+
+        data.setText(notif.getDate());
+        tipo.setText(notif.getTitle());
+        texto.setText(notif.getDescription());
 
 
         builder.setView(view)
@@ -34,7 +48,7 @@ public class NotificationDialog extends AppCompatDialogFragment {
                 .setPositiveButton("See Details", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        NotificationDetailsDialog notifdetailsDialog = new NotificationDetailsDialog();
+                        NotificationDetailsDialog notifdetailsDialog = new NotificationDetailsDialog(notif);
                         notifdetailsDialog.show(getFragmentManager(), "notif details dialog");
                     }
                 });
@@ -46,11 +60,11 @@ public class NotificationDialog extends AppCompatDialogFragment {
 
         Button cancel = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         cancel.setBackgroundColor(Color.GRAY);
-        cancel.setWidth(430);
+        cancel.setWidth(420);
 
         Button sd = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         sd.setBackgroundColor(Color.RED);
-        sd.setWidth(430);
+        sd.setWidth(420);
 
 
         return dialog;
