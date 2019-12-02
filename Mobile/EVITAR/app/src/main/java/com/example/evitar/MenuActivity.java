@@ -3,6 +3,7 @@ package com.example.evitar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,7 +12,7 @@ import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements NotificationsFragment.OnFragmentInteractionListener{
 
     SpaceNavigationView navigationView;
     Fragment fragment;
@@ -78,7 +79,7 @@ public class MenuActivity extends AppCompatActivity {
                         fragment=new SettingsFragment();
                         break;
                 }
-                setFragment(itemIndex);
+                setFragment();
             }
 
             @Override
@@ -93,8 +94,7 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    public void setFragment(int itemIndex){
-        String num=Integer.toString(itemIndex);
+    public void setFragment(){
         if (fragment!=null){
             getSupportFragmentManager()
                     .beginTransaction()
@@ -102,4 +102,13 @@ public class MenuActivity extends AppCompatActivity {
                     .commit();
         }
     }
+    @Override
+    public void onButtonclick(Notification notif) {
+        openDialog();
+    }
+    public void openDialog() {
+        NotificationDialog notifDialog = new NotificationDialog();
+        notifDialog.show(getSupportFragmentManager(), "notif dialog");
+    }
+
 }

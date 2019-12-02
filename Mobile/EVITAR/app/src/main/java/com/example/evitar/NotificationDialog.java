@@ -46,11 +46,11 @@ public class NotificationDialog extends AppCompatDialogFragment {
 
         Button cancel = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         cancel.setBackgroundColor(Color.GRAY);
-        cancel.setWidth(435);
+        cancel.setWidth(430);
 
         Button sd = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         sd.setBackgroundColor(Color.RED);
-        sd.setWidth(435);
+        sd.setWidth(430);
 
 
         return dialog;
