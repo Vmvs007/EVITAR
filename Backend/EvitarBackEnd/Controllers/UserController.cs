@@ -59,7 +59,7 @@ namespace EvitarBackEnd.Controllers
             var client = new RestClient("http://localhost:5001");
             var request = new RestRequest("api/Colaborador", Method.GET);
             // request.AddUrlSegment("id", user.IdColaborador.ToString);
-
+            
 
             using (SqlConnection conn = new SqlConnection("server=DESKTOP-E6JG4C3;Database=EVITARDataBase;Trusted_Connection=true"))
             {
