@@ -13,8 +13,5 @@ namespace EvitarBackEnd.Models
         public ColaboradorModel IdColaboradorForeignKey {get;set;}
         public int Check {get;set;}
         public DateTime DataHora {get;set;}
-        public int IdEPI {get;set;}
-        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdEPI")]
-        public EPIModel IdEPIForeignKey {get;set;}
     }
 }

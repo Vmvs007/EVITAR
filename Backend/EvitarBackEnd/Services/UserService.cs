@@ -94,12 +94,14 @@ namespace EvitarBackEnd.Services
                 user.Username = userParam.Username;
             }
 
+
             // update user properties if provided
             if (!string.IsNullOrWhiteSpace(userParam.FirstName))
                 user.FirstName = userParam.FirstName;
 
             if (!string.IsNullOrWhiteSpace(userParam.LastName))
                 user.LastName = userParam.LastName;
+                
 
             // update password if provided
             if (!string.IsNullOrWhiteSpace(password))

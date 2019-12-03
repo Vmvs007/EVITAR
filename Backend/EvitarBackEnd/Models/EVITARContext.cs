@@ -17,13 +17,20 @@ namespace EvitarBackEnd.Models
                 table.IdCargo,
                 table.IdEPI
             });
+            builder.Entity<MovEPIModel>().HasKey(table => new
+            {
+                table.IdMovimento,
+                table.IdEPI
+            });
         }
+        
         public DbSet<ColaboradorModel> ColaboradorModels { get; set; }
         public DbSet<EPIModel> EPIModels { get; set; }
         public DbSet<CargoModel> CargoModels { get; set; }
         public DbSet<MovimentoModel> MovimentoModels { get; set; }
         public DbSet<EPICargoModel> EPICargoModels { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<MovEPIModel> MovEPIModels { get; set; }
 
 
     }

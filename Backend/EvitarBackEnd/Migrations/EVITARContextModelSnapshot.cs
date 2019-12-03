@@ -61,9 +61,6 @@ namespace EvitarBackEnd.Migrations
                     b.Property<string>("NomeCargo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeCargo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ZonaCargo")
                         .HasColumnType("nvarchar(max)");
 
@@ -150,12 +147,32 @@ namespace EvitarBackEnd.Migrations
                     b.Property<DateTime>("DataValidadeEPI")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdColaborador")
+                        .HasColumnType("int");
+
                     b.Property<string>("NomeEPI")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdEPI");
 
+                    b.HasIndex("IdColaborador");
+
                     b.ToTable("EPIModels");
+                });
+
+            modelBuilder.Entity("EvitarBackEnd.Models.MovEPIModel", b =>
+                {
+                    b.Property<int>("IdMovimento")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdEPI")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdMovimento", "IdEPI");
+
+                    b.HasIndex("IdEPI");
+
+                    b.ToTable("MovEPIModels");
                 });
 
             modelBuilder.Entity("EvitarBackEnd.Models.MovimentoModel", b =>
@@ -174,17 +191,12 @@ namespace EvitarBackEnd.Migrations
                     b.Property<int>("IdColaborador")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEPI")
-                        .HasColumnType("int");
-
                     b.Property<string>("TypeMov")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdMovimento");
 
                     b.HasIndex("IdColaborador");
-
-                    b.HasIndex("IdEPI");
 
                     b.ToTable("MovimentoModels");
                 });
@@ -222,17 +234,35 @@ namespace EvitarBackEnd.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EvitarBackEnd.Models.MovimentoModel", b =>
+            modelBuilder.Entity("EvitarBackEnd.Models.EPIModel", b =>
                 {
                     b.HasOne("EvitarBackEnd.Models.ColaboradorModel", "IdColaboradorForeignKey")
                         .WithMany()
                         .HasForeignKey("IdColaborador")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
+            modelBuilder.Entity("EvitarBackEnd.Models.MovEPIModel", b =>
+                {
                     b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
                         .WithMany()
                         .HasForeignKey("IdEPI")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
+                        .WithMany()
+                        .HasForeignKey("IdMovimento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EvitarBackEnd.Models.MovimentoModel", b =>
+                {
+                    b.HasOne("EvitarBackEnd.Models.ColaboradorModel", "IdColaboradorForeignKey")
+                        .WithMany()
+                        .HasForeignKey("IdColaborador")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
