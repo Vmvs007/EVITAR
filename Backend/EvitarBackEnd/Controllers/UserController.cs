@@ -61,7 +61,7 @@ namespace EvitarBackEnd.Controllers
             // request.AddUrlSegment("id", user.IdColaborador.ToString);
 
 
-            using (SqlConnection conn = new SqlConnection("server=DESKTOP-E6JG4C3;Database=EVITARDataBase;Trusted_Connection=true"))
+            using (SqlConnection conn = new SqlConnection("server=LAPTOP-ST2HTHSJ;Database=EVITARDataBase;Trusted_Connection=true"))
             {
                 string query = @"SELECT e.IdCargo
                                      FROM ColaboradorModels e
