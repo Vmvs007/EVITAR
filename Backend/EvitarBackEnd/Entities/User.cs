@@ -1,12 +1,13 @@
 using EvitarBackEnd.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace EvitarBackEnd.Entities
 {
     public class User
     {
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+
+        [StringLength(50)]
         public string Username { get; set; }
         public int IdColaborador{get;set;}
         [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdColaborador")]

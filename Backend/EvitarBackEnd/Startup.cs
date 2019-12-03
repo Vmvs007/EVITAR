@@ -35,7 +35,7 @@ namespace EvitarBackEnd
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<EVITARContext>(opt =>opt.UseSqlServer(connectionString));
+            services.AddDbContext<EVITARContext>(opt => opt.UseSqlServer(connectionString));
             services.AddControllers();
 
             services.AddCors();
@@ -44,8 +44,9 @@ namespace EvitarBackEnd
             services.AddDbContext<EVITARContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EVITARContext")));
 
-            services.AddSwaggerGen(c=>{
-                c.SwaggerDoc("v1",new OpenApiInfo {Title="EvitarBackEnd",Version="v1"});
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EvitarBackEnd", Version = "v1" });
             });
 
             // configure strongly typed settings objects
@@ -90,7 +91,7 @@ namespace EvitarBackEnd
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,18 +100,25 @@ namespace EvitarBackEnd
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("../swagger/v1/swagger.json", "EvitarBackEnd V1");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
 
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+
+
 
             app.UseAuthentication();
 
@@ -121,12 +129,8 @@ namespace EvitarBackEnd
                 endpoints.MapControllers();
             });
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c=>{
-                c.SwaggerEndpoint("/swagger/v1/swagger.json","EvitarBackEnd V1");
-                c.RoutePrefix = string.Empty;
-            });
-            
+
+
         }
     }
 }

@@ -97,6 +97,7 @@ namespace EvitarBackEnd.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ColaboradorModel>> DeleteColaboradorModel(int id)
         {
+            
             var colaboradorModel = await _context.ColaboradorModels.FindAsync(id);
             if (colaboradorModel == null)
             {

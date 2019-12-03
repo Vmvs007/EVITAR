@@ -20,7 +20,12 @@ namespace EvitarBackEnd
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseIISIntegration();
+                    webBuilder.UseKestrel();
                     webBuilder.UseStartup<Startup>();
+                    
+
                 });
+                
     }
 }

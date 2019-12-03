@@ -22,6 +22,13 @@ namespace EvitarBackEnd.Models
                 table.IdMovimento,
                 table.IdEPI
             });
+
+            builder.Entity<MovimentoModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("MovimentoModelViews");
+        });
+
         }
         
         public DbSet<ColaboradorModel> ColaboradorModels { get; set; }
@@ -31,6 +38,8 @@ namespace EvitarBackEnd.Models
         public DbSet<EPICargoModel> EPICargoModels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<MovEPIModel> MovEPIModels { get; set; }
+
+        public DbSet<MovimentoModelView> MovimentoModelViews{get;set;}
 
 
     }
