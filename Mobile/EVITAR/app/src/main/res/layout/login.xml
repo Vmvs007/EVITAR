@@ -64,11 +64,11 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="number"
+                android:inputType="text"
                 android:textColorHint="@color/colorPrimary"
                 android:textSize="15dp" />
 
@@ -81,7 +81,7 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -90,7 +90,7 @@
                 android:textSize="15dp" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/loginbutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"

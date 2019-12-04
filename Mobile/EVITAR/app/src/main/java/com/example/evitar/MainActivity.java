@@ -53,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 skip.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
-                        //setContentView(R.layout.login);
-                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                     }
                 });
