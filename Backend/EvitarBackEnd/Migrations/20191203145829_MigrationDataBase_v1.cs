@@ -101,9 +101,7 @@ namespace EvitarBackEnd.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(maxLength: 50, nullable: true),
                     IdColaborador = table.Column<int>(nullable: false),
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true)

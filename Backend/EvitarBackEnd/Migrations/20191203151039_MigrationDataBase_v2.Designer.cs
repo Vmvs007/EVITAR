@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    [Migration("20191203104926_MigrationDataBase_v.1")]
-    partial class MigrationDataBase_v1
+    [Migration("20191203151039_MigrationDataBase_v2")]
+    partial class MigrationDataBase_v2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,14 +28,8 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("IdColaborador")
                         .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
@@ -44,7 +38,8 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -153,7 +148,8 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NomeEPI")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(2)")
+                        .HasMaxLength(2);
 
                     b.HasKey("IdEPI");
 
@@ -232,7 +228,7 @@ namespace EvitarBackEnd.Migrations
                     b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
                         .WithMany()
                         .HasForeignKey("IdEPI")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -256,7 +252,7 @@ namespace EvitarBackEnd.Migrations
                     b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
                         .WithMany()
                         .HasForeignKey("IdMovimento")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

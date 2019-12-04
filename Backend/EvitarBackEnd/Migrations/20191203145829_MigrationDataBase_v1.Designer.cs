@@ -4,14 +4,16 @@ using EvitarBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    partial class EVITARContextModelSnapshot : ModelSnapshot
+    [Migration("20191203145829_MigrationDataBase_v1")]
+    partial class MigrationDataBase_v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,8 +148,7 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NomeEPI")
-                        .HasColumnType("nvarchar(2)")
-                        .HasMaxLength(2);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdEPI");
 
@@ -226,7 +227,7 @@ namespace EvitarBackEnd.Migrations
                     b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
                         .WithMany()
                         .HasForeignKey("IdEPI")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -250,7 +251,7 @@ namespace EvitarBackEnd.Migrations
                     b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
                         .WithMany()
                         .HasForeignKey("IdMovimento")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
