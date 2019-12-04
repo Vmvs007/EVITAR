@@ -46,7 +46,7 @@ namespace EvitarBackEnd
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EvitarBackEnd", Version = "v1" });
+                c.SwaggerDoc("teste", new OpenApiInfo { Title = "EvitarBackEnd", Version = "v1" });
             });
 
             // configure strongly typed settings objects
@@ -100,12 +100,7 @@ namespace EvitarBackEnd
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("../swagger/v1/swagger.json", "EvitarBackEnd V1");
-                    c.RoutePrefix = string.Empty;
-                });
+
             }
 
             app.UseHttpsRedirection();
@@ -123,6 +118,13 @@ namespace EvitarBackEnd
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/teste/swagger.json", "EvitarBackEnd V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseEndpoints(endpoints =>
             {

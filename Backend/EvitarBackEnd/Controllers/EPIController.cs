@@ -9,7 +9,7 @@ using EvitarBackEnd.Models;
 
 namespace EvitarBackEnd.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/EPI")]
     [ApiController]
     public class EPIController : ControllerBase
     {

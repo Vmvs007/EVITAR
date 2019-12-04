@@ -47,6 +47,7 @@ namespace EvitarBackEnd.Controllers
         // GET: api/Movimento/5
         [Route("search")]
         [Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<MovimentoModel>>> GetMovimentoModelData(int id)
         {
             // var movimentoModel = await _context.MovimentoModels.FromSql("SELECT * From dbo.MovimentoModels WHERE DataHora > 01/11/2019 and DataHora < 31/11/2019 ").ToList();
@@ -67,6 +68,7 @@ namespace EvitarBackEnd.Controllers
 
         [Route("view")]
         [Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<MovimentoModelView>>> GetMovimentoModelView(int id)
         {
             // var movimentoModel = await _context.MovimentoModels.FromSql("SELECT * From dbo.MovimentoModels WHERE DataHora > 01/11/2019 and DataHora < 31/11/2019 ").ToList();
