@@ -1,0 +1,4 @@
+- Documentem o código :)
+- Usem os branches do Github
+- Partilhem alterações, commits, merges e assim 
+  no MS Teams ou no site da equipa
