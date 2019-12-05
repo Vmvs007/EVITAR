@@ -264,6 +264,7 @@ const jobs=[["Industrial Oven Operator",["Protextive Glasses","Protective Gloves
 
 const employees=[["João Alberto",1,"Human Resources"],["Roberto João",2,"Security"],["Ricardo João",3,"EPI Inspector"],["Afonso João",4,"Oven Operator"]]
 
+const epis=[["Protective Gloves",1,"2019-10-12","2021-10-12","Ricardo João"],["Protective Glasses",2,"2019-10-12","2021-10-12","Ricardo João"],["Protective Boots",3,"2019-10-12","2021-10-12","Ricardo João"],["Protective Gloves",1,"2019-10-12","2021-10-12","Ricardo João"],["Protective Gloves",4,"2019-10-12","2021-10-12","Ricardo João"],["Protective Gloves",5,"2019-10-12","2021-10-12","Ricardo João"],["Protective Gloves",6,"2019-10-12","2021-10-12","Ricardo João"],["Protective Gloves",7,"2019-10-12","2021-10-12","Ricardo João"],["Protective Gloves",8,"2019-10-12","2021-10-12","Ricardo João"]]
 //
 // //
 // // // For tables
@@ -278,19 +279,6 @@ const tdArray = [
   ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
   ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
   ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Check",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
-  ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
   ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
   ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
   ["Main Entry", "2019/12/05 12:23", "65488", "Joaquim Alberto","Industrial Oven Operator", "Alert",["botas","sapatos","galochas","k7"]],
@@ -632,9 +620,11 @@ module.exports = {
   optionsSales,
   responsiveSales,
   legendSales,
-  jobs,
   dataBar,
   optionsBar,
   responsiveBar,
-  legendBar,employees // For charts (Dashboard view)
+  legendBar,
+  employees,//
+  jobs,//
+  epis //
 };

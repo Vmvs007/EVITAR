@@ -29,17 +29,21 @@ import { style } from "variables/Variables.jsx";
 import routes from "routes.js";
 
 import image from "assets/img/Background.png";
-
+import AuthService from 'components/Authentication/AuthService.js';
+const Auth = new AuthService();
 class Admin extends Component {
   constructor(props) {
+    
     super(props);
     this.state = {
       _notificationSystem: null,
       image: image,
       color: "black",
       hasImage: true,
-      fixedClasses: "dropdown show-dropdown open"
+      fixedClasses: "dropdown show-dropdown open",
+      user: null
     };
+    
   }
   /*handleNotificationClick = position => {
     var color = Math.floor(Math.random() * 4 + 1);
@@ -75,24 +79,31 @@ class Admin extends Component {
   };*/
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            render={props => (
-              <prop.component
-                {...props}
-                handleClick={this.handleNotificationClick}
-              />
-            )}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
+      if(Auth.roleInUsers(prop.users)){
+        
+        if (prop.layout === "/admin") {
+          
+          return (
+            <Route
+              path={prop.layout + prop.path}
+              render={props => (
+                <prop.component
+                  {...props}
+                  handleClick={this.handleNotificationClick}
+                />
+              )}
+              key={key}
+            />
+          );
+          } else {
+          return null;
+          }
+        }
+        else{
+          return null;
+        }
+      });
+    };
   getBrandText = path => {
     for (let i = 0; i < routes.length; i++) {
       if (
@@ -121,6 +132,23 @@ class Admin extends Component {
       this.setState({ fixedClasses: "dropdown" });
     }
   };
+  componentWillMount() {
+    if (!Auth.loggedIn()) {
+        this.props.history.replace('/login')
+    }
+    else {
+        try {
+            const profile = Auth.getProfile()
+            this.setState({
+                user: profile
+            })
+        }
+        catch(err){
+            Auth.logout()
+            this.props.history.replace('/login')
+        }
+    }
+}
   /*componentDidMount() {
     this.setState({ _notificationSystem: this.refs.notificationSystem });
     var _notificationSystem = this.refs.notificationSystem;
@@ -170,6 +198,7 @@ class Admin extends Component {
     }
   }
   render() {
+    if (this.state.user) {
     return (
       <div className="wrapper">
         <NotificationSystem ref="notificationSystem" style={style} />
@@ -187,7 +216,15 @@ class Admin extends Component {
         </div>
       </div>
     );
+    }
+    else {
+      return null
   }
+  }
+  handleLogout(){
+    Auth.logout()
+    this.props.history.replace('/login');
+ }
 }
 
 export default Admin;

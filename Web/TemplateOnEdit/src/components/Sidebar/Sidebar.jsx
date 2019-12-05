@@ -19,9 +19,9 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
-
+import AuthService from "../Authentication/AuthService.js";
 import logo from "assets/img/EVITAR.png";
-
+const Auth = new AuthService();
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -70,6 +70,8 @@ class Sidebar extends Component {
           <ul className="nav">
             {this.state.width <= 991 ? <AdminNavbarLinks /> : null}
             {this.props.routes.map((prop, key) => {
+              if(Auth.roleInUsers(prop.users)){
+              
               if(prop.invisible) return null;
               if (!prop.redirect)
                 return (
@@ -91,6 +93,7 @@ class Sidebar extends Component {
                     </NavLink>
                   </li>
                 );
+              }
               return null;
             })}
           </ul>

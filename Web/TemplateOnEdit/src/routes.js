@@ -28,7 +28,6 @@ import EmployeeManagement from "views/EmployeeManagement.jsx";
 import Upgrade from "views/Upgrade.jsx";
 import Archive from "views/Archive.jsx";
 import Home from "views/Home.jsx";
-
 const dashboardRoutes = [
   
   {
@@ -36,42 +35,48 @@ const dashboardRoutes = [
     name: "Home",
     icon: "pe-7s-home",
     component: Home,
-    layout: "/admin"
+    layout: "/admin",
+    users:["1","2","4"]
   },
   {
     path: "/dashboard",
     name: "Dashboard",
     icon: "pe-7s-graph",
     component: Dashboard,
-    layout: "/admin"
+    layout: "/admin",
+    users:["1","2","4"]
   },
   {
     path:"/archive",
     name:"Archive",
     icon:"pe-7s-date",
     component: Archive,
-    layout: "/admin"
+    layout: "/admin",
+    users:["1","2","4"]
   },
   {
     path:"/jobs",
     name:"Job Management",
     icon:"pe-7s-portfolio",
     component: JobManagement,
-    layout: "/admin"
+    layout: "/admin",
+    users:["1","2"]
   },
   {
     path:"/employees",
     name:"Employee Management",
     icon:"pe-7s-id",
     component: EmployeeManagement,
-    layout: "/admin"
+    layout: "/admin",
+    users:["1","2"]
   },
   {
     path:"/epis",
     name:"EPI Management",
     icon:"pe-7s-global",
     component: EPIManagement,
-    layout: "/admin"
+    layout: "/admin",
+    users:["1","3"]
   },
   {
     path: "/user",
@@ -79,7 +84,8 @@ const dashboardRoutes = [
     icon: "pe-7s-user",
     component: UserProfile,
     layout: "/admin",
-    invisible:true
+    invisible:true,
+    users:["1","2","3","4"]
   },
   /*{
     path:"/",
@@ -132,6 +138,7 @@ const dashboardRoutes = [
     component: Upgrade,
     layout: "/admin",
     invisible:true,
+    users:["1","2","4"]
     
   }
   

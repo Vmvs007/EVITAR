@@ -16,38 +16,56 @@
 
 */
 import React, { Component } from "react";
-import {Card,CardColumns,CardBody,CardTitle,CardText,CardLink} from "reactstrap";
-import {Row, Col } from "react-bootstrap";
-import { jobs } from "variables/Variables.jsx";
+import { Grid, Row, Col, Table } from "react-bootstrap";
+import { epis } from "variables/Variables.jsx";
 
+import Card from "components/Card/Card.jsx";
 class TableList extends Component {
+  thArray=["Nome","ID","Data Registo","Data Validade","Inspetor","Detalhes"];
   render() {
     return (
       <div className="content">
+      <Grid fluid>
         <Row>
-        <Col lg={10}><h2>EPI Management</h2></Col><Col lg={2}><a href="#"><h6>Adicionar<i className="fa fa-plus-circle fa-3x" /></h6></a></Col>
+          <Col md={12}>
+            <Card
+              title="EPI Management"
+              ctTableFullWidth
+              ctTableResponsive
+              content={
+                <div className="tabela">
+                <Table striped hover>
+                  <thead>
+                    <tr>
+                      {this.thArray.map((prop, key) => {
+                        return <th key={key}>{prop}</th>;
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {epis.map((prop, key) => {
+                      return (
+                        <tr key={key}>
+                    <td>{prop[0]}</td>
+                    <td>{prop[1]}</td>
+                    <td>{prop[2]}</td>
+                    <td>{prop[3]}</td>
+                    <td>{prop[4]}</td>
+                    <td><a href={"/epis/"+prop[1]}>Detalhes</a></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+                </div>
+              }
+            />
+          </Col>
+
+          
         </Row>
-        <CardColumns>
-        {
-          jobs.map((prop,key)=>{
-            
-            return(
-            <Card>
-              <CardBody>
-                <CardTitle>{prop[0]}</CardTitle>
-                <CardText>{prop[1].map((props)=>{
-                  return props+"\n"
-                })}</CardText>
-                <CardLink href="#">Edit</CardLink>
-                <CardLink href="#" >Delete</CardLink>
-                </CardBody>
-              </Card>
-            )
-          })
-        }
-        </CardColumns>
-        
-      </div>
+      </Grid>
+    </div>
     );
   }
 }
