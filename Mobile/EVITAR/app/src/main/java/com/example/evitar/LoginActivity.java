@@ -45,24 +45,30 @@ public class LoginActivity extends AppCompatActivity {
         String pass=password.getText().toString().trim();
         Log.d("cc", user);
         Log.d("cc", pass);
+        SignIn signIn=new SignIn(user,pass);
 
         Call<User> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .login("Dumbrica", "password");
+                .login(signIn);
 
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                User user = new User(response.body().getId(), response.body().getUsername(), response.body().getToken());
-                Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                startActivity(intent);
+                Log.d("cc", response.toString());
+                if(response.code()==200){
+                    User user = new User(response.body().getId(), response.body().getUsername(), response.body().getToken());
+                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(LoginActivity.this, "Login Wrong!", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Login Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

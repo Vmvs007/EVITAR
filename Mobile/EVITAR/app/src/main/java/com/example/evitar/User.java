@@ -5,13 +5,13 @@ public class User {
     private String username;
     private String token;
 
-    public User(Integer id, String username, String token) {
+    public User(int id, String username, String token) {
         this.id = id;
         this.username = username;
         this.token = token;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
