@@ -6,6 +6,7 @@ public class Epi {
     private String dataRegistoEPI;
     private String dataValidadeEPI;
     private int idColaborador;
+    private int idColaboradorForeignKey;
 
     public Epi(int id, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
         this.id = id;

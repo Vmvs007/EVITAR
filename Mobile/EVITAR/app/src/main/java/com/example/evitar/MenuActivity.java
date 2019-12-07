@@ -13,7 +13,7 @@ import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 
-public class MenuActivity extends AppCompatActivity implements NotificationsFragment.OnFragmentInteractionListener{
+public class MenuActivity extends AppCompatActivity implements NotificationsFragment.OnFragmentInteractionListener, EpiFragment.OnFragmentInteractionListener{
 
     SpaceNavigationView navigationView;
     Fragment fragment;
@@ -110,6 +110,15 @@ public class MenuActivity extends AppCompatActivity implements NotificationsFrag
     public void openDialog(Notification notif) {
         NotificationDialog notifDialog = new NotificationDialog(notif);
         notifDialog.show(getSupportFragmentManager(), "notif dialog");
+    }
+
+    @Override
+    public void onButtonclick(Epi epi) {
+        openDialog(epi);
+    }
+    public void openDialog(Epi epi) {
+        EpiDialog epiDialog = new EpiDialog(epi);
+        epiDialog.show(getSupportFragmentManager(), "epi dialog");
     }
 
 }
