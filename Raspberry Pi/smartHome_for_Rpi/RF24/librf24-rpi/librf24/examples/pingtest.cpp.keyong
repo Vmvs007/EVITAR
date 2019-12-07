@@ -1,0 +1,60 @@
+#include <cstdlib>
+#include <iostream>
+
+#include "../RF24.h"
+
+RF24 radio("/dev/spidev0.0", 8000000 , 8); 
+
+// 设置数据通道地址
+const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
+
+const uint8_t myBuf[5] = {11,22,33,44,55};
+
+#define  BUFSZ  12
+char Sensor_Rx_Buf[BUFSZ] = {0};
+
+void setup(void) {
+	radio.begin();
+	radio.enableDynamicPayloads();
+	radio.setDataRate(RF24_1MBPS);
+	radio.setPALevel(RF24_PA_HIGH);
+	radio.setChannel(110);
+	radio.setCRCLength(RF24_CRC_16);
+	radio.openWritingPipe(pipes[0]);
+	radio.openReadingPipe(1,pipes[1]);
+	radio.startListening();
+	radio.printDetails();
+}
+
+int cnt = 0;
+int i, j;
+
+void loop(void) {
+	//radio.stopListening();
+	bool done = false;
+
+	if(radio.available()){
+		printf("Debug radio.available\n");
+		while(!done){
+			done = radio.read(Sensor_Rx_Buf, BUFSZ);		
+			//printf("rx = %d\n", Sensor_Rx_Buf[0]);
+			printf("Sensor_Rx_Buf : ");	
+			for(i = 0; i < BUFSZ; i++){
+				printf("%02d ", Sensor_Rx_Buf[i]);	
+			}
+			printf("\n");
+//			sleep(1);
+		}	
+	}
+}
+
+int main(int argc, char** argv) 
+{
+	setup();
+
+	while(1){
+		loop();
+	}
+
+	return 0;
+}

@@ -1,0 +1,10 @@
+[
+{"Name":"temp","Value":"252.43"},
+{"Name":"humi","Value":"30.94"},
+{"Name":"illum","Value":"10.0"},
+{"Name":"airPressure","Value":"0.3"},
+{"Name":"gas","Value":"157.102"},
+{"Name":"altitude","Value":"80.168"},
+{"Name":"pir","Value":"1.253"},
+{"Name":"RFID","Value":"157.0"}
+]

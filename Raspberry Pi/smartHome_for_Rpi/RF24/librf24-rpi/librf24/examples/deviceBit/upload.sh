@@ -1,0 +1,1 @@
+curl --request POST --data-binary @"/home/smartHome_for_Rpi/RF24-master/librf24-rpi/librf24/examples/sensorDat/sensorDat.txt" --header "userkey:eeaa56a03fe640389f35a7f94fd11328" http://www.devicebit.com/api/V1/gateway/UpdateSensors/01

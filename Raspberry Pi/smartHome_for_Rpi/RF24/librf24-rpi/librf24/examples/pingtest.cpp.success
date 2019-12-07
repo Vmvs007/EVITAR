@@ -1,0 +1,137 @@
+/**
+	example RF Radio Ping Pair
+*
+* This is an example of how to use the RF24 class.  Write this sketch to two different nodes,
+* connect the role_pin to ground on one.  The ping node sends the current time to the pong node,
+* which responds by sending the value back.  The ping node can then see how long the whole cycle
+* took.
+*/
+
+#include <cstdlib>
+#include <iostream>
+
+#include "../RF24.h"
+
+/*
+   连接方法
+
+   rf24        rasp
+   3.3v        3.3v (不能使用5v)
+   GND         GND
+   CE          GPIO 18 (右排往下第六个)
+   CSN         GPIO 8 (右排往下倒数第二个)
+   SCK         GPIO 11 (左排往下倒数第二个)  
+   MOSI        GPIO 10 (左排往下倒数第四个)
+   MISO        GPIO 9  (左排往下倒数第三个)
+
+ */
+
+//
+// 硬件配置
+// spi设备、CSN速率、CSN引脚 GPIO 8
+RF24 radio("/dev/spidev0.0",8000000 , 8); 
+
+// 设置数据通道地址
+const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
+
+// 配置rf24
+void setup(void) {
+
+	printf("\n\rRF24/examples/pingpair/\n\r");
+	printf("ROLE: Ping out\n\r");
+
+	radio.begin();
+
+	// 开启动态有效信息长度
+	radio.enableDynamicPayloads();
+
+	// 设置重传次数以及每次重传的延迟
+	//radio.setRetries(15,15);
+
+	// 设置传输速率
+	radio.setDataRate(RF24_1MBPS);
+
+	// 设置功放级别，有四种级别：
+	// RF24_PA_MIN=-18dBm
+	// RF24_PA_LOW=-12dBm
+	// RF24_PA_MED=-6dBM
+	// RF24_PA_HIGH=0dBm
+	radio.setPALevel(RF24_PA_HIGH);
+
+	// 设置信道(0-127)
+	radio.setChannel(110);
+
+	// 设置crc校验长度
+	// 两种 8位RF24_CRC_8 和 16位RF24_CRC_16
+	radio.setCRCLength(RF24_CRC_16);
+
+	radio.openWritingPipe(pipes[0]);
+	radio.openReadingPipe(1,pipes[1]);
+
+	//
+	// 开始监听
+	//
+
+	radio.startListening();
+
+	// 打印配置信息
+	radio.printDetails();
+}
+
+void loop(void) {
+
+	// 首先停止监听
+	radio.stopListening();
+
+	// 获取时间，并发送时间
+	unsigned long time = __millis();
+	printf("Now sending %lu...",time);
+
+	// 是否发送成功
+	bool ok = radio.write( &time, sizeof(unsigned long) );
+
+	if (ok)
+		printf("ok...");
+	else
+		printf("failed.\n\r");
+
+	// 继续监听
+	radio.startListening();
+
+	// 等待对方返回数据，超时时间 250ms
+	unsigned long started_waiting_at = __millis();
+
+	bool timeout = false;
+	while ( !radio.available() && !timeout ) {
+
+		//稍微延迟一下，等待radio.available()检测有效数据
+		__msleep(5);
+		if (__millis() - started_waiting_at > 200 )
+			timeout = true;
+	}
+
+	// 是否超时
+	if ( timeout ) {
+
+		printf("Failed, response timed out.\n\r");
+
+	} else {
+		// 读取返回信息，并打印出来
+		unsigned long got_time;
+		radio.read( &got_time, sizeof(unsigned long) );
+
+		printf("Got response %lu, round-trip delay: %lu\n\r",got_time,__millis()-got_time);
+	}
+
+	//延迟一会儿
+	sleep(1);
+}
+
+int main(int argc, char** argv) {
+	setup();
+
+	while(1)
+		loop();
+
+	return 0;
+}

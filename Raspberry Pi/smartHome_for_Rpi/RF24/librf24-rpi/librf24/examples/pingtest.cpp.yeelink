@@ -1,0 +1,198 @@
+#include <stdio.h>
+#include <cstdlib>
+#include <iostream>
+#include <time.h>
+
+#include "../RF24.h"
+
+RF24 radio("/dev/spidev0.0", 8000000 , 8); 
+
+const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
+
+#define  BUFSZ  14
+char Sensor_Rx_Buf[BUFSZ] = {0};
+//char Sensor_Rx_Buf[BUFSZ] = {35,32,49,68,89,73,32};
+
+//Just using in debugging
+/*void ch_dat(void)
+{
+	srand(time(NULL));	
+	Sensor_Rx_Buf[0] = 20 + rand() % 20;
+	Sensor_Rx_Buf[1] = 30 + rand() % 40;
+	Sensor_Rx_Buf[2] = 35 + rand() % 45;
+}
+*/
+void setup(void) 
+{
+	radio.begin();
+	radio.enableDynamicPayloads();
+	radio.setDataRate(RF24_1MBPS);
+	radio.setPALevel(RF24_PA_HIGH);
+	radio.setChannel(110);
+	radio.setCRCLength(RF24_CRC_16);
+	radio.openWritingPipe(pipes[0]);
+	radio.openReadingPipe(1,pipes[1]);
+	radio.startListening();
+	radio.printDetails();
+}
+
+static void w_dat2file(FILE *fp, const char dat_i, const char dat_d)
+{
+	unsigned int i;
+	static const char headBuf[] = {'{','"','v','a','l','u','e','"',':'};
+	static const char midBuf[] = {'.'};
+	static const char tailBuf[] = {'}'};
+
+	for(i = 0; i < sizeof(headBuf); i++){  //write yeelink formart head
+		fprintf(fp, "%c", headBuf[i]);
+	}
+	fprintf(fp, "%d", dat_i);          //write one sensor data to file
+	fprintf(fp, "%c", midBuf[0]);      //write a dot
+	fprintf(fp, "%d", dat_d);          //write one sensor data to file
+	fprintf(fp, "%c", tailBuf[0]);     //write yeelink formart tail
+
+	fclose(fp);
+}
+
+static void w_dat2file_whead(FILE *fp)
+{
+	unsigned int i;
+	static const char headBuf[] = {'{','"','v','a','l','u','e','"',':'};
+
+	for(i = 0; i < sizeof(headBuf); i++){  //write yeelink formart head
+		fprintf(fp, "%c", headBuf[i]);
+	}
+}
+
+static void w_dat2file_wtail(FILE *fp)
+{
+	static const char tailBuf[] = {'}'};
+
+	fprintf(fp, "%c", tailBuf[0]);     //write yeelink formart tail
+
+	fclose(fp);
+}
+
+static void w_dat2file_wdat(FILE *fp, const char dat_i, const char dat_d)
+{
+	static const char midBuf[] = {'.'};
+
+	fprintf(fp, "%d", dat_i);          //write one sensor data to file
+	fprintf(fp, "%c", midBuf[0]);      //write a dot
+	fprintf(fp, "%d", dat_d);          //write one sensor data to file
+}
+
+static void w_sensorDat2files(void)
+{
+	FILE *fp_s0 = NULL;
+	FILE *fp_s1 = NULL;
+	FILE *fp_s2 = NULL;
+	FILE *fp_s3 = NULL;
+	FILE *fp_s4 = NULL;
+	FILE *fp_s5 = NULL;
+	FILE *fp_s6 = NULL;
+	FILE *fp_s7 = NULL;
+	FILE *fp_s8 = NULL;
+	
+	printf("--------Starting write data to file---------->\n");
+
+	fp_s0 = fopen("./sensorDat/humi.txt", "w");
+	if(fp_s0 == NULL){
+		perror("open ./sensorDat/humi.txt failed !");
+	}
+	w_dat2file(fp_s0, Sensor_Rx_Buf[1], 0);
+	
+	fp_s1 = fopen("./sensorDat/temp.txt", "w");
+	if(fp_s1 == NULL){
+		perror("open ./sensorDat/temp.txt failed !");
+	}
+	w_dat2file(fp_s1, Sensor_Rx_Buf[2], 0);
+	
+	fp_s2 = fopen("./sensorDat/illum.txt", "w");
+	if(fp_s2 == NULL){
+		perror("open ./sensorDat/illum.txt failed !");
+	}
+	w_dat2file(fp_s2, Sensor_Rx_Buf[3], 0);
+	
+	fp_s3 = fopen("./sensorDat/gas.txt", "w");
+	if(fp_s3 == NULL){
+		perror("open ./sensorDat/gas.txt failed !");
+	}
+	w_dat2file(fp_s3, Sensor_Rx_Buf[4], 0);
+	
+	fp_s4 = fopen("./sensorDat/rfid.txt", "w");
+	if(fp_s4 == NULL){
+		perror("open ./sensorDat/rfid.txt failed !");
+	}
+	w_dat2file(fp_s4, Sensor_Rx_Buf[5], 0);
+	
+	fp_s5 = fopen("./sensorDat/pir.txt", "w");
+	if(fp_s5 == NULL){
+		perror("open ./sensorDat/pir.txt failed !");
+	}
+	w_dat2file(fp_s5, Sensor_Rx_Buf[6], 0);
+	
+	fp_s6 = fopen("./sensorDat/airPressure.txt", "w");
+	if(fp_s6 == NULL){
+		perror("open ./sensorDat/airPressure.txt failed !");
+	}
+#if 1
+	int tmp0 = 256 * Sensor_Rx_Buf[7] + Sensor_Rx_Buf[8];
+	w_dat2file_whead(fp_s6);
+	w_dat2file_wdat(fp_s6, tmp0, 0);
+	w_dat2file_wtail(fp_s6);
+#endif
+
+	fp_s7 = fopen("./sensorDat/altitude.txt", "w");
+	if(fp_s5 == NULL){
+		perror("open ./sensorDat/altitude.txt failed !");
+	}
+	int tmp1 = 256 * Sensor_Rx_Buf[9] + Sensor_Rx_Buf[10];
+	w_dat2file_whead(fp_s7);
+	w_dat2file_wdat(fp_s7, tmp1, Sensor_Rx_Buf[11]);
+	w_dat2file_wtail(fp_s7);
+
+	fp_s8 = fopen("./sensorDat/weather.txt", "w");
+	if(fp_s8 == NULL){
+		perror("open ./sensorDat/weather.txt failed !");
+	}
+	w_dat2file(fp_s8, Sensor_Rx_Buf[12], 0);
+	
+	printf("Stop write data to file !\n");
+}
+
+void loop(void) 
+{
+	int i;
+	//radio.stopListening();
+	bool done = false;
+
+	if(radio.available()){
+		printf("Debug radio.available\n");
+		while(!done){
+			done = radio.read(Sensor_Rx_Buf, BUFSZ);	
+			while(!((Sensor_Rx_Buf[0] == 0xfc) && (Sensor_Rx_Buf[13] == 0xfd)));
+			printf("Sensor_Rx_Buf : ");	
+			for(i = 0; i < BUFSZ; i++){
+				printf("%02d ", Sensor_Rx_Buf[i]);	
+			}
+			printf("\n");
+			w_sensorDat2files();
+			printf("Start update to yeelink ------------>\n");
+			system("./yeelink/updateAll2yeelink.sh");
+			printf("----------------Update to yeelink success !\n\n");
+			sleep(10);
+		}	
+	}
+}
+
+int main(int argc, char * argv[]) 
+{
+	setup();
+
+	while(1){
+		loop();
+	}
+
+	return 0;
+}
