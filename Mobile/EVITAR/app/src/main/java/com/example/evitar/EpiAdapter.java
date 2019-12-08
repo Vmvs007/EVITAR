@@ -1,6 +1,7 @@
 package com.example.evitar;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
         TextView dataValEpi = viewHolder.dataValEpi;
         TextView idColaborador = viewHolder.idColaborador;
 
-        idEpi.setText(String.valueOf(epi.getId()));
+        idEpi.setText(String.valueOf(epi.getIdEPI()));
         nomeEpi.setText(epi.getNomeEPI());
         dataRegEpi.setText(epi.getDataRegistoEPI());
         dataValEpi.setText(epi.getDataValidadeEPI());
@@ -82,7 +83,7 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
         }
 
         public void bind(final Epi epi, final OnItemClickListener listener) {
-            idEpi.setText(String.valueOf(epi.getId()));
+            idEpi.setText(String.valueOf(epi.getIdEPI()));
             nomeEpi.setText(epi.getNomeEPI());
             dataRegEpi.setText(epi.getDataRegistoEPI());
             dataValEpi.setText(epi.getDataValidadeEPI());

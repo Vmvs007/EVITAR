@@ -1,27 +1,26 @@
 package com.example.evitar;
 
 public class Epi {
-    private int id;
+    private int idEPI;
     private String nomeEPI;
     private String dataRegistoEPI;
     private String dataValidadeEPI;
     private int idColaborador;
-    private int idColaboradorForeignKey;
 
-    public Epi(int id, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
-        this.id = id;
+    public Epi(int idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
+        this.idEPI = idEPI;
         this.nomeEPI = nomeEPI;
         this.dataRegistoEPI = dataRegistoEPI;
         this.dataValidadeEPI = dataValidadeEPI;
         this.idColaborador = idColaborador;
     }
 
-    public int getId() {
-        return id;
+    public int getIdEPI() {
+        return idEPI;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdEPI(int id) {
+        this.idEPI = id;
     }
 
     public String getNomeEPI() {

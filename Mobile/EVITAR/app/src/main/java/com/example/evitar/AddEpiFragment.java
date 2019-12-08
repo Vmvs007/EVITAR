@@ -1,18 +1,31 @@
 package com.example.evitar;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class SettingsFragment extends Fragment {
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class AddEpiFragment extends Fragment {
+    SharedPreferences mUser;
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -21,15 +34,34 @@ public class SettingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private RecyclerView mRecyclerView;
+    private EpiAdapter mAdapter;
+
     private Context mContext;
+    private List<Epi> epis;
 
-    Button epiButton;
-    Switch switchNotif;
+    private View mContentView;
 
-    private SettingsFragment.OnFragmentInteractionListener mListener;
 
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
+
+
+    private AddEpiFragment.OnFragmentInteractionListener mListener;
+
+    public AddEpiFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Fragment1.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static AddEpiFragment newInstance(String param1, String param2) {
+        AddEpiFragment fragment = new AddEpiFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -46,6 +78,9 @@ public class SettingsFragment extends Fragment {
         }
         mContext=getActivity();
 
+
+
+
     }
 
     @Override
@@ -53,47 +88,31 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View mContentView = inflater.inflate(R.layout.settings, container, false);
+        mContentView = inflater.inflate(R.layout.add_epi_layout, container, false);
+        mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
 
-        epiButton=(Button) mContentView.findViewById(R.id.epibutton);
-        switchNotif=(Switch) mContentView.findViewById(R.id.switch1);
 
-        epiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new EpiFragment())
-                        .commit();
-            }
-        });
+        TextView idColab= (TextView) mContentView.findViewById(R.id.textView34);
 
-        switchNotif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(switchNotif.isChecked()){
-                    Toast.makeText(mContext, "ON!!!!", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(mContext, "OFF!!!!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        idColab.setText(String.valueOf(mUser.getInt("user_id", 0)));
+
 
         return mContentView;
     }
 
+
+
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String uri) {
+    public void onButtonPressed(String u) {
         if (mListener != null) {
-            mListener.onButtonclick(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof AddEpiFragment.OnFragmentInteractionListener) {
+            mListener = (AddEpiFragment.OnFragmentInteractionListener) context;
         } else {/*
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");*/
@@ -106,7 +125,9 @@ public class SettingsFragment extends Fragment {
         mListener = null;
     }
     public interface OnFragmentInteractionListener {
-        void onButtonclick(String notif);
     }
+
+
+
 
 }
