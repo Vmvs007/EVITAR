@@ -84,7 +84,6 @@ namespace EvitarBackEnd.Controllers
                     while (dr.Read())
                     {
                         x = dr.GetInt32(0);
-                        Console.WriteLine("yooooooooooooooooooooooo " + x.ToString());
                     }
                 }
 
