@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.EpiFolder;
 
 public class Epi {
     private int idEPI;

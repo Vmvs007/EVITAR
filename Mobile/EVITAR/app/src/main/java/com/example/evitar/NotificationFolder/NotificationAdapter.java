@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.NotificationFolder;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.evitar.R;
 
 import java.util.List;
 
@@ -47,11 +49,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         Notification notification = mNotif.get(position);
 
         TextView date = viewHolder.dateTextView;
-        date.setText(notification.getDate());
+        date.setText(notification.getDataHora());
         TextView title = viewHolder.titleTextView;
-        title.setText(notification.getTitle());
+        title.setText(notification.getTypeMov());
         TextView description = viewHolder.descriptionTextView;
-        description.setText(notification.getDescription());
+        description.setText(String.valueOf(notification.getCheck()));
 
 
         viewHolder.bind(mNotif.get(position), listener);
@@ -73,9 +75,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
 
         public void bind(final Notification notif, final OnItemClickListener listener) {
-            dateTextView.setText(notif.getDate());
-            titleTextView.setText(notif.getTitle());
-            descriptionTextView.setText(notif.getDescription());
+            dateTextView.setText(notif.getDataHora());
+            titleTextView.setText(notif.getTypeMov());
+            descriptionTextView.setText(String.valueOf(notif.getCheck()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

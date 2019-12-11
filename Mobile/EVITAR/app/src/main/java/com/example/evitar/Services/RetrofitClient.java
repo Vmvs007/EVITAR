@@ -1,9 +1,6 @@
-package com.example.evitar;
-
-import android.util.Log;
+package com.example.evitar.Services;
 
 import java.security.KeyManagementException;
-import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
@@ -12,7 +9,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
@@ -20,7 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL="https://10.0.2.2:5001/";
+    private static final String BASE_URL="https://evitar.azurewebsites.net/";           //"https://10.0.2.2:5001/";
     private static RetrofitClient mInstance;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private Retrofit retrofit;

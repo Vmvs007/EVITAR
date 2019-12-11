@@ -1,21 +1,23 @@
-package com.example.evitar;
+package com.example.evitar.EpiFolder;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.evitar.R;
+import com.example.evitar.Services.RetrofitClient;
 
 import java.util.List;
 
@@ -34,13 +36,11 @@ public class AddEpiFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private RecyclerView mRecyclerView;
-    private EpiAdapter mAdapter;
-
     private Context mContext;
-    private List<Epi> epis;
 
     private View mContentView;
+
+    private ProgressBar pbar;
 
 
 
@@ -92,12 +92,57 @@ public class AddEpiFragment extends Fragment {
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
 
 
+        pbar=mContentView.findViewById(R.id.progressBar);
         TextView idColab= (TextView) mContentView.findViewById(R.id.textView34);
+        Button addButton= (Button) mContentView.findViewById(R.id.adicionarbutton);
+        EditText edIdEpi = (EditText) mContentView.findViewById(R.id.editText);
+        EditText edNomeEpi = (EditText) mContentView.findViewById(R.id.editText2);
+        EditText edDataReg = (EditText) mContentView.findViewById(R.id.editText3);
+        EditText edDataVal = (EditText) mContentView.findViewById(R.id.editText4);
 
         idColab.setText(String.valueOf(mUser.getInt("user_id", 0)));
 
+        final Epi epi=new Epi(edIdEpi.getId(), edNomeEpi.getText().toString(),edDataReg.getText().toString(), edDataVal.getText().toString(), mUser.getInt("user_id", 0));
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                pbar.setVisibility(View.VISIBLE);
+                addEpi(epi);
+            }
+        });
+
 
         return mContentView;
+    }
+
+    public void addEpi(Epi epi){
+        Call<Epi> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .addEpi("Bearer "+mUser.getString("token", ""), epi);
+
+        call.enqueue(new Callback<Epi>() {
+            @Override
+            public void onResponse(Call<Epi> call, Response<Epi> response) {
+                Log.d("cc", response.toString());
+                if(response.code()==200){
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new EpiFragment())
+                            .commit();
+                    pbar.setVisibility(View.GONE);
+                }else{
+                    pbar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Epi> call, Throwable t) {
+                pbar.setVisibility(View.GONE);
+            }
+        });
+
     }
 
 

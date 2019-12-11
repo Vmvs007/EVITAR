@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.NotificationFolder;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,11 +13,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.evitar.R;
+
 public class NotificationDialog extends AppCompatDialogFragment {
 
     private ExampleDialogListener listener;
-    TextView data, tipo, texto;
-    Notification notif;
+    private TextView data, tipo, texto;
+    private Notification notif;
 
     public NotificationDialog(Notification notif) {
         this.notif = notif;
@@ -34,9 +36,9 @@ public class NotificationDialog extends AppCompatDialogFragment {
         tipo=(TextView) view.findViewById(R.id.textView12);
         texto=(TextView) view.findViewById(R.id.textView13);
 
-        data.setText(notif.getDate());
-        tipo.setText(notif.getTitle());
-        texto.setText(notif.getDescription());
+        data.setText(notif.getDataHora());
+        tipo.setText(notif.getTypeMov());
+        texto.setText(String.valueOf(notif.getCheck()));
 
 
         builder.setView(view)

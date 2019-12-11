@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.LoginFolder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.example.evitar.MenuActivity;
+import com.example.evitar.R;
+import com.example.evitar.Services.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,14 +82,20 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     pbar.setVisibility(View.GONE);
                 }else{
+                    pbar.setVisibility(View.GONE);
                     Toast.makeText(LoginActivity.this, "Login Wrong!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                pbar.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "Login Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 }

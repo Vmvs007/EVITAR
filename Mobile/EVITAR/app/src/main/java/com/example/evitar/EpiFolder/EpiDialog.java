@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.EpiFolder;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,11 +11,14 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.Fragment;
+
+import com.example.evitar.R;
 
 public class EpiDialog extends AppCompatDialogFragment {
 
     private EpiDialog.ExampleDialogListener listener;
-    Epi epi;
+    private Epi epi;
 
     public EpiDialog(Epi epi) {
         this.epi = epi;
@@ -30,14 +33,18 @@ public class EpiDialog extends AppCompatDialogFragment {
 
 
         builder.setView(view)
-                .setNegativeButton("Editar", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
                 })
-                .setPositiveButton("Remover", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Editar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, new EditEpiFragment())
+                                .commit();
                     }
                 });
 

@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.NotificationFolder;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,10 +12,12 @@ import android.widget.Button;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.evitar.R;
+
 public class NotificationDetailsDialog extends AppCompatDialogFragment {
 
     private ExampleDialogListener listener;
-    Notification notif;
+    private Notification notif;
 
     public NotificationDetailsDialog(Notification notif) {
         this.notif = notif;

@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.LoginFolder;
 
 public class User {
     private int id;

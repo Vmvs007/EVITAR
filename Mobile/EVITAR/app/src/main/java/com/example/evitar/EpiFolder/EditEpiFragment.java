@@ -1,0 +1,183 @@
+package com.example.evitar.EpiFolder;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+
+import com.example.evitar.R;
+import com.example.evitar.Services.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class EditEpiFragment extends Fragment {
+    SharedPreferences mUser;
+
+
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private Context mContext;
+
+    private View mContentView;
+
+    private ProgressBar pbar;
+
+    private Epi epi;
+
+
+
+
+    private EditEpiFragment.OnFragmentInteractionListener mListener;
+
+    public EditEpiFragment() {
+        // Required empty public constructor
+    }
+
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Fragment1.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static EditEpiFragment newInstance(String param1, String param2) {
+        EditEpiFragment fragment = new EditEpiFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+        mContext=getActivity();
+
+
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        mContentView = inflater.inflate(R.layout.add_epi_layout, container, false);
+        mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
+
+
+        pbar=mContentView.findViewById(R.id.progressBar);
+        TextView idColab= (TextView) mContentView.findViewById(R.id.textView34);
+        Button addButton= (Button) mContentView.findViewById(R.id.adicionarbutton);
+        TextView edIdEpi = (TextView) mContentView.findViewById(R.id.idepi);
+        TextView edNomeEpi = (TextView) mContentView.findViewById(R.id.nomeepi);
+        TextView edDataReg = (TextView) mContentView.findViewById(R.id.dataregisto);
+        EditText edDataVal = (EditText) mContentView.findViewById(R.id.editText4);
+
+        edIdEpi.setText(String.valueOf(epi.getIdEPI()));
+        edNomeEpi.setText(epi.getNomeEPI());
+        edDataReg.setText(epi.getDataRegistoEPI());
+        edDataVal.setText(epi.getDataValidadeEPI());
+
+        idColab.setText(String.valueOf(mUser.getInt("user_id", 0)));
+
+        final Epi epiEdit=new Epi(epi.getIdEPI(), epi.getDataRegistoEPI(), epi.getDataRegistoEPI(), epi.getDataValidadeEPI(), mUser.getInt("user_id", 0));
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                pbar.setVisibility(View.VISIBLE);
+                editEpi(epiEdit);
+            }
+        });
+
+
+        return mContentView;
+    }
+
+    public void editEpi(Epi epiEdit){
+        Call<Epi> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .editEpi("Bearer "+mUser.getString("token", ""), epiEdit.getIdEPI() ,epiEdit);
+
+        call.enqueue(new Callback<Epi>() {
+            @Override
+            public void onResponse(Call<Epi> call, Response<Epi> response) {
+                Log.d("cc", response.toString());
+                if(response.code()==200){
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new EpiFragment())
+                            .commit();
+                    pbar.setVisibility(View.GONE);
+                }else{
+                    pbar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Epi> call, Throwable t) {
+                pbar.setVisibility(View.GONE);
+            }
+        });
+
+    }
+
+
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(String u) {
+        if (mListener != null) {
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof EditEpiFragment.OnFragmentInteractionListener) {
+            mListener = (EditEpiFragment.OnFragmentInteractionListener) context;
+        } else {/*
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");*/
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+    public interface OnFragmentInteractionListener {
+    }
+
+
+
+
+}

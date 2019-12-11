@@ -1,7 +1,6 @@
 package com.example.evitar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.evitar.EpiFolder.EpiFragment;
 
 public class SettingsFragment extends Fragment {
 

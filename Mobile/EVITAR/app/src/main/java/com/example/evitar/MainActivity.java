@@ -53,12 +53,17 @@ public class MainActivity extends AppCompatActivity {
                 skip.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                         startActivity(intent);
                     }
                 });
             }
         },SPLASH_TIME_OUT);
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 }
