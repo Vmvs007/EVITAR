@@ -19,19 +19,20 @@ import React, { Component } from "react";
 import { Grid, Row, Col, Table } from "react-bootstrap";
 
 import Card from "components/Card/Card.jsx";
+import { StatsCard } from "components/StatsCard/StatsCard.jsx";
 import { thArray, tdArray } from "variables/Variables.jsx";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 class TableList extends Component {
   state = {
-    ola:"coisaBoa",
+    ola: "coisaBoa",
     startDate: new Date()
   };
- 
+
   handleChange = date => {
     this.setState({
       startDate: date,
-      ola:date.toString()
+      ola: date.toString()
     });
   };
   render() {
@@ -39,16 +40,34 @@ class TableList extends Component {
       <div className="content">
         <Grid fluid>
           <Row>
-            <Col md={12}>
+            <Col md={4} sm={4}>
               <Card
                 title="Archive"
                 content={
                   <DatePicker
-                  dateFormat="yyyy/MM/dd"
-                  selected={this.state.startDate}
-                  onChange={this.handleChange}
-                />
-                }/> 
+                    dateFormat="yyyy/MM/dd"
+                    selected={this.state.startDate}
+                    onChange={this.handleChange}
+                  />
+                } />
+            </Col>
+            <Col lg={4} sm={4}>
+              <StatsCard
+                bigIcon={<i className="pe-7s-id text-warning" />}
+                statsText="Employee Attendance"
+                statsValue="5.252"
+                statsIcon={<i className="fa fa-clock-o" />}
+                statsIconText="Day"
+              />
+            </Col>
+            <Col lg={4} sm={4}>
+              <StatsCard
+                bigIcon={<i className="pe-7s-global text-danger" />}
+                statsText="EPI Warnings"
+                statsValue="420"
+                statsIcon={<i className="fa fa-clock-o" />}
+                statsIconText="Day"
+              />
             </Col>
           </Row>
           <Row>
@@ -60,33 +79,33 @@ class TableList extends Component {
                 ctTableResponsive
                 content={
                   <div className="tabela">
-                    
-                  <Table striped hover>
-                    <thead>
-                      <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
+
+                    <Table striped hover>
+                      <thead>
+                        <tr>
+                          {thArray.map((prop, key) => {
+                            return <th key={key}>{prop}</th>;
+                          })}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {tdArray.map((prop, key) => {
+                          return (
+                            <tr key={key}>
+                              {prop.map((prop, key) => {
+                                return <td key={key}>{prop}</td>;
+                              })}
+                            </tr>
+                          );
                         })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tdArray.map((prop, key) => {
-                        return (
-                          <tr key={key}>
-                            {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
-                            })}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
+                      </tbody>
+                    </Table>
                   </div>
                 }
               />
             </Col>
 
-            
+
           </Row>
         </Grid>
       </div>

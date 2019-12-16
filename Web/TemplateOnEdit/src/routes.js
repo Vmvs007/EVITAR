@@ -28,6 +28,8 @@ import EmployeeManagement from "views/EmployeeManagement.jsx";
 import Upgrade from "views/Upgrade.jsx";
 import Archive from "views/Archive.jsx";
 import Home from "views/Home.jsx";
+import EpiDetails from "views/EpiDetails.jsx";
+import JobDetails from "views/JobDetails.jsx";
 const dashboardRoutes = [
   
   {
@@ -55,12 +57,28 @@ const dashboardRoutes = [
     users:["1","2","4"]
   },
   {
+    path:"/jobs/:id",
+    name:"Job Details",
+    component:JobDetails,
+    layout: "/admin",
+    users:["1","2"],
+    invisible:true
+  },
+  {
     path:"/jobs",
     name:"Job Management",
     icon:"pe-7s-portfolio",
     component: JobManagement,
     layout: "/admin",
     users:["1","2"]
+  },
+  {
+    path:"/employees/:id",
+    name:"Employee Details",
+    component:EmployeeDetails,
+    layout: "/admin",
+    users:["1","2"],
+    invisible:true
   },
   {
     path:"/employees",
@@ -71,6 +89,14 @@ const dashboardRoutes = [
     users:["1","2"]
   },
   {
+    path:"/epis/:id",
+    name:"EPI Details",
+    component:EpiDetails,
+    layout: "/admin",
+    users:["1","3"],
+    invisible:true
+  },
+  {
     path:"/epis",
     name:"EPI Management",
     icon:"pe-7s-global",
@@ -78,6 +104,7 @@ const dashboardRoutes = [
     layout: "/admin",
     users:["1","3"]
   },
+  
   {
     path: "/user",
     name: "User Profile",

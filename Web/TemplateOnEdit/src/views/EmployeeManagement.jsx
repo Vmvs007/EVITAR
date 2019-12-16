@@ -17,12 +17,36 @@
 */
 import React, { Component } from "react";
 import { Grid, Row, Col, Table } from "react-bootstrap";
-import { employees } from "variables/Variables.jsx";
-
+//import { employees } from "variables/Variables.jsx";
+import AuthService from "../components/Authentication/AuthService.js";
 import Card from "components/Card/Card.jsx";
+import {Link } from "react-router-dom";
 class TableList extends Component {
-  thArray=["Nome","ID","Job","Details"];
+  constructor(props) {
+    super(props);
+    this.state={
+      thArray:["Nome","ID","Job","Details"],
+      data:[],
+      isLoading:false
+    }
+    
+  }
+  componentDidMount() {
+    this.setState({ isLoading: true });
+    const Auth = new AuthService();
+    Auth.fetch("https://evitar.azurewebsites.net/api/Colaborador", {
+    method: 'GET'
+}).then(result => this.setState({
+  data: result,
+  isLoading: false
+})).catch(error => alert('Error! ' + error.message));
+
+}
+  
   render() {
+    if (this.state.isLoading) {
+      return (<div className="content"><i class="fa fa-spinner fa-spin fa-3x"></i><p>isLoading...</p></div>)
+    }
     return (
       <div className="content">
       <Grid fluid>
@@ -37,19 +61,20 @@ class TableList extends Component {
                 <Table striped hover>
                   <thead>
                     <tr>
-                      {this.thArray.map((prop, key) => {
+                      {this.state.thArray.map((prop, key) => {
                         return <th key={key}>{prop}</th>;
                       })}
                     </tr>
                   </thead>
                   <tbody>
-                    {employees.map((prop, key) => {
+                    {
+                    this.state.data.map(element => {
                       return (
-                        <tr key={key}>
-                    <td>{prop[0]}</td>
-                    <td>{prop[1]}</td>
-                    <td>{prop[2]}</td>
-                    <td><a href={"/employee/"+prop[1]}>Details</a></td>
+                        <tr>
+                    <td>{element["idColaborador"]}</td>
+                    <td>{element["nomeColaborador"]}</td>
+                    <td>{element["idCargo"]}</td>
+                    <td><a href={"/employee/"+element["idColaborador"]}>Details</a></td>
                         </tr>
                       );
                     })}

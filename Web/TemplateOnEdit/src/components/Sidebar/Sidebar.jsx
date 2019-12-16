@@ -71,7 +71,6 @@ class Sidebar extends Component {
             {this.state.width <= 991 ? <AdminNavbarLinks /> : null}
             {this.props.routes.map((prop, key) => {
               if(Auth.roleInUsers(prop.users)){
-              
               if(prop.invisible) return null;
               if (!prop.redirect)
                 return (

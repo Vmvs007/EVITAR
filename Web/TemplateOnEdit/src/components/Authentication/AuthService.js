@@ -4,7 +4,7 @@ require('isomorphic-fetch');
 export default class AuthService {
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'https://25.63.33.7:5001' // API server domain
+        this.domain = domain || 'https://172.20.128.233:5001' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
@@ -13,7 +13,7 @@ export default class AuthService {
     login(username, password) {
         // Get a token from api server using the fetch api
         
-        return this.fetch("https://192.168.1.66:5001/users/authenticate", {
+        return this.fetch("https://172.20.128.233:5001/users/authenticate", {
             method: 'POST',
             body: JSON.stringify({
                 "username":username,
@@ -28,7 +28,9 @@ export default class AuthService {
 
     loggedIn() {
         // Checks if there is a saved token and it's still valid
+        
         const token = this.getToken() // GEtting token from localstorage
+        
         return !!token && !this.isTokenExpired(token) // handwaiving here
     }
 
@@ -36,10 +38,12 @@ export default class AuthService {
         try {
             const decoded = decode(token);
             if (decoded.exp < Date.now() / 1000) { // Checking if token is expired. N
+                
                 return true;
             }
-            else
-                return false;
+            else{
+
+                return false;}
         }
         catch (err) {
             return false;
@@ -57,6 +61,7 @@ export default class AuthService {
     }
 
     getToken() {
+        
         // Retrieves the user token from localStorage
         return localStorage.getItem('id_token')
     }
@@ -64,6 +69,9 @@ export default class AuthService {
     logout() {
         // Clear user token and profile data from localStorage
         localStorage.removeItem('id_token');
+        localStorage.removeItem('idUser');
+        localStorage.removeItem('User');
+        window.location.reload();
     }
 
     getProfile() {
@@ -93,7 +101,7 @@ export default class AuthService {
         if (this.loggedIn()) {
             headers['Authorization'] = 'Bearer ' + this.getToken()
         }
-
+            
         return fetch(url, {
             headers,
             ...options

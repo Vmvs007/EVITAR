@@ -16,9 +16,25 @@
 
 */
 import React, { Component } from "react";
+import {NavLink } from "react-router-dom";
 import { NavItem, Nav, NavDropdown, MenuItem } from "react-bootstrap";
-
+import AuthService from "../Authentication/AuthService.js";
 class AdminNavbarLinks extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: window.innerWidth
+    };
+  }
+  Auth=new AuthService();
+  onClickHandler(h) {
+    this.Auth.logout()
+  }
+  sourceSelected = ( ) => {
+    
+    this.Auth.logout()  
+  }
+  
   render() {
     const notification = (
       <div>
@@ -56,13 +72,9 @@ class AdminNavbarLinks extends Component {
             title="Account"
             id="basic-nav-dropdown-right"
           >
-            <MenuItem eventKey={2.1}>Action</MenuItem>
-            <MenuItem eventKey={2.2}>Another action</MenuItem>
-            <MenuItem eventKey={2.3}>Something</MenuItem>
-            <MenuItem eventKey={2.4}>Another action</MenuItem>
-            <MenuItem eventKey={2.5}>Something</MenuItem>
+            <MenuItem  ><NavLink to="/admin/user">Profile</NavLink></MenuItem>
             <MenuItem divider />
-            <MenuItem eventKey={2.5}>Separated link</MenuItem>
+            <MenuItem onClick={this.sourceSelected.bind()}>Logout</MenuItem>
           </NavDropdown>
         </Nav>
       </div>

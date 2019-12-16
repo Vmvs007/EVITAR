@@ -65,58 +65,63 @@ class Dashboard extends Component {
                 statsIconText="Day"
               />
             </Col>
-            
+
           </Row>
-          
+
           <Row>
-          <Card 
-                
+            <Col md={12}>
+              <Card
+
                 title="Flow View"
                 ctTableFullWidth
                 ctTableResponsive
                 content={
-                  <div className="tabela">
-                  <Table hover  >
 
-                    <thead>
-                      <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tdArray.map((prop, key) => {
-                        return (
-                          <tr key={key} id={key}>
-                            {prop.map((props, keys) => {
-                              if(keys!==6){
-                              if(props==='Alert'){
-                                return <td title={prop[keys+1].map((propss)=>{
-                                  return propss+"\n"
-                                })
-                                } style={{backgroundColor:"red"}} key={keys}  id={keys}>{props} </td>;
-                              }
-                              else if(props==='Check'){
-                              return <td style={{backgroundColor:"green"}} key={keys} id={keys}>
-                                {props}</td>;
-                                }else{
-                                  return <td key={keys} id={keys}> 
-                                {props}</td>;
+                  <div className="tabela">
+                    <Table hover  >
+
+                      <thead>
+                        <tr>
+                          {thArray.map((prop, key) => {
+                            return <th key={key}>{prop}</th>;
+                          })}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {tdArray.map((prop, key) => {
+                          return (
+                            <tr key={key} id={key}>
+                              {prop.map((props, keys) => {
+                                if (keys !== 6) {
+                                  if (props === 'Alert') {
+                                    return <td title={prop[keys + 1].map((propss) => {
+                                      return propss + "\n"
+                                    })
+                                    } style={{ backgroundColor: "red" }} key={keys} id={keys}>{props} </td>;
+                                  }
+                                  else if (props === 'Check') {
+                                    return <td style={{ backgroundColor: "green" }} key={keys} id={keys}>
+                                      {props}</td>;
+                                  } else {
+                                    return <td key={keys} id={keys}>
+                                      {props}</td>;
+                                  }
+
+                                } else {
+                                  return null;
                                 }
-                                
-                            }else{
-                              return null;
-                            }
-                            })}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
+                              })}
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </Table>
+
                   </div>
+
                 }
               />
+            </Col>
           </Row>
 
         </Grid>
