@@ -14,7 +14,12 @@ namespace EvitarBackEnd.Models
         public DateTime DataRegistoEPI {get;set;}
         public DateTime DataValidadeEPI {get;set;}
 
+
         public int valido{get;set;}
+
+        public int IdTipoEPI {get;set;}
+        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdTipoEPI")]
+        public TipoEPIModel IdTipoEPIForeignKey {get;set;}
         
         public int IdColaborador {get;set;}
         [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdColaborador")]
