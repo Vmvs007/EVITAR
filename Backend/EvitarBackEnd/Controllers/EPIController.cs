@@ -81,9 +81,10 @@ namespace EvitarBackEnd.Controllers
         {
             
             _context.EPIModels.Add(ePIModel);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return CreatedAtAction("GetEPIModel", new { id = ePIModel.IdEPI }, ePIModel);
+
         }
 
         // DELETE: api/EPI/5

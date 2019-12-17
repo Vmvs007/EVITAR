@@ -16,6 +16,7 @@ using EvitarBackEnd.Models.Users;
 using EvitarBackEnd.Controllers;
 using RestSharp;
 using System.Data.SqlClient;
+using System.Configuration;
 
 
 
@@ -28,91 +29,61 @@ namespace EvitarBackEnd.Controllers
     {
         private IUserService _userService;
         private IMapper _mapper;
-        private readonly AppSettings _appSettings;
+        //private readonly AppSettings _appSettings;
         private int x;
         public UsersController(
             IUserService userService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
+            // _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
-        {
-            var user = _userService.Authenticate(model.Username, model.Password);
+        {       
+                var user = _userService.Authenticate(model.Username, model.Password);
+                if (user == null)
+                    return BadRequest(new { message = "Username or password is incorrect" });
 
 
 
-            if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
-
-
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            // var cargo = new ColaboradorController().GetColaboradorModel(user.IdColaborador);
-            var client = new RestClient("http://localhost:5001");
-            var request = new RestRequest("api/Colaborador", Method.GET);
-            // request.AddUrlSegment("id", user.IdColaborador.ToString);
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes("saudadeeeeeeeeee");
+                string roleU = _userService.userRole(user.IdColaborador);
             
 
-            using (SqlConnection conn = new SqlConnection("server=DESKTOP-E6JG4C3;Database=EVITARDataBase;Trusted_Connection=true"))
-            {
-                string query = @"SELECT e.IdCargo
-                                     FROM ColaboradorModels e
-                                     where IdColaborador = " + user.IdColaborador + "";
-
-
-                //define the SqlCommand object
-                SqlCommand cmd = new SqlCommand(query, conn);
-
-                //open connection
-                conn.Open();
-
-                //execute the SQLCommand
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                Console.WriteLine(Environment.NewLine + "Retrieving data from database..." + Environment.NewLine);
-                Console.WriteLine("Retrieved records:");
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
+                    var tokenDescriptor = new SecurityTokenDescriptor
                     {
-                        x = dr.GetInt32(0);
-                    }
-                }
-
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, x.ToString())
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                    new Claim(ClaimTypes.Role, roleU.ToString())
+                        }),
+                        Expires = DateTime.UtcNow.AddDays(7),
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
 
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
+                    };
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    var tokenString = tokenHandler.WriteToken(token);
 
 
 
                 // return basic user info and authentication token
                 return Ok(new
-                {
-                    Id = user.Id,
-                    Username = user.Username,
-                    Token = tokenString
-                });
+                 {
+
+                        Id = user.Id,
+                        Username = user.Username,
+                        Token = tokenString
+                    });
+
             }
-        }
+        
+
+
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody]RegisterModel model)

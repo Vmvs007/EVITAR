@@ -10,6 +10,7 @@ namespace EvitarBackEnd.Services
 {
     public interface IUserService
     {
+        string userRole(int idColaborador);
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
         User GetById(int id);
@@ -25,6 +26,16 @@ namespace EvitarBackEnd.Services
         public UserService(EVITARContext context)
         {
             _context = context;
+        }
+
+
+        public string userRole(int idColaborador)
+        {
+            var DB =  _context.ColaboradorModels.ToList();
+            var roleT = (from x in DB where x.IdColaborador == idColaborador select x.IdCargo).Single();
+           
+
+            return roleT.ToString();
         }
 
         public User Authenticate(string username, string password)
@@ -94,8 +105,8 @@ namespace EvitarBackEnd.Services
                 user.Username = userParam.Username;
             }
 
-        
-                
+
+
 
             // update password if provided
             if (!string.IsNullOrWhiteSpace(password))
