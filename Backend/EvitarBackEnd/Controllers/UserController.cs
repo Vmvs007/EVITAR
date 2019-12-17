@@ -77,6 +77,7 @@ namespace EvitarBackEnd.Controllers
 
                         Id = user.Id,
                         Username = user.Username,
+                        IdColaborador = user.IdColaborador,
                         Token = tokenString
                     });
 

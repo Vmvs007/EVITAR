@@ -87,6 +87,45 @@ namespace EvitarBackEnd.Controllers
             return movimentoModel;
         }
 
+        
+        [Authorize] //Podem todos ver desde que estejam autenticados 
+        [Route("alert/{data}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MovimentoModelView>>> GetMovimentoModelAlert(DateTime data)
+        {
+           
+            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
+
+            if (movimentoModel == null)
+            {
+                return NotFound();
+            }
+        
+            var movimentoAlert = (from x in movimentoModel where x.Check == 0 && x.DataHora == data select x).ToList();
+
+            return movimentoAlert;
+        }
+
+         
+        [Authorize] //Podem todos ver desde que estejam autenticados 
+        [Route("Entradas/{data}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MovimentoModelView>>> GetMovimentoModelEntradas(DateTime data)
+        {
+           
+            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
+
+            if (movimentoModel == null)
+            {
+                return NotFound();
+            }
+        
+            var movimentoAlert = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date == data select x).ToList();
+
+            return movimentoAlert;
+        }
+
+
         // PUT: api/Movimento/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
