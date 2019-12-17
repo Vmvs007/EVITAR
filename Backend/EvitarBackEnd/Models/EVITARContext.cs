@@ -15,7 +15,7 @@ namespace EvitarBackEnd.Models
             builder.Entity<EPICargoModel>().HasKey(table => new
             {
                 table.IdCargo,
-                table.IdEPI
+                table.IdTipoEPI
             });
             builder.Entity<MovEPIModel>().HasKey(table => new
             {
@@ -38,6 +38,7 @@ namespace EvitarBackEnd.Models
         public DbSet<EPICargoModel> EPICargoModels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<MovEPIModel> MovEPIModels { get; set; }
+        public DbSet<TipoEPIModel> TipoEPIModels {get;set;}
 
         public DbSet<MovimentoModelView> MovimentoModelViews{get;set;}
 

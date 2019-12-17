@@ -4,14 +4,16 @@ using EvitarBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    partial class EVITARContextModelSnapshot : ModelSnapshot
+    [Migration("20191217152309_MigrationDataBase_v.4")]
+    partial class MigrationDataBase_v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,9 +153,6 @@ namespace EvitarBackEnd.Migrations
                     b.Property<int>("IdColaborador")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTipoEPI")
-                        .HasColumnType("int");
-
                     b.Property<string>("NomeEPI")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -161,8 +160,6 @@ namespace EvitarBackEnd.Migrations
                     b.HasKey("IdEPI");
 
                     b.HasIndex("IdColaborador");
-
-                    b.HasIndex("IdTipoEPI");
 
                     b.ToTable("EPIModels");
                 });
@@ -261,12 +258,6 @@ namespace EvitarBackEnd.Migrations
                     b.HasOne("EvitarBackEnd.Models.ColaboradorModel", "IdColaboradorForeignKey")
                         .WithMany()
                         .HasForeignKey("IdColaborador")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdTipoEPI")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
