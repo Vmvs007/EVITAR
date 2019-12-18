@@ -73,8 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 Log.d("cc", response.toString());
                 if(response.code()==200){
-                    User user = new User(response.body().getId(), response.body().getUsername(), response.body().getToken());
-                    mEditor.putInt("user_id", user.getId());
+                    User user = new User(response.body().getId(), response.body().getIdColaborador(), response.body().getUsername(), response.body().getToken());
+                    mEditor.putInt("user_id", user.getIdColaborador());
                     mEditor.putString("token", user.getToken());
                     mEditor.commit();
                     Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();

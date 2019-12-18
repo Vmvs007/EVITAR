@@ -11,15 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +43,10 @@ public class AddEpiFragment extends Fragment {
     private View mContentView;
 
     private ProgressBar pbar;
+
+    private EditText edNomeEpi;
+    private EditText edDataReg;
+    private EditText edDataVal;
 
 
 
@@ -93,20 +99,20 @@ public class AddEpiFragment extends Fragment {
 
 
         pbar=mContentView.findViewById(R.id.progressBar);
-        TextView idColab= (TextView) mContentView.findViewById(R.id.textView34);
         Button addButton= (Button) mContentView.findViewById(R.id.adicionarbutton);
-        EditText edIdEpi = (EditText) mContentView.findViewById(R.id.editText);
-        EditText edNomeEpi = (EditText) mContentView.findViewById(R.id.editText2);
-        EditText edDataReg = (EditText) mContentView.findViewById(R.id.editText3);
-        EditText edDataVal = (EditText) mContentView.findViewById(R.id.editText4);
-
-        idColab.setText(String.valueOf(mUser.getInt("user_id", 0)));
-
-        final Epi epi=new Epi(edIdEpi.getId(), edNomeEpi.getText().toString(),edDataReg.getText().toString(), edDataVal.getText().toString(), mUser.getInt("user_id", 0));
+        edNomeEpi = (EditText) mContentView.findViewById(R.id.editText2);
+        edDataReg = (EditText) mContentView.findViewById(R.id.editText3);
+        edDataVal = (EditText) mContentView.findViewById(R.id.editText4);
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                Date currentTime = Calendar.getInstance().getTime();
+                DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+                DateFormat dateFormat1 = new SimpleDateFormat("hh:mm:ss");
+                String strDate = dateFormat.format(currentTime)+"T"+dateFormat1.format(currentTime);
+                Log.d("cc", strDate);
+                EpiAdd epi=new EpiAdd(edNomeEpi.getText().toString(), strDate, edDataVal.getText().toString(), mUser.getInt("user_id", 0));
                 pbar.setVisibility(View.VISIBLE);
                 addEpi(epi);
             }
@@ -116,7 +122,7 @@ public class AddEpiFragment extends Fragment {
         return mContentView;
     }
 
-    public void addEpi(Epi epi){
+    public void addEpi(EpiAdd epi){
         Call<Epi> call = RetrofitClient
                 .getInstance()
                 .getApi()
@@ -126,7 +132,7 @@ public class AddEpiFragment extends Fragment {
             @Override
             public void onResponse(Call<Epi> call, Response<Epi> response) {
                 Log.d("cc", response.toString());
-                if(response.code()==200){
+                if(response.code()==201){
                     getFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, new EpiFragment())
@@ -139,6 +145,7 @@ public class AddEpiFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Epi> call, Throwable t) {
+                Log.d("cc", t.getMessage());
                 pbar.setVisibility(View.GONE);
             }
         });

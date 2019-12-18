@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.evitar.ArchiveFolder.ArchiveFragment;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiDialog;
 import com.example.evitar.EpiFolder.EpiFragment;
@@ -62,6 +63,8 @@ public class MenuActivity extends AppCompatActivity implements NotificationsFrag
         navigationView.addSpaceItem(new SpaceItem("Dashboard", R.drawable.ic_dashboard_white_24dp));
         navigationView.addSpaceItem(new SpaceItem("Archive", R.drawable.ic_archive_white_24dp));
         navigationView.addSpaceItem(new SpaceItem("Settings", R.drawable.ic_settings_white_24dp));
+
+        navigationView.showIconOnly();
 
 
 

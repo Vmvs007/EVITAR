@@ -1,6 +1,7 @@
 package com.example.evitar.Services;
 
 import com.example.evitar.EpiFolder.Epi;
+import com.example.evitar.EpiFolder.EpiAdd;
 import com.example.evitar.NotificationFolder.Notification;
 import com.example.evitar.LoginFolder.SignIn;
 import com.example.evitar.LoginFolder.User;
@@ -30,7 +31,7 @@ public interface Api {
     @POST("api/EPI")
     Call<Epi> addEpi(
             @Header("Authorization") String token,
-            @Body Epi epi
+            @Body EpiAdd epi
     );
 
     @PUT("api/EPI/{id}")
@@ -48,5 +49,10 @@ public interface Api {
            // @Path("id") int id
     );
 
+    @GET("api/Movimento/Entradas/{data}")
+    Call<List<Notification>> getMovimentosporDia(
+            @Header("Authorization") String token,
+            @Path("data") String data
+    );
 
 }

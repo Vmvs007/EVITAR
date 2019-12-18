@@ -34,15 +34,17 @@
                     android:text="Home"
                     android:textColor="@color/colorAccent"
                     android:textSize="30dp" />
+
             </LinearLayout>
 
-
         </com.google.android.material.appbar.AppBarLayout>
+
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
+            android:layout_height="541dp"></FrameLayout>
+
     </LinearLayout>
 
 
@@ -63,5 +65,7 @@
         app:space_item_icon_size="24dp"
         app:space_item_icon_only_size="24dp"
         app:space_item_text_size="5dp" />
+
+
 
 </RelativeLayout>

@@ -1,9 +1,10 @@
-package com.example.evitar;
+package com.example.evitar.ArchiveFolder;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-
 import com.example.evitar.NotificationFolder.Notification;
+import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DashboardFragment  extends Fragment{
+public class ArchiveDayFragment   extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -42,9 +43,9 @@ public class DashboardFragment  extends Fragment{
 
     SharedPreferences mUser;
 
-    private DashboardFragment.OnFragmentInteractionListener mListener;
+    private ArchiveDayFragment.OnFragmentInteractionListener mListener;
 
-    public DashboardFragment() {
+    public ArchiveDayFragment() {
         // Required empty public constructor
     }
 
@@ -57,8 +58,8 @@ public class DashboardFragment  extends Fragment{
      * @return A new instance of fragment Fragment1.
      */
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static ArchiveDayFragment newInstance(String param1, String param2) {
+        ArchiveDayFragment fragment = new ArchiveDayFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,7 +71,7 @@ public class DashboardFragment  extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getString("data");
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         mContext=getActivity();
@@ -82,10 +83,12 @@ public class DashboardFragment  extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        mContentView = inflater.inflate(R.layout.dashboard, container, false);
+        mContentView = inflater.inflate(R.layout.archive_day, container, false);
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
         pbar=mContentView.findViewById(R.id.progressBar);
         tableLayout=(TableLayout)mContentView.findViewById(R.id.tableLayout);
+        TextView data=(TextView) mContentView.findViewById(R.id.textView11);
+        data.setText(mParam1);
         pbar.setVisibility(View.VISIBLE);
         getNotificationsServer();
 
@@ -101,7 +104,7 @@ public class DashboardFragment  extends Fragment{
         Call<List<Notification>> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getNotifications("Bearer "+mUser.getString("token", ""));
+                .getMovimentosporDia("Bearer "+mUser.getString("token", ""), mParam1);
         call.enqueue(new Callback<List<Notification>>() {
             @Override
             public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
@@ -149,8 +152,8 @@ public class DashboardFragment  extends Fragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof DashboardFragment.OnFragmentInteractionListener) {
-            mListener = (DashboardFragment.OnFragmentInteractionListener) context;
+        if (context instanceof ArchiveDayFragment.OnFragmentInteractionListener) {
+            mListener = (ArchiveDayFragment.OnFragmentInteractionListener) context;
         } else {/*
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");*/
@@ -168,3 +171,4 @@ public class DashboardFragment  extends Fragment{
 
 
 }
+

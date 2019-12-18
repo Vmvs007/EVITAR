@@ -1,34 +1,19 @@
 package com.example.evitar.EpiFolder;
 
-public class Epi {
-    private int idEPI;
+public class EpiAdd {
     private String nomeEPI;
     private String dataRegistoEPI;
     private String dataValidadeEPI;
     private int idColaborador;
 
-    public Epi(int idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
-        this.idEPI = idEPI;
+
+    public EpiAdd(String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
         this.nomeEPI = nomeEPI;
         this.dataRegistoEPI = dataRegistoEPI;
         this.dataValidadeEPI = dataValidadeEPI;
         this.idColaborador = idColaborador;
     }
 
-    public Epi(String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
-        this.nomeEPI = nomeEPI;
-        this.dataRegistoEPI = dataRegistoEPI;
-        this.dataValidadeEPI = dataValidadeEPI;
-        this.idColaborador = idColaborador;
-    }
-
-    public int getIdEPI() {
-        return idEPI;
-    }
-
-    public void setIdEPI(int id) {
-        this.idEPI = id;
-    }
 
     public String getNomeEPI() {
         return nomeEPI;

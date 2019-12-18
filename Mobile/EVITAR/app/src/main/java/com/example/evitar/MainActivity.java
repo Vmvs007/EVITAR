@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.evitar.LoginFolder.LoginActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT=3000;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 skip.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                     }
                 });

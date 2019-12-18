@@ -2,17 +2,23 @@ package com.example.evitar.LoginFolder;
 
 public class User {
     private int id;
+    private int idColaborador;
     private String username;
     private String token;
 
-    public User(int id, String username, String token) {
+    public User(int id, int idColaborador, String username, String token) {
         this.id = id;
+        this.idColaborador = idColaborador;
         this.username = username;
         this.token = token;
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getIdColaborador() {
+        return idColaborador;
     }
 
     public String getUsername() {
@@ -25,6 +31,10 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setIdColaborador(int idColaborador) {
+        this.idColaborador = idColaborador;
     }
 
     public void setUsername(String username) {
