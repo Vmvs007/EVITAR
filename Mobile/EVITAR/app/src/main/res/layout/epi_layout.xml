@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/addbutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Adicionar EPI" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -24,6 +20,15 @@
         android:layout_gravity="center"
         android:theme="@style/ProgressTheme"
         android:visibility="gone" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/floating_action_button"
+    app:backgroundTint="@color/colorPrimaryDark"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right"
+    android:layout_margin="16dp"
+    app:srcCompat="@drawable/ic_add_black_24dp"/>
+
 
 
 </LinearLayout>

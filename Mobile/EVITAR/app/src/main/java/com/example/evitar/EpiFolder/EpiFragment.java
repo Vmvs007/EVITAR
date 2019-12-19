@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -96,11 +97,12 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
         pbar=mContentView.findViewById(R.id.progressBar);
         pbar.setVisibility(View.VISIBLE);
-        Button addButton=mContentView.findViewById(R.id.addbutton);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) mContentView.findViewById(R.id.floating_action_button);
 
-            public void onClick(View v) {
+        floatingActionButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
                 addEpi();
             }
         });

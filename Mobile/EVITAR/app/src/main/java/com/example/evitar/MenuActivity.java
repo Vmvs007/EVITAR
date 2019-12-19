@@ -105,7 +105,21 @@ public class MenuActivity extends AppCompatActivity implements NotificationsFrag
 
             @Override
             public void onItemReselected(int itemIndex, String itemName) {
-                Toast.makeText(MenuActivity.this, "You are already here!", Toast.LENGTH_SHORT).show();
+                switch (itemIndex){
+                    case 0:
+                        fragment=new HomeFragment();
+                        break;
+                    case 1:
+                        fragment=new DashboardFragment();
+                        break;
+                    case 2:
+                        fragment=new ArchiveFragment();
+                        break;
+                    case 3:
+                        fragment=new SettingsFragment();
+                        break;
+                }
+                setFragment();
             }
         });
 
