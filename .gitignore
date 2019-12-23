@@ -11,3 +11,33 @@ Raspberry Pi/smartHome_for_Rpi/RF24/librf24-rpi/librf24/examples/pingtest.cpp.ba
 Raspberry Pi/smartHome_for_Rpi/RF24/librf24-rpi/librf24/gpio.o
 Raspberry Pi/smartHome_for_Rpi/RF24/librf24-rpi/librf24/RF24.o
 Raspberry Pi/smartHome_for_Rpi/RF24/librf24-rpi/librf24/spi.o
+Backend/EvitarBackEnd/obj/Debug/netcoreapp3.0/EvitarBackEnd.dll
+Backend/EvitarBackEnd/obj/
+Backend/EvitarBackEnd/.vscode/
+Backend/EvitarBackEnd/bin/
+Backend/EvitarBackEnd/Properties/
+Backend/EvitarBackEnd/publish/
+Backend/EvitarBackEnd/bin/Debug/
+Backend/EvitarBackEnd/.vscode/launch.json
+Backend/EvitarBackEnd/.vscode/tasks.json
+Backend/EvitarBackEnd/appsettings.Development.json
+Backend/EvitarBackEnd/appsettings.json
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/appsettings.Development.json
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/EvitarBackEnd.deps.json
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/EvitarBackEnd.dll
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/EvitarBackEnd.pdb
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/EvitarBackEnd.runtimeconfig.dev.json
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/Properties/launchSettings.json
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+*.dll
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/System.Configuration.ConfigurationManager.dll
+Backend/EvitarBackEnd/bin/Debug/netcoreapp3.0/System.Security.Cryptography.ProtectedData.dll
+Backend/EvitarBackEnd/obj/Debug/netcoreapp3.0/EvitarBackEnd.AssemblyInfo.cs
+Backend/EvitarBackEnd/obj/Debug/netcoreapp3.0/EvitarBackEnd.assets.cache
+Backend/EvitarBackEnd/obj/Debug/netcoreapp3.0/EvitarBackEnd.csproj.FileListAbsolute.txt
+Backend/EvitarBackEnd/obj/Debug/netcoreapp3.0/EvitarBackEnd.csprojAssemblyReference.cache
+Backend/EvitarBackEnd/obj/Debug/netcoreapp3.0/EvitarBackEnd.dll
+Backend/EvitarBackEnd/obj/Debug/netcoreapp3.0/EvitarBackEnd.pdb
+Backend/EvitarBackEnd/obj/EvitarBackEnd.csproj.nuget.dgspec.json
+Backend/EvitarBackEnd/obj/project.assets.json
+Backend/EvitarBackEnd/Properties/launchSettings.json

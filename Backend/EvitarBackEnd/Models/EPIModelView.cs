@@ -12,6 +12,7 @@ namespace EvitarBackEnd.Models
         public DateTime DataValidadeEPI {get;set;}
         public int Valido{get;set;}
         public int IdTipoEPI {get;set;}
+        public String NomeTipoEPI {get;set;}
         public int IdColaborador {get;set;}
         public String NomeInspector {get;set;}
     }

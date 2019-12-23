@@ -115,8 +115,6 @@ namespace EvitarBackEnd.Migrations
 
                     b.HasKey("IdColaborador");
 
-                    b.HasIndex("IdCargo");
-
                     b.ToTable("ColaboradorModels");
                 });
 
@@ -129,8 +127,6 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IdCargo", "IdTipoEPI");
-
-                    b.HasIndex("IdTipoEPI");
 
                     b.ToTable("EPICargoModels");
                 });
@@ -158,15 +154,13 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<int>("Valido")
+                        .HasColumnType("int");
+
                     b.Property<int>("valido")
                         .HasColumnType("int");
 
-
                     b.HasKey("IdEPI");
-
-                    b.HasIndex("IdColaborador");
-
-                    b.HasIndex("IdTipoEPI");
 
                     b.ToTable("EPIModels");
                 });
@@ -180,8 +174,6 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IdMovimento", "IdEPI");
-
-                    b.HasIndex("IdEPI");
 
                     b.ToTable("MovEPIModels");
                 });
@@ -207,8 +199,6 @@ namespace EvitarBackEnd.Migrations
 
                     b.HasKey("IdMovimento");
 
-                    b.HasIndex("IdColaborador");
-
                     b.ToTable("MovimentoModels");
                 });
 
@@ -228,69 +218,6 @@ namespace EvitarBackEnd.Migrations
                 });
 
             modelBuilder.Entity("EvitarBackEnd.Entities.User", b =>
-                {
-                    b.HasOne("EvitarBackEnd.Models.ColaboradorModel", "IdColaboradorForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdColaborador")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EvitarBackEnd.Models.ColaboradorModel", b =>
-                {
-                    b.HasOne("EvitarBackEnd.Models.CargoModel", "IdCargoForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdCargo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EvitarBackEnd.Models.EPICargoModel", b =>
-                {
-                    b.HasOne("EvitarBackEnd.Models.CargoModel", "IdCargoForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdCargo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdTipoEPI")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EvitarBackEnd.Models.EPIModel", b =>
-                {
-                    b.HasOne("EvitarBackEnd.Models.ColaboradorModel", "IdColaboradorForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdColaborador")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdTipoEPI")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EvitarBackEnd.Models.MovEPIModel", b =>
-                {
-                    b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdEPI")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdMovimento")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EvitarBackEnd.Models.MovimentoModel", b =>
                 {
                     b.HasOne("EvitarBackEnd.Models.ColaboradorModel", "IdColaboradorForeignKey")
                         .WithMany()

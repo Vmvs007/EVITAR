@@ -18,6 +18,7 @@ namespace EvitarBackEnd.Models{
         public string MoradaCol {get;set;}
         public string EmailCol {get;set;}
         public DateTime DataRegistoCol {get;set;}
-        public int NomeCargo {get;set;}
+        public int IdCargo {get;set;}
+        public String NomeCargo {get;set;}
     }
 }
