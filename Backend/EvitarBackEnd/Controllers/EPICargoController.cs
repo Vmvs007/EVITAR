@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
@@ -21,6 +22,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/EPICargo
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EPICargoModel>>> GetEPICargoModels()
         {
@@ -28,6 +30,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/EPICargo/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<EPICargoModel>> GetEPICargoModel(int id)
         {
@@ -44,6 +47,7 @@ namespace EvitarBackEnd.Controllers
         // PUT: api/EPICargo/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEPICargoModel(int id, EPICargoModel ePICargoModel)
         {
@@ -76,6 +80,7 @@ namespace EvitarBackEnd.Controllers
         // POST: api/EPICargo
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<EPICargoModel>> PostEPICargoModel(EPICargoModel ePICargoModel)
         {
@@ -100,6 +105,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/EPICargo/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<EPICargoModel>> DeleteEPICargoModel(int id)
         {

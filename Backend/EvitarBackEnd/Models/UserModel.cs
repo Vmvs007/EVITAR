@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace EvitarBackEnd.Models.Users
 {
   public class UserModel
@@ -5,7 +7,8 @@ namespace EvitarBackEnd.Models.Users
         public string Username { get; set; }
 
         public int IdColaborador{get;set;}
-        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdColaborador")]
+        [ForeignKey("IdColaborador")]
+        [NotMapped]
         public ColaboradorModel IdColaboradorForeignKey {get;set;}
     }
 }

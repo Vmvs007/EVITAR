@@ -2,6 +2,7 @@
 using System.Globalization;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EvitarBackEnd.Models
 {
@@ -33,7 +34,8 @@ namespace EvitarBackEnd.Models
         public DateTime DataRegistoCol {get;set;}
 
         public int IdCargo {get;set;}
-        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdCargo")]
+        [ForeignKey("IdCargo")]
+        [NotMapped]
         public CargoModel IdCargoForeignKey {get;set;}
     }
 }
