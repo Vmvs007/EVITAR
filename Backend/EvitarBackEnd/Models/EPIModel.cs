@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EvitarBackEnd.Models
 {
@@ -17,13 +16,11 @@ namespace EvitarBackEnd.Models
         public int Valido{get;set;}
 
         public int IdTipoEPI {get;set;}
-        [ForeignKey("IdTipoEPI")]
-        [NotMapped]
+        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdTipoEPI")]
         public TipoEPIModel IdTipoEPIForeignKey {get;set;}
         
         public int IdColaborador {get;set;}
-        [ForeignKey("IdColaborador")]
-        [NotMapped]
+        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdColaborador")]
         public ColaboradorModel IdColaboradorForeignKey {get;set;}
     }
 }
