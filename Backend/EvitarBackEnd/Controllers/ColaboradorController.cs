@@ -114,5 +114,21 @@ namespace EvitarBackEnd.Controllers
         {
             return _context.ColaboradorModels.Any(e => e.IdColaborador == id);
         }
+
+        [Route("View")]
+        //[Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ColaboradorModelView>>> GetColaboradorModelView()
+        {
+
+            var colaboradorModel = await _context.ColaboradorModelViews.ToListAsync();
+
+            if (colaboradorModel == null)
+            {
+                return NotFound();
+            }
+
+            return colaboradorModel;
+        }
     }
 }

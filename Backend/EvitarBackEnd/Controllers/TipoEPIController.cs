@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
@@ -21,6 +22,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/TipoEPI
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TipoEPIModel>>> GetTipoEPIModels()
         {
@@ -28,6 +30,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/TipoEPI/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<TipoEPIModel>> GetTipoEPIModel(int id)
         {
@@ -44,6 +47,7 @@ namespace EvitarBackEnd.Controllers
         // PUT: api/TipoEPI/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize(Roles="1,2,3")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTipoEPIModel(int id, TipoEPIModel tipoEPIModel)
         {
@@ -76,6 +80,7 @@ namespace EvitarBackEnd.Controllers
         // POST: api/TipoEPI
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize(Roles="1,2,3")]
         [HttpPost]
         public async Task<ActionResult<TipoEPIModel>> PostTipoEPIModel(TipoEPIModel tipoEPIModel)
         {
@@ -86,6 +91,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/TipoEPI/5
+        [Authorize(Roles="1,2,3")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<TipoEPIModel>> DeleteTipoEPIModel(int id)
         {

@@ -22,6 +22,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/EPI
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EPIModel>>> GetEPIModels()
         {
@@ -41,6 +42,22 @@ namespace EvitarBackEnd.Controllers
             }
 
             return ePIModel;
+        }
+
+         [Route("view")]
+        //[Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(int id)
+        {
+
+            var epiModel = await _context.EPIModelViews.ToListAsync();
+
+            if (epiModel == null)
+            {
+                return NotFound();
+            }
+
+            return epiModel;
         }
 
         // PUT: api/EPI/5
@@ -86,6 +103,7 @@ namespace EvitarBackEnd.Controllers
             
             _context.EPIModels.Add(ePIModel);
             _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEPIModel", new { id = ePIModel.IdEPI }, ePIModel);
 
