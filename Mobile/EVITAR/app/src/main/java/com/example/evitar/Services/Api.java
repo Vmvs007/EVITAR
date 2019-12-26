@@ -1,5 +1,6 @@
 package com.example.evitar.Services;
 
+import com.example.evitar.Colaborador;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiAdd;
 import com.example.evitar.NotificationFolder.Notification;
@@ -21,6 +22,12 @@ public interface Api {
     @POST("users/authenticate")
     Call<User> login(
             @Body SignIn body
+    );
+
+    @GET("api/Colaborador/{id}")
+    Call<Colaborador> getColab(
+            @Header("Authorization") String token,
+            @Path("id") int id
     );
 
     @GET("api/EPI")

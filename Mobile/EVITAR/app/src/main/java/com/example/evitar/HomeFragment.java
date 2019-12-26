@@ -4,29 +4,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.evitar.EpiFolder.AddEpiFragment;
 import com.example.evitar.EpiFolder.Epi;
-import com.example.evitar.EpiFolder.EpiAdapter;
 import com.example.evitar.EpiFolder.EpiFragment;
-import com.example.evitar.Services.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -89,6 +81,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View mContentView = inflater.inflate(R.layout.home, container, false);
+        mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) mContentView.findViewById(R.id.floating_action_button);
 
@@ -101,6 +94,25 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
+
+        TextView nome=mContentView.findViewById(R.id.nome);
+        TextView timeday=mContentView.findViewById(R.id.timeday);
+
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat dateFormat1 = new SimpleDateFormat("HH");
+        Integer hora =Integer.parseInt(dateFormat1.format(currentTime));
+        String tipodia="Good Day,";
+
+        if (hora>6 && hora<13){
+            tipodia="Good Morning,";
+        }else if (hora>12 && hora<20){
+            tipodia="Good Afternoon,";
+        }else if ((hora>19 && hora<24)||(hora>=0 && hora<7) ){
+            tipodia="Good Night,";
+        }
+
+        timeday.setText(tipodia);
+        nome.setText(mUser.getString("nome", "Undefined"));
 
         return mContentView;
     }

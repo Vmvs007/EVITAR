@@ -3,33 +3,33 @@ package com.example.evitar;
 public class Colaborador {
 
     private int idColaborador;
-    private String NomeColaborador;
-    private String PrimeiroNomeCol;
-    private String UltimoNomeCol;
-    private String DataNasc;
+    private String nomeColaborador;
+    private String primeiroNomeCol;
+    private String ultimoNomeCol;
+    private String dataNasc;
     private int ccColaborador;
-    private int NifColaborador;
-    private String GeneroCol;
-    private int TelefoneCol;
-    private String MoradaCol;
-    private String EmailCol;
-    private String DataRegistoCol;
-    private int IdCargo;
+    private int nifColaborador;
+    private String generoCol;
+    private int telefoneCol;
+    private String moradaCol;
+    private String emailCol;
+    private String dataRegistoCol;
+    private int idCargo;
 
     public Colaborador(int idColaborador, String nomeColaborador, String primeiroNomeCol, String ultimoNomeCol, String dataNasc, int ccColaborador, int nifColaborador, String generoCol, int telefoneCol, String moradaCol, String emailCol, String dataRegistoCol, int idCargo) {
         this.idColaborador = idColaborador;
-        NomeColaborador = nomeColaborador;
-        PrimeiroNomeCol = primeiroNomeCol;
-        UltimoNomeCol = ultimoNomeCol;
-        DataNasc = dataNasc;
+        this.nomeColaborador = nomeColaborador;
+        this.primeiroNomeCol = primeiroNomeCol;
+        this.ultimoNomeCol = ultimoNomeCol;
+        this.dataNasc = dataNasc;
         this.ccColaborador = ccColaborador;
-        NifColaborador = nifColaborador;
-        GeneroCol = generoCol;
-        TelefoneCol = telefoneCol;
-        MoradaCol = moradaCol;
-        EmailCol = emailCol;
-        DataRegistoCol = dataRegistoCol;
-        IdCargo = idCargo;
+        this.nifColaborador = nifColaborador;
+        this.generoCol = generoCol;
+        this.telefoneCol = telefoneCol;
+        this.moradaCol = moradaCol;
+        this.emailCol = emailCol;
+        this.dataRegistoCol = dataRegistoCol;
+        this.idCargo = idCargo;
     }
 
     public int getIdColaborador() {
@@ -41,35 +41,35 @@ public class Colaborador {
     }
 
     public String getNomeColaborador() {
-        return NomeColaborador;
+        return nomeColaborador;
     }
 
     public void setNomeColaborador(String nomeColaborador) {
-        NomeColaborador = nomeColaborador;
+        this.nomeColaborador = nomeColaborador;
     }
 
     public String getPrimeiroNomeCol() {
-        return PrimeiroNomeCol;
+        return primeiroNomeCol;
     }
 
     public void setPrimeiroNomeCol(String primeiroNomeCol) {
-        PrimeiroNomeCol = primeiroNomeCol;
+        this.primeiroNomeCol = primeiroNomeCol;
     }
 
     public String getUltimoNomeCol() {
-        return UltimoNomeCol;
+        return ultimoNomeCol;
     }
 
     public void setUltimoNomeCol(String ultimoNomeCol) {
-        UltimoNomeCol = ultimoNomeCol;
+        this.ultimoNomeCol = ultimoNomeCol;
     }
 
     public String getDataNasc() {
-        return DataNasc;
+        return dataNasc;
     }
 
     public void setDataNasc(String dataNasc) {
-        DataNasc = dataNasc;
+        this.dataNasc = dataNasc;
     }
 
     public int getCcColaborador() {
@@ -81,58 +81,58 @@ public class Colaborador {
     }
 
     public int getNifColaborador() {
-        return NifColaborador;
+        return nifColaborador;
     }
 
     public void setNifColaborador(int nifColaborador) {
-        NifColaborador = nifColaborador;
+        this.nifColaborador = nifColaborador;
     }
 
     public String getGeneroCol() {
-        return GeneroCol;
+        return generoCol;
     }
 
     public void setGeneroCol(String generoCol) {
-        GeneroCol = generoCol;
+        this.generoCol = generoCol;
     }
 
     public int getTelefoneCol() {
-        return TelefoneCol;
+        return telefoneCol;
     }
 
     public void setTelefoneCol(int telefoneCol) {
-        TelefoneCol = telefoneCol;
+        this.telefoneCol = telefoneCol;
     }
 
     public String getMoradaCol() {
-        return MoradaCol;
+        return moradaCol;
     }
 
     public void setMoradaCol(String moradaCol) {
-        MoradaCol = moradaCol;
+        this.moradaCol = moradaCol;
     }
 
     public String getEmailCol() {
-        return EmailCol;
+        return emailCol;
     }
 
     public void setEmailCol(String emailCol) {
-        EmailCol = emailCol;
+        this.emailCol = emailCol;
     }
 
     public String getDataRegistoCol() {
-        return DataRegistoCol;
+        return dataRegistoCol;
     }
 
     public void setDataRegistoCol(String dataRegistoCol) {
-        DataRegistoCol = dataRegistoCol;
+        this.dataRegistoCol = dataRegistoCol;
     }
 
     public int getIdCargo() {
-        return IdCargo;
+        return idCargo;
     }
 
     public void setIdCargo(int idCargo) {
-        IdCargo = idCargo;
+        this.idCargo = idCargo;
     }
 }

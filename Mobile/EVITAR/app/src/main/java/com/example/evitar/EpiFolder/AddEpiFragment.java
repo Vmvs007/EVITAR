@@ -109,7 +109,7 @@ public class AddEpiFragment extends Fragment {
             public void onClick(View v) {
                 Date currentTime = Calendar.getInstance().getTime();
                 DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-                DateFormat dateFormat1 = new SimpleDateFormat("hh:mm:ss");
+                DateFormat dateFormat1 = new SimpleDateFormat("HH:mm:ss");
                 String strDate = dateFormat.format(currentTime)+"T"+dateFormat1.format(currentTime);
                 Log.d("cc", strDate);
                 EpiAdd epi=new EpiAdd(edNomeEpi.getText().toString(), strDate, edDataVal.getText().toString(), mUser.getInt("user_id", 0));

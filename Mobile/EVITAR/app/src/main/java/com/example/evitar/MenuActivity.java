@@ -165,8 +165,7 @@ public class MenuActivity extends AppCompatActivity implements NotificationsFrag
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_logout:
-                mEditor.putInt("user_id", 0);
-                mEditor.putString("token", "");
+                mEditor.clear();
                 mEditor.commit();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);

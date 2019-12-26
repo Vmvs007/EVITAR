@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.evitar.Colaborador;
 import com.example.evitar.MenuActivity;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
@@ -59,8 +60,6 @@ public class LoginActivity extends AppCompatActivity {
     private void userLogin(){
         String user=username.getText().toString().trim();
         String pass=password.getText().toString().trim();
-        Log.d("cc", user);
-        Log.d("cc", pass);
         SignIn signIn=new SignIn(user,pass);
 
         Call<User> call = RetrofitClient
@@ -71,12 +70,12 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.d("cc", response.toString());
                 if(response.code()==200){
                     User user = new User(response.body().getId(), response.body().getIdColaborador(), response.body().getUsername(), response.body().getToken());
                     mEditor.putInt("user_id", user.getIdColaborador());
                     mEditor.putString("token", user.getToken());
                     mEditor.commit();
+                    getColaboradorInfo(user.getToken(),user.getIdColaborador());
                     Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                     startActivity(intent);
@@ -91,6 +90,37 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
                 pbar.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "Login Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getColaboradorInfo(String token, int id){
+
+        Call<Colaborador> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getColab("Bearer "+token, id);
+
+        call.enqueue(new Callback<Colaborador>() {
+            @Override
+            public void onResponse(Call<Colaborador> call, Response<Colaborador> response) {
+                Log.d("cc", response.toString());
+                if (response.code() == 200) {
+                    Colaborador colab = new Colaborador(response.body().getIdColaborador(), response.body().getNomeColaborador(), response.body().getPrimeiroNomeCol(), response.body().getUltimoNomeCol(), response.body().getDataNasc(), response.body().getCcColaborador(), response.body().getNifColaborador(), response.body().getGeneroCol(), response.body().getTelefoneCol(), response.body().getMoradaCol(), response.body().getEmailCol(), response.body().getDataRegistoCol(), response.body().getIdCargo());
+                    String primUltimo=colab.getPrimeiroNomeCol() + " " + colab.getUltimoNomeCol();
+                    mEditor.putString("nome", primUltimo);
+                    mEditor.putInt("idCargo", colab.getIdCargo());
+                    mEditor.commit();
+                } else {
+                    pbar.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this, "Colab wrong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Colaborador> call, Throwable t) {
+                pbar.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, "Colab Failed " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
