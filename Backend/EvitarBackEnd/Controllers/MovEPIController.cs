@@ -43,6 +43,25 @@ namespace EvitarBackEnd.Controllers
 
             return movEPIModel;
         }
+        //[Authorize]
+        [Route("EpiWarning/{data}")]
+        [HttpGet]
+        public async Task<int> GetMovEPIModel(DateTime data)
+        {
+            
+           
+            var movEPIWarningModel = await _context.MovEPIModelViews.ToListAsync();
+
+            if (movEPIWarningModel == null)
+            {
+                return 0;
+            }
+        
+            var movimentoAlert = (from x in movEPIWarningModel where x.TypeMov == "E" && (x.DataHora).Date >=data select ( x.IdEPI)).ToList();
+            var movimentoAlert1=movimentoAlert.Count();
+            
+            return movimentoAlert1;
+        }
 
         // PUT: api/MovEPI/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
