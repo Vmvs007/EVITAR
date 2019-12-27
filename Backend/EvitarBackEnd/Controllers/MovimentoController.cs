@@ -125,7 +125,46 @@ namespace EvitarBackEnd.Controllers
             return movimentoAlert;
         }
 
+        [Authorize] //Podem todos ver desde que estejam autenticados 
+        [Route("EntradasDiaria/{data}")]
+        [HttpGet]
+        public async Task<int> GetMovimentoModelEntradasDiarias(DateTime data)
+        {
+            
+           
+            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
 
+            if (movimentoModel == null)
+            {
+                return 0;
+            }
+        
+            var movimentoAlert = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date == data select ( x.IdColaborador)).ToList();
+            var movimentoAlert1=movimentoAlert.Distinct().Count();
+            
+            return movimentoAlert1;
+        }
+        [Authorize] //Podem todos ver desde que estejam autenticados 
+        [Route("EntradasIntervalo/{data}/{data1}")]
+        [HttpGet]
+        public async Task<int> GetMovimentoModelEntradasIntervaloDatas(DateTime data, DateTime data1)
+        {
+            
+           
+            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
+
+            if (movimentoModel == null)
+            {
+                return 0;
+            }
+        
+            var movimentoAlert = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date >=data && (x.DataHora).Date <=data1 select ( x.IdColaborador)).ToList();
+            var movimentoAlert1=movimentoAlert.Distinct().Count();
+            
+            return movimentoAlert1;
+        }
+
+        
         // PUT: api/Movimento/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -168,6 +207,7 @@ namespace EvitarBackEnd.Controllers
         {
             _context.MovimentoModels.Add(movimentoModel);
             await _context.SaveChangesAsync();
+            
 
             return CreatedAtAction(nameof(GetMovimentoModel), new { id = movimentoModel.IdMovimento }, movimentoModel);
         }
