@@ -44,6 +44,24 @@ namespace EvitarBackEnd.Controllers
             return ePICargoModel;
         }
 
+        // GET: api/EPICargo/5
+        [Authorize]
+        [Route("EPIs/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EPICargoNecModelView>>> GetEPICargoEPIs(int id)
+        {
+            var ePICargo = await _context.EPICargoNecModelViews.ToListAsync();
+
+            var query = (from x in ePICargo where x.IdCargo == id select x).ToList();
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            return query;
+        }
+
         // PUT: api/EPICargo/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.

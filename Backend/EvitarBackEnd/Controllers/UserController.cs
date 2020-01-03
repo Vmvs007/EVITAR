@@ -96,7 +96,7 @@ namespace EvitarBackEnd.Controllers
             {
                 // create user
                 _userService.Create(user, model.Password);
-                return Ok();
+                return Ok(new { message ="Albílio"});
             }
             catch (AppException ex)
             {
