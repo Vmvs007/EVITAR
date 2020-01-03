@@ -45,7 +45,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         [Route("view")]
-        //[Authorize] //Podem todos ver desde que estejam autenticados 
+        [Authorize] //Podem todos ver desde que estejam autenticados 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(int id)
         {

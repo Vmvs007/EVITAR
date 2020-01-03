@@ -22,7 +22,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/MovEPI
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovEPIModel>>> GetMovEPIModels()
         {
@@ -43,7 +43,7 @@ namespace EvitarBackEnd.Controllers
 
             return movEPIModel;
         }
-        //[Authorize]
+        [Authorize]
         [Route("EpiWarning/{data}")]
         [HttpGet]
         public async Task<int> GetMovEPIModel(DateTime data)
