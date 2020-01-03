@@ -8,8 +8,8 @@ namespace EvitarBackEnd.Models{
         public MovimentoModel IdMovimentoForeignKey {get;set;}
 
         
-         public int IdEPI {get;set;}
-        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdEPI")]
-        public EPIModel IdEPIForeignKey {get;set;}
+         public int IdTipoEPI {get;set;}
+        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdTipoEPI")]
+        public TipoEPIModel IdTipoEPIForeignKey {get;set;}
     }
 }

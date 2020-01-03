@@ -4,16 +4,14 @@ using EvitarBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    [Migration("20191227172741_MigrationDataBase_v2")]
-    partial class MigrationDataBase_v2
+    partial class EVITARContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,12 +175,12 @@ namespace EvitarBackEnd.Migrations
                     b.Property<int>("IdMovimento")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEPI")
+                    b.Property<int>("IdTipoEPI")
                         .HasColumnType("int");
 
-                    b.HasKey("IdMovimento", "IdEPI");
+                    b.HasKey("IdMovimento", "IdTipoEPI");
 
-                    b.HasIndex("IdEPI");
+                    b.HasIndex("IdTipoEPI");
 
                     b.ToTable("MovEPIModels");
                 });
@@ -278,15 +276,15 @@ namespace EvitarBackEnd.Migrations
 
             modelBuilder.Entity("EvitarBackEnd.Models.MovEPIModel", b =>
                 {
-                    b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdEPI")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
                         .WithMany()
                         .HasForeignKey("IdMovimento")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
+                        .WithMany()
+                        .HasForeignKey("IdTipoEPI")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

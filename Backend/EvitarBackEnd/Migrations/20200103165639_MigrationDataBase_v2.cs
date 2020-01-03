@@ -6,6 +6,7 @@ namespace EvitarBackEnd.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+        
 
         }
 

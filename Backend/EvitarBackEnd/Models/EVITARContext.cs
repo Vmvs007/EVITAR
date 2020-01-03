@@ -22,7 +22,7 @@ namespace EvitarBackEnd.Models
             builder.Entity<MovEPIModel>().HasKey(table => new
             {
                 table.IdMovimento,
-                table.IdEPI
+                table.IdTipoEPI
             });
 
             builder.Entity<MovimentoModelView>(eb =>

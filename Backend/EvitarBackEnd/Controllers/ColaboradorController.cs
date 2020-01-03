@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
-    
+
     [Route("api/Colaborador")]
     [ApiController]
     public class ColaboradorController : ControllerBase
@@ -21,7 +21,7 @@ namespace EvitarBackEnd.Controllers
         {
             _context = context;
         }
-        
+
 
         // GET: api/Colaborador
         [Authorize]//Toda a gente pode ver os colaboradores
@@ -30,7 +30,7 @@ namespace EvitarBackEnd.Controllers
         {
             return await _context.ColaboradorModels.ToListAsync();
         }
-        
+
         // GET: api/Colaborador/5
         [Authorize]//Toda a gente pode ver os colaboradores
         [HttpGet("{idColaborador}")]
@@ -45,14 +45,14 @@ namespace EvitarBackEnd.Controllers
 
             return colaboradorModel;
         }
-       
+
         // GET: api/Colaborador/5/epi1&ep
-        [Authorize]//Toda a gente pode ver os colaboradores
+        //  [Authorize]//Toda a gente pode ver os colaboradores
         [Route("sensor/{idColaborador}")]
         [HttpGet]
-        public async Task<List<String>> GetEntradaColaborador(int idColaborador, [FromQuery] int [] idEPIs)
+        public async Task<List<String>> GetEntradaColaborador(int idColaborador, [FromQuery] int[] idEPIs)
         {
-            List<String> Retorno=new List<String>();
+            List<String> Retorno = new List<String>();
             var colaboradorModel = await _context.ColaboradorModels.FindAsync(idColaborador);
 
             if (colaboradorModel == null)
@@ -61,56 +61,69 @@ namespace EvitarBackEnd.Controllers
             }
 
             //Criação do Movimento da Entrada do Colaborador
-               MovimentoModel movimentoModel=new MovimentoModel();
-               movimentoModel.IdColaborador=idColaborador;
-               movimentoModel.DataHora=DateTime.Now;
-               movimentoModel.TypeMov="E";
-               movimentoModel.Check=1;
-               _context.MovimentoModels.Add(movimentoModel);
-               await _context.SaveChangesAsync();
-               
-               Retorno.Add("Bem Vindo,"+colaboradorModel.PrimeiroNomeCol+" "+colaboradorModel.UltimoNomeCol+",está tudo correcto");
-                            
+            MovimentoModel movimentoModel = new MovimentoModel();
+            movimentoModel.IdColaborador = idColaborador;
+            movimentoModel.DataHora = DateTime.Now;
+            movimentoModel.TypeMov = "E";
+            movimentoModel.Check = 1;
+         /*   _context.MovimentoModels.Add(movimentoModel);
+            await _context.SaveChangesAsync();*/
 
-               
-               var epiNecessarios= await _context.EPICargoNecModelViews.ToListAsync();
-               
-               //Criação da query para verificar quais os epis necessarios para o cargo do Colaborador
-               
-               var epiNecessariosQuery = (from x in epiNecessarios where x.IdCargo == colaboradorModel.IdCargo  select x.IdTipoEpi).ToList();
+            Retorno.Add("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol + ",está tudo correcto");
 
-            
-               var epiNecessariosFinal=epiNecessariosQuery.ToArray();
 
-               //Comparação dos epis necessarios e os epis que passaram no sensor
 
-               var Compare=idEPIs.SequenceEqual(epiNecessariosFinal);
-               if(Compare==true){
-                   return Retorno.Distinct().ToList();
+            var epiNecessarios = await _context.EPICargoNecModelViews.ToListAsync();
+
+            //Criação da query para verificar quais os epis necessarios para o cargo do Colaborador
+
+            var epiNecessariosQuery = (from x in epiNecessarios where x.IdCargo == colaboradorModel.IdCargo select x.IdTipoEpi).ToList();
+
+
+            var epiNecessariosFinal = epiNecessariosQuery.ToArray();
+
+            //Comparação dos epis necessarios e os epis que passaram no sensor
+
+            var Compare = idEPIs.SequenceEqual(epiNecessariosFinal);
+            if (Compare == true)
+            {
+                _context.MovimentoModels.Add(movimentoModel);
+                await _context.SaveChangesAsync();
+                return Retorno.Distinct().ToList();
+                
                }
 
-               else if(Compare==false){
-                   MovEPIModel movEPI=new MovEPIModel();
-                   for(int i=0; i<epiNecessariosFinal.Length;i++){
-                       if(idEPIs.ToList().Contains(epiNecessariosFinal[i])==false){
-                           var epimodel= await _context.TipoEPIModels.FindAsync(epiNecessariosFinal[i]);
-                           Retorno.Remove("Bem Vindo,"+colaboradorModel.PrimeiroNomeCol+" "+colaboradorModel.UltimoNomeCol+",está tudo correcto");
-                           Retorno.Add("Bem Vindo,"+colaboradorModel.PrimeiroNomeCol+" "+colaboradorModel.UltimoNomeCol);
-                           Retorno.Add("Falta:"+epimodel.NomeTipoEPI.ToString());
+            else if (Compare == false)
+            {
 
-                           //Criação do MovEPI devido a epi em falta
-                           movEPI.IdMovimento=movimentoModel.IdMovimento;
-                           movEPI.IdEPI=epiNecessariosFinal[i];
-                           _context.MovEPIModels.Add(movEPI);
-                           await _context.SaveChangesAsync();
+                movimentoModel.Check = 0;
+                _context.MovimentoModels.Add(movimentoModel);
+                await _context.SaveChangesAsync();
 
-                       }
+
+                MovEPIModel movEPI = new MovEPIModel();
+                for (int i = 0; i < epiNecessariosFinal.Length; i++)
+                {
+                    if (idEPIs.ToList().Contains(epiNecessariosFinal[i]) == false)
+                    {
+                        var epimodel = await _context.TipoEPIModels.FindAsync(epiNecessariosFinal[i]);
+                        Retorno.Remove("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol + ",está tudo correcto");
+                        Retorno.Add("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol);
+                        Retorno.Add("Falta:" + epimodel.NomeTipoEPI.ToString());
+
+                        //Criação do MovEPI devido a epi em falta
+                        movEPI.IdMovimento = movimentoModel.IdMovimento;
+                        movEPI.IdTipoEPI = epiNecessariosFinal[i];
+                        _context.MovEPIModels.Add(movEPI);
+                        await _context.SaveChangesAsync();
+
                     }
-               }
-               
-         return Retorno.Distinct().ToList(); //colaboradorModel.PrimeiroNomeCol.ToString();
+                }
+            }
+
+            return Retorno.Distinct().ToList(); //colaboradorModel.PrimeiroNomeCol.ToString();
         }
-        
+
         // PUT: api/Colaborador/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -162,7 +175,7 @@ namespace EvitarBackEnd.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ColaboradorModel>> DeleteColaboradorModel(int id)
         {
-            
+
             var colaboradorModel = await _context.ColaboradorModels.FindAsync(id);
             if (colaboradorModel == null)
             {
