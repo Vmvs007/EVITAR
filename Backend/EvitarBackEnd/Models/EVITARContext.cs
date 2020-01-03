@@ -12,11 +12,13 @@ namespace EvitarBackEnd.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            
             builder.Entity<EPICargoModel>().HasKey(table => new
             {
                 table.IdCargo,
                 table.IdTipoEPI
             });
+            
             builder.Entity<MovEPIModel>().HasKey(table => new
             {
                 table.IdMovimento,
@@ -44,6 +46,11 @@ namespace EvitarBackEnd.Models
             eb.HasNoKey();
             eb.ToView("MovEPIModelViews");
         });
+         builder.Entity<EPICargoNecModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("EPICargoNecModelViews");
+        });
         }
         
         public DbSet<ColaboradorModel> ColaboradorModels { get; set; }
@@ -59,6 +66,7 @@ namespace EvitarBackEnd.Models
         public DbSet<ColaboradorModelView> ColaboradorModelViews{get;set;}
         public DbSet<EPIModelView> EPIModelViews{get;set;}
         public DbSet<MovEPIModelView> MovEPIModelViews{get;set;}
+        public DbSet<EPICargoNecModelView> EPICargoNecModelViews{get;set;}
 
 
     }
