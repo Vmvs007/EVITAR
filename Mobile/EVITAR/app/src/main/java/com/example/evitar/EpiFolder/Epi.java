@@ -6,28 +6,38 @@ public class Epi {
     private String dataRegistoEPI;
     private String dataValidadeEPI;
     private int idColaborador;
+    private int valido;
+    private int idTipoEPI;
+    private String nomeTipoEPI;
+    private String nomeInspector;
 
-    public Epi(int idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
+    public Epi(int idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador, int valido, int idTipoEPI, String nomeTipoEPI, String nomeInspector) {
         this.idEPI = idEPI;
         this.nomeEPI = nomeEPI;
         this.dataRegistoEPI = dataRegistoEPI;
         this.dataValidadeEPI = dataValidadeEPI;
         this.idColaborador = idColaborador;
+        this.valido = valido;
+        this.idTipoEPI = idTipoEPI;
+        this.nomeTipoEPI = nomeTipoEPI;
+        this.nomeInspector = nomeInspector;
     }
-
-    public Epi(String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador) {
+    public Epi(int idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador, int valido, int idTipoEPI) {
+        this.idEPI = idEPI;
         this.nomeEPI = nomeEPI;
         this.dataRegistoEPI = dataRegistoEPI;
         this.dataValidadeEPI = dataValidadeEPI;
         this.idColaborador = idColaborador;
+        this.valido = valido;
+        this.idTipoEPI = idTipoEPI;
     }
 
     public int getIdEPI() {
         return idEPI;
     }
 
-    public void setIdEPI(int id) {
-        this.idEPI = id;
+    public void setIdEPI(int idEPI) {
+        this.idEPI = idEPI;
     }
 
     public String getNomeEPI() {
@@ -60,5 +70,37 @@ public class Epi {
 
     public void setIdColaborador(int idColaborador) {
         this.idColaborador = idColaborador;
+    }
+
+    public int getValido() {
+        return valido;
+    }
+
+    public void setValido(int valido) {
+        this.valido = valido;
+    }
+
+    public int getIdTipoEPI() {
+        return idTipoEPI;
+    }
+
+    public void setIdTipoEPI(int idTipoEPI) {
+        this.idTipoEPI = idTipoEPI;
+    }
+
+    public String getNomeTipoEPI() {
+        return nomeTipoEPI;
+    }
+
+    public void setNomeTipoEPI(String nomeTipoEPI) {
+        this.nomeTipoEPI = nomeTipoEPI;
+    }
+
+    public String getNomeInspector() {
+        return nomeInspector;
+    }
+
+    public void setNomeInspector(String nomeInspector) {
+        this.nomeInspector = nomeInspector;
     }
 }

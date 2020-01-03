@@ -50,15 +50,9 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
 
         TextView idEpi = viewHolder.idEpi;
         TextView nomeEpi = viewHolder.nomeEpi;
-        TextView dataRegEpi = viewHolder.dataRegEpi;
-        TextView dataValEpi = viewHolder.dataValEpi;
-        TextView idColaborador = viewHolder.idColaborador;
 
         idEpi.setText(String.valueOf(epi.getIdEPI()));
         nomeEpi.setText(epi.getNomeEPI());
-        dataRegEpi.setText(epi.getDataRegistoEPI());
-        dataValEpi.setText(epi.getDataValidadeEPI());
-        idColaborador.setText(String.valueOf(epi.getIdColaborador()));
 
 
         viewHolder.bind(mEpi.get(position), listener);
@@ -70,25 +64,16 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
     public class EpiViewHolder extends RecyclerView.ViewHolder {
         public TextView idEpi;
         public TextView nomeEpi;
-        public TextView dataRegEpi;
-        public TextView dataValEpi;
-        public TextView idColaborador;
 
         public EpiViewHolder(View itemView) {
             super(itemView);
             idEpi = itemView.findViewById(R.id.idEpi);
             nomeEpi = itemView.findViewById(R.id.nomeEpi);
-            dataRegEpi = itemView.findViewById(R.id.dataRegEpi);
-            dataValEpi = itemView.findViewById(R.id.dataValEpi);
-            idColaborador = itemView.findViewById(R.id.idColaboradorEpi);
         }
 
         public void bind(final Epi epi, final OnItemClickListener listener) {
             idEpi.setText(String.valueOf(epi.getIdEPI()));
             nomeEpi.setText(epi.getNomeEPI());
-            dataRegEpi.setText(epi.getDataRegistoEPI());
-            dataValEpi.setText(epi.getDataValidadeEPI());
-            idColaborador.setText(String.valueOf(epi.getIdColaborador()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

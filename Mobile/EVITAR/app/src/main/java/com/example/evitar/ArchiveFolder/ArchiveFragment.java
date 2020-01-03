@@ -8,24 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.ProgressBar;
-import android.widget.TableLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.evitar.DashboardFragment;
-import com.example.evitar.NotificationFolder.Notification;
+import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.R;
-import com.example.evitar.Services.RetrofitClient;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ArchiveFragment   extends Fragment{
 
@@ -115,7 +102,7 @@ public class ArchiveFragment   extends Fragment{
         return mContentView;
     }
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Notification uri) {
+    public void onButtonPressed(Movimento uri) {
         if (mListener != null) {
         }
     }

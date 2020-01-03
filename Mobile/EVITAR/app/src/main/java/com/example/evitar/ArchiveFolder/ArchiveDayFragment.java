@@ -12,11 +12,17 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.fragment.app.Fragment;
-import com.example.evitar.NotificationFolder.Notification;
+import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,7 +40,7 @@ public class ArchiveDayFragment   extends Fragment {
 
     private Context mContext;
 
-    private List<Notification> notif;
+    private List<Movimento> notif;
     private View mContentView;
 
     private ProgressBar pbar;
@@ -100,27 +106,38 @@ public class ArchiveDayFragment   extends Fragment {
     }
 
     private void getNotificationsServer() {
-        Call<List<Notification>> call = RetrofitClient
+        Call<List<Movimento>> call = RetrofitClient
                 .getInstance()
                 .getApi()
                 .getMovimentosporDia("Bearer "+mUser.getString("token", ""), mParam1);
-        call.enqueue(new Callback<List<Notification>>() {
+        call.enqueue(new Callback<List<Movimento>>() {
             @Override
-            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
+            public void onResponse(Call<List<Movimento>> call, Response<List<Movimento>> response) {
                 if(response.code()==200){
                     notif=response.body();
 
 
 
-                    for(Notification mov:notif){
+                    for(Movimento mov:notif){
                         View tableRow = LayoutInflater.from(mContext).inflate(R.layout.flow_line,null,false);
                         TextView tipo  = (TextView) tableRow.findViewById(R.id.tipo);
                         TextView colab  = (TextView) tableRow.findViewById(R.id.colab);
                         TextView data  = (TextView) tableRow.findViewById(R.id.data);
 
-                        tipo.setText(mov.getTypeMov());
-                        colab.setText(String.valueOf(mov.getIdColaborador()));
-                        data.setText(mov.getDataHora());
+                        if (mov.getTypeMov().charAt(0)=='E'){
+                            tipo.setText("Entry");
+                        }else{
+                            tipo.setText("Exit");
+                        }
+                        colab.setText(mov.getPrimeiroNomeCol()+" "+mov.getUltimoNomeCol());
+                        String da=mov.getDataHora();
+                        String[] a=da.split("\\.");
+                        String date=a[0].replace("T", "  ");
+
+                        data.setText(date);
+
+
+
 
                         tableLayout.addView(tableRow);
                     }
@@ -135,7 +152,7 @@ public class ArchiveDayFragment   extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Notification>> call, Throwable t) {
+            public void onFailure(Call<List<Movimento>> call, Throwable t) {
                 Toast.makeText(mContext, "Pedidos movimentos Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
                 pbar.setVisibility(View.GONE);
             }
@@ -143,7 +160,7 @@ public class ArchiveDayFragment   extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Notification uri) {
+    public void onButtonPressed(Movimento uri) {
         if (mListener != null) {
         }
     }

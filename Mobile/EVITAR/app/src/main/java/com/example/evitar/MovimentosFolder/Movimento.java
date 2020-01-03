@@ -1,21 +1,23 @@
-package com.example.evitar.NotificationFolder;
+package com.example.evitar.MovimentosFolder;
 
-import java.util.Date;
-
-public class Notification {
+public class Movimento {
 
     private int idMovimento;
     private String typeMov;
     private int idColaborador;
     private int check;
     private String dataHora;
+    private String primeiroNomeCol;
+    private String ultimoNomeCol;
 
-    public Notification(int idMovimento, String typeMov, int idColaborador, int check, String dataHora) {
+    public Movimento(int idMovimento, String typeMov, int idColaborador, int check, String dataHora, String primeiroNomeCol, String ultimoNomeCol) {
         this.idMovimento = idMovimento;
         this.typeMov = typeMov;
         this.idColaborador = idColaborador;
         this.check = check;
         this.dataHora = dataHora;
+        this.primeiroNomeCol = primeiroNomeCol;
+        this.ultimoNomeCol = ultimoNomeCol;
     }
 
     public int getIdMovimento() {
@@ -56,5 +58,21 @@ public class Notification {
 
     public void setDataHora(String dataHora) {
         this.dataHora = dataHora;
+    }
+
+    public String getPrimeiroNomeCol() {
+        return primeiroNomeCol;
+    }
+
+    public void setPrimeiroNomeCol(String primeiroNomeCol) {
+        this.primeiroNomeCol = primeiroNomeCol;
+    }
+
+    public String getUltimoNomeCol() {
+        return ultimoNomeCol;
+    }
+
+    public void setUltimoNomeCol(String ultimoNomeCol) {
+        this.ultimoNomeCol = ultimoNomeCol;
     }
 }

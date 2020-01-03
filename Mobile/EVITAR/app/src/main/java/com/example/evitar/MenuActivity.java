@@ -11,21 +11,20 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.evitar.ArchiveFolder.ArchiveFragment;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiDialog;
 import com.example.evitar.EpiFolder.EpiFragment;
 import com.example.evitar.LoginFolder.LoginActivity;
-import com.example.evitar.NotificationFolder.Notification;
-import com.example.evitar.NotificationFolder.NotificationDialog;
-import com.example.evitar.NotificationFolder.NotificationsFragment;
+import com.example.evitar.MovimentosFolder.Movimento;
+import com.example.evitar.MovimentosFolder.MovimentoDialog;
+import com.example.evitar.MovimentosFolder.MovimentosFragment;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 
-public class MenuActivity extends AppCompatActivity implements NotificationsFragment.OnFragmentInteractionListener, EpiFragment.OnFragmentInteractionListener{
+public class MenuActivity extends AppCompatActivity implements MovimentosFragment.OnFragmentInteractionListener, EpiFragment.OnFragmentInteractionListener{
 
     private SpaceNavigationView navigationView;
     private Fragment fragment;
@@ -72,8 +71,8 @@ public class MenuActivity extends AppCompatActivity implements NotificationsFrag
             @Override
             public void onCentreButtonClick() {
                 navigationView.setCentreButtonSelectable(true);
-                toolbarText.setText("Notifications");
-                fragment=new NotificationsFragment();
+                toolbarText.setText("Movements");
+                fragment=new MovimentosFragment();
                 if (fragment!=null){
                     getSupportFragmentManager()
                             .beginTransaction()
@@ -138,11 +137,11 @@ public class MenuActivity extends AppCompatActivity implements NotificationsFrag
         }
     }
     @Override
-    public void onButtonclick(Notification notif) {
+    public void onButtonclick(Movimento notif) {
         openDialog(notif);
     }
-    public void openDialog(Notification notif) {
-        NotificationDialog notifDialog = new NotificationDialog(notif);
+    public void openDialog(Movimento notif) {
+        MovimentoDialog notifDialog = new MovimentoDialog(notif);
         notifDialog.show(getSupportFragmentManager(), "notif dialog");
     }
 

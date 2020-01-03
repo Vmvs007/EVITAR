@@ -8,15 +8,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.evitar.Colaborador;
+import com.example.evitar.LoginFolder.LoginActivity;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
+
+import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,8 +40,15 @@ public class EditEpiFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int idepi;
+    private String nomeepi;
+    private String regepi;
+    private String valepi;
+    private int idcolab;
+    private int valido;
+    private int idtipoepi;
+    private String nometipoepi;
+    private String nomecolab;
 
     private Context mContext;
 
@@ -39,7 +56,21 @@ public class EditEpiFragment extends Fragment {
 
     private ProgressBar pbar;
 
+    private Epi epiEdit;
     private Epi epi;
+    private int check;
+
+    private CheckBox checkBox;
+    private EditText edDataVal;
+
+    private int tipo;
+
+    private Spinner mSpinner;
+    private String[] mTipos;
+    private Integer[] mTiposIds;
+    private List<TipoEpis> tiposEpi;
+
+
 
 
 
@@ -73,8 +104,15 @@ public class EditEpiFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            idepi = getArguments().getInt("idepi");
+            nomeepi = getArguments().getString("nomeepi");
+            regepi = getArguments().getString("regepi");
+            valepi = getArguments().getString("valepi");
+            idcolab = getArguments().getInt("idcolab");
+            valido = getArguments().getInt("valido");
+            idtipoepi = getArguments().getInt("idtipoepi");
+            nometipoepi = getArguments().getString("nometipoepi");
+            nomecolab = getArguments().getString("nomecolab");
         }
         mContext=getActivity();
 
@@ -88,32 +126,64 @@ public class EditEpiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        mContentView = inflater.inflate(R.layout.add_epi_layout, container, false);
+        mContentView = inflater.inflate(R.layout.edit_epi_layout, container, false);
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
+        mSpinner=mContentView.findViewById(R.id.spinner);
 
+        epi=new Epi(idepi,nomeepi,regepi,valepi,idcolab,valido,idtipoepi,nometipoepi,nomecolab);
+
+        getTipoEpis();
 
         pbar=mContentView.findViewById(R.id.progressBar);
-        TextView idColab= (TextView) mContentView.findViewById(R.id.textView34);
+        TextView nomeColab= (TextView) mContentView.findViewById(R.id.textView34);
         Button addButton= (Button) mContentView.findViewById(R.id.adicionarbutton);
         TextView edIdEpi = (TextView) mContentView.findViewById(R.id.idepi);
         TextView edNomeEpi = (TextView) mContentView.findViewById(R.id.nomeepi);
         TextView edDataReg = (TextView) mContentView.findViewById(R.id.dataregisto);
-        EditText edDataVal = (EditText) mContentView.findViewById(R.id.editText4);
+        edDataVal = (EditText) mContentView.findViewById(R.id.editText4);
+        Button cancelButton= (Button) mContentView.findViewById(R.id.cancelbutton);
+        checkBox=(CheckBox) mContentView.findViewById(R.id.checkBox);
+
+        if(epi.getValido()==1){
+            checkBox.setChecked(true);
+        } else{
+            checkBox.setChecked(false);
+        }
+
+
+
 
         edIdEpi.setText(String.valueOf(epi.getIdEPI()));
         edNomeEpi.setText(epi.getNomeEPI());
         edDataReg.setText(epi.getDataRegistoEPI());
         edDataVal.setText(epi.getDataValidadeEPI());
+        nomeColab.setText(epi.getNomeInspector());
 
-        idColab.setText(String.valueOf(mUser.getInt("user_id", 0)));
 
-        final Epi epiEdit=new Epi(epi.getIdEPI(), epi.getDataRegistoEPI(), epi.getDataRegistoEPI(), epi.getDataValidadeEPI(), mUser.getInt("user_id", 0));
+
+
+
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                if (checkBox.isChecked()){
+                    epiEdit=new Epi(epi.getIdEPI(), epi.getNomeEPI(), epi.getDataRegistoEPI(), edDataVal.getText().toString(), mUser.getInt("user_id", 0), 1,tipo);
+                } else{
+                    epiEdit=new Epi(epi.getIdEPI(), epi.getNomeEPI(), epi.getDataRegistoEPI(), edDataVal.getText().toString(), mUser.getInt("user_id", 0), 0,tipo);
+                }
                 pbar.setVisibility(View.VISIBLE);
                 editEpi(epiEdit);
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new EpiFragment())
+                        .commit();
             }
         });
 
@@ -121,17 +191,28 @@ public class EditEpiFragment extends Fragment {
         return mContentView;
     }
 
-    public void editEpi(Epi epiEdit){
+    private int getPositionTipo(int id){
+        int count=0;
+        for (int i : mTiposIds){
+            if(i==id){
+                return count;
+            }
+            count++;
+        }
+        return 0;
+    }
+
+    public void editEpi(Epi epiEdited){
         Call<Epi> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .editEpi("Bearer "+mUser.getString("token", ""), epiEdit.getIdEPI() ,epiEdit);
+                .editEpi("Bearer "+mUser.getString("token", ""), epiEdited.getIdEPI() ,epiEdited);
 
         call.enqueue(new Callback<Epi>() {
             @Override
             public void onResponse(Call<Epi> call, Response<Epi> response) {
                 Log.d("cc", response.toString());
-                if(response.code()==200){
+                if(response.code()==204){
                     getFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, new EpiFragment())
@@ -148,6 +229,76 @@ public class EditEpiFragment extends Fragment {
             }
         });
 
+    }
+
+    private void getTipoEpis(){
+        Call<List<TipoEpis>> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getTipoEpis("Bearer "+mUser.getString("token", ""));
+
+        call.enqueue(new Callback<List<TipoEpis>>() {
+            @Override
+            public void onResponse(Call<List<TipoEpis>> call, Response<List<TipoEpis>> response) {
+                Log.d("cc", response.toString());
+                if(response.code()==200){
+                    tiposEpi=response.body();
+                    int count=0;
+
+                    for(TipoEpis t : tiposEpi){
+                        if(count>0){
+                            mTipos=append(mTipos, t.getNomeTipoEPI());
+                            mTiposIds=append(mTiposIds, t.getIdTipoEPI());
+                        }else{
+                            mTiposIds=new Integer[]{t.getIdTipoEPI()};
+                            mTipos=new String[]{t.getNomeTipoEPI()};
+                            count++;
+                        }
+                    }
+                    mSpinner=mContentView.findViewById(R.id.spinner);
+
+                    try {
+                        ArrayAdapter aa=new ArrayAdapter(mContext, android.R.layout.simple_spinner_item, mTipos);
+                        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        mSpinner.setAdapter(aa);
+                    }catch (NullPointerException n){
+
+                    }
+
+
+
+
+                    mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            tipo=mTiposIds[position];
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+                    mSpinner.setSelection(getPositionTipo(idtipoepi));
+                }else{
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<TipoEpis>> call, Throwable t) {
+                Log.d("cc", t.getMessage());
+                pbar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private <T> T[] append(T[] arr, T element) {
+        final int N = arr.length;
+        arr = Arrays.copyOf(arr, N + 1);
+        arr[N] = element;
+        return arr;
     }
 
 

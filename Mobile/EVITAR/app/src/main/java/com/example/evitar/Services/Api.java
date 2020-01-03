@@ -3,7 +3,8 @@ package com.example.evitar.Services;
 import com.example.evitar.Colaborador;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiAdd;
-import com.example.evitar.NotificationFolder.Notification;
+import com.example.evitar.EpiFolder.TipoEpis;
+import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.LoginFolder.SignIn;
 import com.example.evitar.LoginFolder.User;
 
@@ -35,6 +36,17 @@ public interface Api {
             @Header("Authorization") String token
     );
 
+    @GET("api/TipoEPI")
+    Call<List<TipoEpis>> getTipoEpis(
+            @Header("Authorization") String token
+    );
+
+    @GET("api/TipoEPI/{id}")
+    Call<TipoEpis> getTipoEpi(
+            @Header("Authorization") String token,
+            @Path("id") int id
+    );
+
     @POST("api/EPI")
     Call<Epi> addEpi(
             @Header("Authorization") String token,
@@ -50,14 +62,13 @@ public interface Api {
     );
 
 
-    @GET("api/Movimento")
-    Call<List<Notification>> getNotifications(
+    @GET("api/Movimento/view")
+    Call<List<Movimento>> getNotifications(
             @Header("Authorization") String token
-           // @Path("id") int id
     );
 
     @GET("api/Movimento/Entradas/{data}")
-    Call<List<Notification>> getMovimentosporDia(
+    Call<List<Movimento>> getMovimentosporDia(
             @Header("Authorization") String token,
             @Path("data") String data
     );

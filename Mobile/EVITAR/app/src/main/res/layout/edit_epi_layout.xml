@@ -13,12 +13,16 @@
             android:id="@+id/textView29"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Id do Epi:   " />
+            android:layout_weight="1"
+            android:text="EPI ID:" />
 
         <TextView
             android:id="@+id/idepi"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 
     <LinearLayout
@@ -30,12 +34,16 @@
             android:id="@+id/textView30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome do Epi: " />
+            android:layout_weight="1"
+            android:text="EPI Name:" />
 
         <TextView
             android:id="@+id/nomeepi"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 
     <LinearLayout
@@ -47,12 +55,16 @@
             android:id="@+id/textView31"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data de registo:   " />
+            android:layout_weight="1"
+            android:text="Creation Date:" />
 
         <TextView
             android:id="@+id/dataregisto"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 
     <LinearLayout
@@ -64,40 +76,92 @@
             android:id="@+id/textView32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data de validade: " />
+            android:layout_weight="1"
+            android:text="Expire Date:" />
 
         <EditText
             android:id="@+id/editText4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date" />
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Válido"
+            android:theme="@style/checkbox_color"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView331"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EPI Type:" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="10dp">
+        android:paddingBottom="30dp">
 
         <TextView
             android:id="@+id/textView33"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Id do Colaborador: " />
+            android:layout_weight="1"
+            android:text="Inspector Name:" />
 
         <TextView
             android:id="@+id/textView34"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/adicionarbutton"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ADICIONAR"/>
+        android:background="@drawable/buttons_style"
+        android:textColor="@color/colorAccent"
+        android:text="EDIT EPI"/>
+
+    <Button
+        android:id="@+id/cancelbutton"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_style"
+        android:textColor="#FC0202"
+        android:text="Cancel"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

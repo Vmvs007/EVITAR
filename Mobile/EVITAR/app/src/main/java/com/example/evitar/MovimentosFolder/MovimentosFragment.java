@@ -1,4 +1,4 @@
-package com.example.evitar.NotificationFolder;
+package com.example.evitar.MovimentosFolder;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NotificationsFragment extends Fragment implements NotificationDialog.ExampleDialogListener {
+public class MovimentosFragment extends Fragment implements MovimentoDialog.ExampleDialogListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -34,11 +34,11 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
     private String mParam2;
 
     private RecyclerView mRecyclerView;
-    private NotificationAdapter mAdapter;
+    private MovimentoAdapter mAdapter;
 
     private Context mContext;
 
-    private List<Notification> notif;
+    private List<Movimento> notif;
     private View mContentView;
 
     private ProgressBar pbar;
@@ -47,7 +47,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
 
     private OnFragmentInteractionListener mListener;
 
-    public NotificationsFragment() {
+    public MovimentosFragment() {
         // Required empty public constructor
     }
 
@@ -60,8 +60,8 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
      * @return A new instance of fragment Fragment1.
      */
     // TODO: Rename and change types and number of parameters
-    public static NotificationsFragment newInstance(String param1, String param2) {
-        NotificationsFragment fragment = new NotificationsFragment();
+    public static MovimentosFragment newInstance(String param1, String param2) {
+        MovimentosFragment fragment = new MovimentosFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -85,33 +85,29 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        mContentView = inflater.inflate(R.layout.notifications, container, false);
+        mContentView = inflater.inflate(R.layout.movements, container, false);
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
         pbar=mContentView.findViewById(R.id.progressBar);
         pbar.setVisibility(View.VISIBLE);
         getNotificationsServer();
 
 
-
-
-
-
         return mContentView;
     }
 
     private void getNotificationsServer() {
-        Call<List<Notification>> call = RetrofitClient
+        Call<List<Movimento>> call = RetrofitClient
                 .getInstance()
                 .getApi()
                 .getNotifications("Bearer "+mUser.getString("token", ""));
-        call.enqueue(new Callback<List<Notification>>() {
+        call.enqueue(new Callback<List<Movimento>>() {
             @Override
-            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
+            public void onResponse(Call<List<Movimento>> call, Response<List<Movimento>> response) {
                 if(response.code()==200){
                     notif=response.body();
 
-                    mAdapter=new NotificationAdapter(mContext, notif,new NotificationAdapter.OnItemClickListener() {
-                        @Override public void onItemClick(Notification notif) {
+                    mAdapter=new MovimentoAdapter(mContext, notif,new MovimentoAdapter.OnItemClickListener() {
+                        @Override public void onItemClick(Movimento notif) {
                             mListener.onButtonclick(notif);
                         }});
 
@@ -131,7 +127,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
             }
 
             @Override
-            public void onFailure(Call<List<Notification>> call, Throwable t) {
+            public void onFailure(Call<List<Movimento>> call, Throwable t) {
                 Toast.makeText(mContext, "Pedidos movimentos Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
                 pbar.setVisibility(View.GONE);
             }
@@ -139,7 +135,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Notification uri) {
+    public void onButtonPressed(Movimento uri) {
         if (mListener != null) {
             mListener.onButtonclick(uri);
         }
@@ -162,7 +158,7 @@ public class NotificationsFragment extends Fragment implements NotificationDialo
         mListener = null;
 }
     public interface OnFragmentInteractionListener {
-        void onButtonclick(Notification notif);
+        void onButtonclick(Movimento notif);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.evitar.NotificationFolder;
+package com.example.evitar.MovimentosFolder;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,12 +14,12 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.evitar.R;
 
-public class NotificationDetailsDialog extends AppCompatDialogFragment {
+public class MovimentoDetailsDialog extends AppCompatDialogFragment {
 
     private ExampleDialogListener listener;
-    private Notification notif;
+    private Movimento notif;
 
-    public NotificationDetailsDialog(Notification notif) {
+    public MovimentoDetailsDialog(Movimento notif) {
         this.notif = notif;
     }
 
@@ -28,7 +28,7 @@ public class NotificationDetailsDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.notifdetailsdialog, null);
+        View view = inflater.inflate(R.layout.movdetailsdialog, null);
 
 
         builder.setView(view)

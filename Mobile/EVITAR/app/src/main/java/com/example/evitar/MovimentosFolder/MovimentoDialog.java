@@ -1,4 +1,4 @@
-package com.example.evitar.NotificationFolder;
+package com.example.evitar.MovimentosFolder;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,13 +15,13 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.evitar.R;
 
-public class NotificationDialog extends AppCompatDialogFragment {
+public class MovimentoDialog extends AppCompatDialogFragment {
 
     private ExampleDialogListener listener;
-    private TextView data, tipo, texto;
-    private Notification notif;
+    private TextView data, tipo, texto, nomeC;
+    private Movimento notif;
 
-    public NotificationDialog(Notification notif) {
+    public MovimentoDialog(Movimento notif) {
         this.notif = notif;
     }
 
@@ -30,15 +30,30 @@ public class NotificationDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.notifdialog, null);
+        View view = inflater.inflate(R.layout.movdialog, null);
 
         data=(TextView) view.findViewById(R.id.textView7);
-        tipo=(TextView) view.findViewById(R.id.textView12);
+        tipo=(TextView) view.findViewById(R.id.textView10);
+        nomeC=(TextView) view.findViewById(R.id.textView12);
         texto=(TextView) view.findViewById(R.id.textView13);
 
-        data.setText(notif.getDataHora());
-        tipo.setText(notif.getTypeMov());
-        texto.setText(String.valueOf(notif.getCheck()));
+        String da=notif.getDataHora();
+        String[] a=da.split("\\.");
+        String date=a[0].replace("T", "  ");
+
+        data.setText(date);
+        if (notif.getTypeMov().charAt(0)=='E'){
+            tipo.setText("Entry");
+        }else{
+            tipo.setText("Exit");
+        }
+        if (notif.getCheck()==1){
+            texto.setText("Everything's fine!");
+        }else{
+            texto.setText("Something happened!");
+        }
+        nomeC.setText(notif.getPrimeiroNomeCol()+" "+notif.getUltimoNomeCol());
+
 
 
         builder.setView(view)
@@ -50,7 +65,7 @@ public class NotificationDialog extends AppCompatDialogFragment {
                 .setPositiveButton("See Details", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        NotificationDetailsDialog notifdetailsDialog = new NotificationDetailsDialog(notif);
+                        MovimentoDetailsDialog notifdetailsDialog = new MovimentoDetailsDialog(notif);
                         notifdetailsDialog.show(getFragmentManager(), "notif details dialog");
                     }
                 });
