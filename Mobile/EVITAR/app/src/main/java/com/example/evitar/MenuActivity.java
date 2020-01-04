@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.evitar.ArchiveFolder.ArchiveDayFragment;
 import com.example.evitar.ArchiveFolder.ArchiveFragment;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiDialog;
@@ -24,7 +25,8 @@ import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 
-public class MenuActivity extends AppCompatActivity implements MovimentosFragment.OnFragmentInteractionListener, EpiFragment.OnFragmentInteractionListener{
+public class MenuActivity extends AppCompatActivity implements MovimentosFragment.OnFragmentInteractionListener, EpiFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener,
+        ArchiveDayFragment.OnFragmentInteractionListener{
 
     private SpaceNavigationView navigationView;
     private Fragment fragment;

@@ -9,16 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiFragment;
+import com.example.evitar.Services.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -30,6 +36,10 @@ public class HomeFragment extends Fragment {
     private String mParam2;
 
     private Context mContext;
+
+    private View mContentView;
+
+    private int movDay;
 
     SharedPreferences mUser;
 
@@ -80,8 +90,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View mContentView = inflater.inflate(R.layout.home, container, false);
+        mContentView = inflater.inflate(R.layout.home, container, false);
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
+        getStats();
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) mContentView.findViewById(R.id.floating_action_button);
 
@@ -115,6 +126,37 @@ public class HomeFragment extends Fragment {
         nome.setText(mUser.getString("nome", "Undefined"));
 
         return mContentView;
+    }
+
+    private void getStats() {
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        String strDate = dateFormat.format(currentTime);
+        Call<Stats> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getStats("Bearer "+mUser.getString("token", ""), strDate);
+        call.enqueue(new Callback<Stats>() {
+            @Override
+            public void onResponse(Call<Stats> call, Response<Stats> response) {
+                if(response.code()==200){
+                    movDay=response.body().getMovimentosDiarios();
+
+                    TextView day=mContentView.findViewById(R.id.textView39);
+
+                    day.setText(String.valueOf(movDay));
+
+
+                }else{
+                    Toast.makeText(mContext, "Fail" + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Stats> call, Throwable t) {
+                Toast.makeText(mContext, "Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

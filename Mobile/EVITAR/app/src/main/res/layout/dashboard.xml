@@ -51,7 +51,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="5300"
                             android:textSize="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -92,7 +91,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="5300"
                             android:textSize="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -134,7 +132,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="5300"
                             android:textSize="20dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -166,7 +163,7 @@
 
                 <TextView
                     android:id="@+id/textView35"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="Tipo"
                     android:textSize="20dp"
@@ -176,7 +173,7 @@
 
                 <TextView
                     android:id="@+id/textView36"
-                    android:layout_width="wrap_content"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:text="Colaborador"
                     android:textSize="20dp"
@@ -186,7 +183,7 @@
 
                 <TextView
                     android:id="@+id/textView37"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="Data"
                     android:textSize="20dp"
@@ -194,6 +191,11 @@
                     android:layout_weight="3"
                     android:gravity="center"/>
             </TableRow>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="430dp" />
         </TableLayout>
         <ProgressBar
             android:id="@+id/progressBar"

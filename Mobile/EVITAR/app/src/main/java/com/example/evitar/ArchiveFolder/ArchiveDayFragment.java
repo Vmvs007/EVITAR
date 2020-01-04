@@ -14,15 +14,15 @@ import android.widget.Toast;
 
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.evitar.MovimentosFolder.FlowAdapter;
 import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
+import com.example.evitar.Stats;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,6 +45,12 @@ public class ArchiveDayFragment   extends Fragment {
 
     private ProgressBar pbar;
     private TableLayout tableLayout;
+
+    private RecyclerView mRecyclerView;
+    private FlowAdapter mAdapter;
+
+    private int warnings=0;
+    private int movDay=0;
 
     SharedPreferences mUser;
 
@@ -94,6 +100,7 @@ public class ArchiveDayFragment   extends Fragment {
         tableLayout=(TableLayout)mContentView.findViewById(R.id.tableLayout);
         TextView data=(TextView) mContentView.findViewById(R.id.textView11);
         data.setText(mParam1);
+        getStats();
         pbar.setVisibility(View.VISIBLE);
         getNotificationsServer();
 
@@ -117,7 +124,7 @@ public class ArchiveDayFragment   extends Fragment {
                     notif=response.body();
 
 
-
+/*
                     for(Movimento mov:notif){
                         View tableRow = LayoutInflater.from(mContext).inflate(R.layout.flow_line,null,false);
                         TextView tipo  = (TextView) tableRow.findViewById(R.id.tipo);
@@ -136,11 +143,22 @@ public class ArchiveDayFragment   extends Fragment {
 
                         data.setText(date);
 
-
-
-
                         tableLayout.addView(tableRow);
-                    }
+
+                    }*/
+
+                    mAdapter=new FlowAdapter(mContext, notif,new FlowAdapter.OnItemClickListener() {
+                        @Override public void onItemClick(Movimento notif) {
+                            mListener.onButtonclick(notif);
+                        }});
+
+                    mRecyclerView=mContentView.findViewById(R.id.recycler_view);
+                    mRecyclerView.setAdapter(mAdapter);
+
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
+                    RecyclerView.ItemDecoration itemDecoration=new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL);
+                    mRecyclerView.addItemDecoration(itemDecoration);
 
 
                     pbar.setVisibility(View.GONE);
@@ -155,6 +173,37 @@ public class ArchiveDayFragment   extends Fragment {
             public void onFailure(Call<List<Movimento>> call, Throwable t) {
                 Toast.makeText(mContext, "Pedidos movimentos Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
                 pbar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void getStats() {
+        Call<Stats> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getStats("Bearer "+mUser.getString("token", ""), mParam1);
+        call.enqueue(new Callback<Stats>() {
+            @Override
+            public void onResponse(Call<Stats> call, Response<Stats> response) {
+                if(response.code()==200){
+                    warnings=response.body().getAlertasDiarios();
+                    movDay=response.body().getMovimentosDiarios();
+
+                    TextView day=mContentView.findViewById(R.id.textView3911);
+                    TextView war=mContentView.findViewById(R.id.textView39113);
+
+                    day.setText(String.valueOf(movDay));
+                    war.setText(String.valueOf(warnings));
+
+
+                }else{
+                    Toast.makeText(mContext, "Fail" + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Stats> call, Throwable t) {
+                Toast.makeText(mContext, "Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -182,6 +231,7 @@ public class ArchiveDayFragment   extends Fragment {
         mListener = null;
     }
     public interface OnFragmentInteractionListener {
+        void onButtonclick(Movimento notif);
     }
 
 

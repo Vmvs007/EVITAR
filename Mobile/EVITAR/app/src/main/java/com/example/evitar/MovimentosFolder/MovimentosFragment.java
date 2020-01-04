@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
-
 import java.util.List;
 
 import retrofit2.Call;
@@ -105,6 +105,7 @@ public class MovimentosFragment extends Fragment implements MovimentoDialog.Exam
             public void onResponse(Call<List<Movimento>> call, Response<List<Movimento>> response) {
                 if(response.code()==200){
                     notif=response.body();
+
 
                     mAdapter=new MovimentoAdapter(mContext, notif,new MovimentoAdapter.OnItemClickListener() {
                         @Override public void onItemClick(Movimento notif) {

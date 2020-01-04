@@ -7,6 +7,7 @@ import com.example.evitar.EpiFolder.TipoEpis;
 import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.LoginFolder.SignIn;
 import com.example.evitar.LoginFolder.User;
+import com.example.evitar.Stats;
 
 import java.util.List;
 
@@ -69,6 +70,12 @@ public interface Api {
 
     @GET("api/Movimento/Entradas/{data}")
     Call<List<Movimento>> getMovimentosporDia(
+            @Header("Authorization") String token,
+            @Path("data") String data
+    );
+
+    @GET("api/Movimento/Stats/{data}")
+    Call<Stats> getStats(
             @Header("Authorization") String token,
             @Path("data") String data
     );

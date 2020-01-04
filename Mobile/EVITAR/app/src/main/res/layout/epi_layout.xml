@@ -5,12 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="507dp">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:srcCompat="@drawable/ic_add_black_24dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="423dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -20,15 +34,6 @@
         android:layout_gravity="center"
         android:theme="@style/ProgressTheme"
         android:visibility="gone" />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/floating_action_button"
-    app:backgroundTint="@color/colorPrimaryDark"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|right"
-    android:layout_margin="16dp"
-    app:srcCompat="@drawable/ic_add_black_24dp"/>
-
 
 
 </LinearLayout>
