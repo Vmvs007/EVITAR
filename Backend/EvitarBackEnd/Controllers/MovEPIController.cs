@@ -43,6 +43,28 @@ namespace EvitarBackEnd.Controllers
 
             return movEPIModel;
         }
+
+        [Authorize]
+        [Route("EpiWarningMov/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<WarningsMovModelView>>> GetEpiWarningMov(int id)
+        {
+            
+           
+            var movEPIWarningModel = await _context.WarningsMovModelViews.ToListAsync();
+
+            if (movEPIWarningModel == null)
+            {
+                return null;
+            }
+        
+            var movimentoAlert = (from x in movEPIWarningModel where x.IdMovimento == id select x).ToList();
+            
+            
+            return movimentoAlert;
+        }
+
+
         [Authorize]
         [Route("EpiWarning/{data}")]
         [HttpGet]

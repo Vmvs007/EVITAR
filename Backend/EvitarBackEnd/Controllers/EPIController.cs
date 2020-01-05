@@ -52,12 +52,15 @@ namespace EvitarBackEnd.Controllers
         public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(int id)
         {
 
-            var epiModel = await _context.EPIModelViews.ToListAsync();
+            var epiModelAux = await _context.EPIModelViews.ToListAsync();
+            
 
-            if (epiModel == null)
+            if (epiModelAux == null)
             {
                 return NotFound();
             }
+
+            var epiModel = epiModelAux.OrderByDescending(x=>x.Valido).ThenByDescending(y=>y.IdEPI).ToList();
 
             return epiModel;
         }

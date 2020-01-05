@@ -26,7 +26,12 @@ namespace EvitarBackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovimentoModel>>> GetMovimentoModels()
         {
-            return await _context.MovimentoModels.ToListAsync();
+
+            var movimentoModelAux = await _context.MovimentoModels.ToListAsync();
+
+            var movimentoModel = movimentoModelAux.OrderByDescending(x=>x.IdMovimento).ToList();
+
+            return movimentoModel;
         }
 
         // GET: api/Movimento/5
@@ -50,20 +55,37 @@ namespace EvitarBackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovimentoModelView>>> GetMovimentoModelView(int id)
         {
-            // var movimentoModel = await _context.MovimentoModels.FromSql("SELECT * From dbo.MovimentoModels WHERE DataHora > 01/11/2019 and DataHora < 31/11/2019 ").ToList();
-           // _context.Database.ExecuteSqlRaw(@"CREATE VIEW MovimentoModelViews AS
-            //SELECT m.IdMovimento,m.TypeMov,m.IdColaborador,m.[Check],m.DataHora,c.PrimeiroNomeCol,c.UltimoNomeCol
-            //FROM MovimentoModels m,ColaboradorModels c
-            //WHERE c.IdColaborador=m.IdColaborador");
+          
+            var movimentoModelAux = await _context.MovimentoModelViews.ToListAsync();
 
-            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
-
-            if (movimentoModel == null)
+            if (movimentoModelAux == null)
             {
                 return NotFound();
             }
 
+            var movimentoModel = movimentoModelAux.OrderByDescending(x=>x.IdMovimento).ToList();
+
             return movimentoModel;
+
+        }
+
+        [Route("viewVal")]
+        [Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MovimentoModelView>>> GetMovimentoModelViewVal(int id)
+        {
+          
+            var movimentoModelAux = await _context.MovimentoModelViews.ToListAsync();
+
+            if (movimentoModelAux == null)
+            {
+                return NotFound();
+            }
+
+            var movimentoModel = movimentoModelAux.OrderByDescending(x=>x.Check).ThenByDescending(y=>y.IdMovimento).ToList();
+
+            return movimentoModel;
+
         }
 
         
@@ -80,7 +102,7 @@ namespace EvitarBackEnd.Controllers
                 return NotFound();
             }
         
-            var movimentoAlert = (from x in movimentoModel where (x.DataHora).Date == data && x.Check==1 select x).ToList();
+            var movimentoAlert = (from x in movimentoModel where (x.DataHora).Date == data && x.Check==0 select x).ToList();
             var novo = movimentoAlert.OrderByDescending(x=>x.IdMovimento).ToList();
             return novo;
         }
@@ -136,32 +158,57 @@ namespace EvitarBackEnd.Controllers
                     });
         }
 
-        /*AINDA EM PREPARAÇÂO
+        
         [Authorize] //Podem todos ver desde que estejam autenticados 
-        [Route("NumeroWarnigs")]
+        [Route("NumeroWarnigs/{data}")]
         [HttpGet]
-        public async Task<int> GetNumerodeWarnigs6Meses(DateTime data)
+        public async Task<IActionResult> GetNumerodeWarnigs6Meses(DateTime data)
         {
-            
+            DateTime data1 = data.AddMonths(-1);
+            DateTime data2 = data.AddMonths(-2);
+            DateTime data3 = data.AddMonths(-3);
+            DateTime data4 = data.AddMonths(-4);
+            DateTime data5 = data.AddMonths(-5);
+            DateTime data6 = data.AddMonths(-6);
+
            
             var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
 
             if (movimentoModel == null)
             {
-                return 0;
+                return  BadRequest(new { message = "Sem moviemntos" });
             }
-            
 
-            var movimentoAlert = (from x in movimentoModel select ( x.IdColaborador)).ToList();
+             var movimentosData = (from x in movimentoModel where x.TypeMov == "E" && x.Check == 0 && (x.DataHora).Date <=data && (x.DataHora).Date >data1 select x.IdMovimento).ToList();
+             var movimentosData1 = (from x in movimentoModel where x.TypeMov == "E" && x.Check == 0 && (x.DataHora).Date <=data1 && (x.DataHora).Date >data2 select x.IdMovimento).ToList();
+             var movimentosData2 = (from x in movimentoModel where x.TypeMov == "E" && x.Check == 0 && (x.DataHora).Date <=data2 && (x.DataHora).Date >data3 select x.IdMovimento).ToList();
+             var movimentosData3 = (from x in movimentoModel where x.TypeMov == "E" && x.Check == 0 && (x.DataHora).Date <=data3 && (x.DataHora).Date >data4 select x.IdMovimento).ToList();
+             var movimentosData4 = (from x in movimentoModel where x.TypeMov == "E" && x.Check == 0 && (x.DataHora).Date <=data4 && (x.DataHora).Date >data5 select x.IdMovimento).ToList();
+             var movimentosData5 = (from x in movimentoModel where x.TypeMov == "E" && x.Check == 0 && (x.DataHora).Date <=data5 && (x.DataHora).Date >=data6 select x.IdMovimento).ToList();
+
+            var movimentosCountData = movimentosData.Count();
+            var movimentosCountData1 = movimentosData1.Count();
+            var movimentosCountData2 = movimentosData2.Count();
+            var movimentosCountData3 = movimentosData3.Count();
+            var movimentosCountData4 = movimentosData4.Count();
+            var movimentosCountData5 = movimentosData5.Count();
             
-            
-            return movimentoAlert;
+            return Ok(new
+                 {
+                    mes = movimentosCountData,
+                    mes1 = movimentosCountData1,
+                    mes2 = movimentosCountData2,
+                    mes3 = movimentosCountData3,
+                    mes4 = movimentosCountData4,
+                    mes5 = movimentosCountData5,
+                    });
         }
-        */
+        
         
         // PUT: api/Movimento/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+       
         [Authorize(Roles = "1")]//Só podem editar os Admins
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovimentoModel(int id, MovimentoModel movimentoModel)
