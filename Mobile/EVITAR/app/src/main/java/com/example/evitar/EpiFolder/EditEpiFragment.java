@@ -16,12 +16,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.evitar.Colaborador;
-import com.example.evitar.LoginFolder.LoginActivity;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
 

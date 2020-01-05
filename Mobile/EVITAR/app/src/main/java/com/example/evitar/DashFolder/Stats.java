@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.DashFolder;
 
 public class Stats {
 

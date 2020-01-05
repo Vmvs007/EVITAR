@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.HomeFolder;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,15 +12,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.evitar.DashFolder.Stats;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiFragment;
+import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
+import com.github.mikephil.charting.charts.BarLineChartBase;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +54,15 @@ public class HomeFragment extends Fragment {
     private int movDay;
 
     SharedPreferences mUser;
+
+    private LastMonths lm;
+
+    private String[] meses={"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+
+    private Integer currentMes;
+    private Date currentTime;
+
+    private int count;
 
 
 
@@ -109,9 +130,10 @@ public class HomeFragment extends Fragment {
         TextView nome=mContentView.findViewById(R.id.nome);
         TextView timeday=mContentView.findViewById(R.id.timeday);
 
-        Date currentTime = Calendar.getInstance().getTime();
+        currentTime = Calendar.getInstance().getTime();
         DateFormat dateFormat1 = new SimpleDateFormat("HH");
         Integer hora =Integer.parseInt(dateFormat1.format(currentTime));
+
         String tipodia="Good Day,";
 
         if (hora>6 && hora<13){
@@ -125,8 +147,103 @@ public class HomeFragment extends Fragment {
         timeday.setText(tipodia);
         nome.setText(mUser.getString("nome", "Undefined"));
 
+
+
+        getMeses();
+
+
+
+
+
         return mContentView;
     }
+
+    private void getMeses() {
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        DateFormat dateFormat2 = new SimpleDateFormat("MM");
+        currentMes =Integer.parseInt(dateFormat2.format(currentTime));
+        String strDate = dateFormat.format(currentTime);
+        Call<LastMonths> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getLastMonths("Bearer "+mUser.getString("token", ""), strDate);
+        call.enqueue(new Callback<LastMonths>() {
+            @Override
+            public void onResponse(Call<LastMonths> call, Response<LastMonths> response) {
+                Log.d("cc", response.toString());
+                if(response.code()==200){
+                    lm=response.body();
+                    Integer[] warnings={lm.getMes5(),lm.getMes4(),lm.getMes3(),lm.getMes2(),lm.getMes1(),lm.getMes()};
+                    count=0;
+
+                    LineChart chart = (LineChart) mContentView.findViewById(R.id.chart);
+                    List<Entry> entries = new ArrayList<Entry>();
+
+                    ArrayList<String> xLabel = new ArrayList<>();
+                    for (int i =0; i<6 ; i++) {
+                        entries.add(new Entry(i, warnings[i] ) );
+                        xLabel.add(meses[currentMes-1]);
+                        currentMes--;
+                        if (currentMes==0){
+                            currentMes=12;
+                        }
+                    }
+                    ArrayList novoArray=reverseArrayList(xLabel);
+
+                    LineDataSet dataSet = new LineDataSet(entries, "Monthly Warnings");
+                    LineData lineData = new LineData(dataSet);
+
+                    ValueFormatter xAxisFormatter = new MonthAxisValueFormatter(chart,novoArray);
+                    XAxis xAxis = chart.getXAxis();
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis.setDrawGridLines(false);
+                    xAxis.setGranularity(1f);
+                    xAxis.setLabelCount(6);
+                    xAxis.setValueFormatter(xAxisFormatter);
+
+                    chart.setData(lineData);
+                    chart.invalidate();
+
+
+
+
+
+
+                }else{
+                    Toast.makeText(mContext, "Fail" + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LastMonths> call, Throwable t) {
+                Toast.makeText(mContext, "Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public class MonthAxisValueFormatter extends ValueFormatter {
+        private final LineChart chart;
+        private final ArrayList<String> xLabel;
+        public MonthAxisValueFormatter(LineChart chart, ArrayList<String> xLabel) {
+            this.chart = chart;
+            this.xLabel = xLabel;
+        }
+        @Override
+        public String getFormattedValue(float value) {
+            return xLabel.get((int)value);
+        }
+    }
+
+    public ArrayList<String> reverseArrayList(ArrayList<String> alist)
+    {
+        ArrayList<String> revArrayList = new ArrayList<String>();
+        for (int i = alist.size() - 1; i >= 0; i--) {
+            revArrayList.add(alist.get(i));
+        }
+        return revArrayList;
+    }
+
+
 
     private void getStats() {
         Date currentTime = Calendar.getInstance().getTime();

@@ -1,13 +1,14 @@
 package com.example.evitar.Services;
 
-import com.example.evitar.Colaborador;
+import com.example.evitar.HomeFolder.LastMonths;
+import com.example.evitar.LoginFolder.Colaborador;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiAdd;
 import com.example.evitar.EpiFolder.TipoEpis;
 import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.LoginFolder.SignIn;
 import com.example.evitar.LoginFolder.User;
-import com.example.evitar.Stats;
+import com.example.evitar.DashFolder.Stats;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public interface Api {
             @Path("id") int id
     );
 
-    @GET("api/EPI")
+    @GET("api/EPI/view")
     Call<List<Epi>> getEpis(
             @Header("Authorization") String token
     );
@@ -70,6 +71,12 @@ public interface Api {
 
     @GET("api/Movimento/Entradas/{data}")
     Call<List<Movimento>> getMovimentosporDia(
+            @Header("Authorization") String token,
+            @Path("data") String data
+    );
+
+    @GET("api/Movimento/NumeroWarnigs/{data}")
+    Call<LastMonths> getLastMonths(
             @Header("Authorization") String token,
             @Path("data") String data
     );

@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.evitar.Colaborador;
 import com.example.evitar.MenuActivity;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;

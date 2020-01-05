@@ -1,4 +1,4 @@
-package com.example.evitar;
+package com.example.evitar.DashFolder;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.evitar.MovimentosFolder.FlowAdapter;
 import com.example.evitar.MovimentosFolder.Movimento;
-import com.example.evitar.MovimentosFolder.MovimentoAdapter;
+import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
 
 import java.text.DateFormat;

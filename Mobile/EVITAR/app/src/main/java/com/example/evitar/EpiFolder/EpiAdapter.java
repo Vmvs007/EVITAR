@@ -1,9 +1,11 @@
 package com.example.evitar.EpiFolder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,9 +52,14 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
 
         TextView idEpi = viewHolder.idEpi;
         TextView nomeEpi = viewHolder.nomeEpi;
+        LinearLayout ll=viewHolder.ll;
 
         idEpi.setText(String.valueOf(epi.getIdEPI()));
         nomeEpi.setText(epi.getNomeEPI());
+
+        if (epi.getValido()==0){
+            ll.setBackgroundColor(Color.RED);
+        }
 
 
         viewHolder.bind(mEpi.get(position), listener);
@@ -64,16 +71,21 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
     public class EpiViewHolder extends RecyclerView.ViewHolder {
         public TextView idEpi;
         public TextView nomeEpi;
+        public LinearLayout ll;
 
         public EpiViewHolder(View itemView) {
             super(itemView);
             idEpi = itemView.findViewById(R.id.idEpi);
             nomeEpi = itemView.findViewById(R.id.nomeEpi);
+            ll= itemView.findViewById(R.id.linearLayout);
         }
 
         public void bind(final Epi epi, final OnItemClickListener listener) {
             idEpi.setText(String.valueOf(epi.getIdEPI()));
             nomeEpi.setText(epi.getNomeEPI());
+            if (epi.getValido()==0){
+                ll.setBackgroundColor(Color.RED);
+            }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

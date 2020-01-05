@@ -22,7 +22,7 @@ import com.example.evitar.MovimentosFolder.FlowAdapter;
 import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
-import com.example.evitar.Stats;
+import com.example.evitar.DashFolder.Stats;
 import java.util.List;
 
 import retrofit2.Call;
