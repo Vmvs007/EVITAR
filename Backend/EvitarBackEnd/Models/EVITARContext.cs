@@ -51,6 +51,11 @@ namespace EvitarBackEnd.Models
             eb.HasNoKey();
             eb.ToView("EPICargoNecModelViews");
         });
+         builder.Entity<WarningsMovModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("WarningsMovModelView");
+        });
         }
         
         public DbSet<ColaboradorModel> ColaboradorModels { get; set; }
@@ -68,6 +73,6 @@ namespace EvitarBackEnd.Models
         public DbSet<MovEPIModelView> MovEPIModelViews{get;set;}
         public DbSet<EPICargoNecModelView> EPICargoNecModelViews{get;set;}
 
-
+        public DbSet<WarningsMovModelView> WarningsMovModelViews{get;set;}
     }
 }

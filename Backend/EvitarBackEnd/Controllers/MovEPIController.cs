@@ -22,11 +22,11 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/MovEPI
-        //[Authorize]
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovEPIModel>>> GetMovEPIModels()
+        public async Task<ActionResult<IEnumerable<WarningsMovModelView>>> GetMovEPIModels()
         {
-            return await _context.MovEPIModels.ToListAsync();
+            return await _context.WarningsMovModelViews.ToListAsync();
         }
 
         // GET: api/MovEPI/5

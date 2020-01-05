@@ -26,7 +26,9 @@ namespace EvitarBackEnd.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EPIModel>>> GetEPIModels()
         {
-            return await _context.EPIModels.ToListAsync();
+            var epis= await _context.EPIModels.ToListAsync();
+            var TodosEpis= epis.OrderByDescending(x=>x.Valido).ToList();
+            return TodosEpis;
         }
 
         // GET: api/EPI/5
