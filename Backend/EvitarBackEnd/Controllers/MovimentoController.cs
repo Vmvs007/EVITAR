@@ -80,9 +80,9 @@ namespace EvitarBackEnd.Controllers
                 return NotFound();
             }
         
-            var movimentoAlert = (from x in movimentoModel where x.Check == 0 && x.DataHora == data select x).ToList();
-
-            return movimentoAlert;
+            var movimentoAlert = (from x in movimentoModel where (x.DataHora).Date == data && x.Check==1 select x).ToList();
+            var novo = movimentoAlert.OrderByDescending(x=>x.IdMovimento).ToList();
+            return novo;
         }
 
          
@@ -99,9 +99,9 @@ namespace EvitarBackEnd.Controllers
                 return NotFound();
             }
         
-            var movimentoAlert = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date == data select x).ToList();
-
-            return movimentoAlert;
+            var movimentoAlert = (from x in movimentoModel where (x.DataHora).Date == data select x).ToList();
+            var novo = movimentoAlert.OrderByDescending(x=>x.IdMovimento).ToList();
+            return novo;
         }
 
         [Authorize] //Podem todos ver desde que estejam autenticados 
@@ -135,8 +135,29 @@ namespace EvitarBackEnd.Controllers
                     MovimentosSemanais = movimentoWeek
                     });
         }
-       
 
+        /*AINDA EM PREPARAÇÂO
+        [Authorize] //Podem todos ver desde que estejam autenticados 
+        [Route("NumeroWarnigs")]
+        [HttpGet]
+        public async Task<int> GetNumerodeWarnigs6Meses(DateTime data)
+        {
+            
+           
+            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
+
+            if (movimentoModel == null)
+            {
+                return 0;
+            }
+            
+
+            var movimentoAlert = (from x in movimentoModel select ( x.IdColaborador)).ToList();
+            
+            
+            return movimentoAlert;
+        }
+        */
         
         // PUT: api/Movimento/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
