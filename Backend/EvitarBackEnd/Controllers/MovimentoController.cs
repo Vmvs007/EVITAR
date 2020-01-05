@@ -92,18 +92,17 @@ namespace EvitarBackEnd.Controllers
         [Authorize] //Podem todos ver desde que estejam autenticados 
         [Route("alert/{data}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovimentoModelView>>> GetMovimentoModelAlert(DateTime data)
+        public async Task<ActionResult<IEnumerable<AlertModelView>>> GetMovimentoModelAlert(DateTime data)
         {
            
-            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
+            var movimentoModel = await _context.AlertViews.ToListAsync();
 
             if (movimentoModel == null)
             {
                 return NotFound();
             }
         
-            var movimentoAlert = (from x in movimentoModel where (x.DataHora).Date == data && x.Check==0 select x).ToList();
-            var novo = movimentoAlert.OrderByDescending(x=>x.IdMovimento).ToList();
+            var novo = movimentoModel.OrderByDescending(x=>x.IdMovimento).ToList();
             return novo;
         }
 
