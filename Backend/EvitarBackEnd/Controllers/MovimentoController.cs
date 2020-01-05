@@ -44,27 +44,6 @@ namespace EvitarBackEnd.Controllers
             return movimentoModel;
         }
 
-        // GET: api/Movimento/5
-        [Route("search")]
-        [Authorize] //Podem todos ver desde que estejam autenticados 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovimentoModel>>> GetMovimentoModelData(int id)
-        {
-            // var movimentoModel = await _context.MovimentoModels.FromSql("SELECT * From dbo.MovimentoModels WHERE DataHora > 01/11/2019 and DataHora < 31/11/2019 ").ToList();
-            var DB = await _context.MovimentoModels.ToListAsync();
-            DateTime dataI = new DateTime(2019, 11, 01);
-            DateTime dataF = new DateTime(2019, 11, 30);
-
-            var movimentoModelAux = from x in DB where x.DataHora > dataI && x.DataHora < dataF select x;
-            var movimentoModel = movimentoModelAux.ToList();
-
-            if (movimentoModel == null)
-            {
-                return NotFound();
-            }
-
-            return movimentoModel;
-        }
 
         [Route("view")]
         [Authorize] //Podem todos ver desde que estejam autenticados 
@@ -126,43 +105,37 @@ namespace EvitarBackEnd.Controllers
         }
 
         [Authorize] //Podem todos ver desde que estejam autenticados 
-        [Route("EntradasDiaria/{data}")]
+        [Route("Stats/{data}")]
         [HttpGet]
-        public async Task<int> GetMovimentoModelEntradasDiarias(DateTime data)
+        public async Task<IActionResult> GetMovimentoModelEntradasDiarias(DateTime data)
         {
             
-           
             var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
+
+            DateTime data1 = data.AddDays(-7);
 
             if (movimentoModel == null)
             {
-                return 0;
+                return BadRequest(new { message = "Sem moviemntos" }); 
             }
-        
-            var movimentoAlert = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date == data select ( x.IdColaborador)).ToList();
-            var movimentoAlert1=movimentoAlert.Distinct().Count();
-            
-            return movimentoAlert1;
-        }
-        [Authorize] //Podem todos ver desde que estejam autenticados 
-        [Route("EntradasIntervalo/{data}/{data1}")]
-        [HttpGet]
-        public async Task<int> GetMovimentoModelEntradasIntervaloDatas(DateTime data, DateTime data1)
-        {
-            
-           
-            var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
 
-            if (movimentoModel == null)
-            {
-                return 0;
-            }
-        
-            var movimentoAlert = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date >=data && (x.DataHora).Date <=data1 select ( x.IdColaborador)).ToList();
-            var movimentoAlert1=movimentoAlert.Distinct().Count();
+
+            var movimentosWeek = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date <=data && (x.DataHora).Date >=data1 select ( x.IdColaborador, (x.DataHora).Date)).ToList();
+            var movimentosDay = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date == data select ( x.IdColaborador)).ToList();
+            var movimentosAlert = (from x in movimentoModel where x.TypeMov == "E" && (x.DataHora).Date == data && x.Check == 0 select ( x.IdMovimento)).ToList();
+
+            var movimentoWeek = movimentosWeek.Distinct().Count();
+            var movimentoDay = movimentosDay.Distinct().Count();
+            var movimentoAlert = movimentosAlert.Distinct().Count(); 
             
-            return movimentoAlert1;
+             return Ok(new
+                 {
+                    AlertasDiarios = movimentoAlert,
+                    MovimentosDiarios = movimentoDay,
+                    MovimentosSemanais = movimentoWeek
+                    });
         }
+       
 
         
         // PUT: api/Movimento/5

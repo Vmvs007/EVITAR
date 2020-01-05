@@ -54,6 +54,7 @@ namespace EvitarBackEnd.Controllers
         {
             List<String> Retorno = new List<String>();
             var colaboradorModel = await _context.ColaboradorModels.FindAsync(idColaborador);
+            Boolean movAdded = false;
 
             if (colaboradorModel == null)
             {
@@ -66,8 +67,8 @@ namespace EvitarBackEnd.Controllers
             movimentoModel.DataHora = DateTime.Now;
             movimentoModel.TypeMov = "E";
             movimentoModel.Check = 1;
-         /*   _context.MovimentoModels.Add(movimentoModel);
-            await _context.SaveChangesAsync();*/
+            /*   _context.MovimentoModels.Add(movimentoModel);
+               await _context.SaveChangesAsync();*/
 
             Retorno.Add("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol + ",está tudo correcto");
 
@@ -90,15 +91,11 @@ namespace EvitarBackEnd.Controllers
                 _context.MovimentoModels.Add(movimentoModel);
                 await _context.SaveChangesAsync();
                 return Retorno.Distinct().ToList();
-                
-               }
+
+            }
 
             else if (Compare == false)
             {
-
-                movimentoModel.Check = 0;
-                _context.MovimentoModels.Add(movimentoModel);
-                await _context.SaveChangesAsync();
 
 
                 MovEPIModel movEPI = new MovEPIModel();
@@ -106,6 +103,15 @@ namespace EvitarBackEnd.Controllers
                 {
                     if (idEPIs.ToList().Contains(epiNecessariosFinal[i]) == false)
                     {
+
+                        if (movAdded == false)
+                        {
+                            movimentoModel.Check = 0;
+                            _context.MovimentoModels.Add(movimentoModel);
+                            await _context.SaveChangesAsync();
+                            movAdded = true;
+
+                        }
                         var epimodel = await _context.TipoEPIModels.FindAsync(epiNecessariosFinal[i]);
                         Retorno.Remove("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol + ",está tudo correcto");
                         Retorno.Add("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol);
@@ -119,6 +125,8 @@ namespace EvitarBackEnd.Controllers
 
                     }
                 }
+                 _context.MovimentoModels.Add(movimentoModel);
+                 await _context.SaveChangesAsync();
             }
 
             return Retorno.Distinct().ToList(); //colaboradorModel.PrimeiroNomeCol.ToString();
