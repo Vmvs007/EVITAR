@@ -34,7 +34,7 @@ namespace EvitarBackEnd.Controllers
         // GET: api/EPI/5
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<EPIModel>> GetEPIModel(int id)
+        public async Task<ActionResult<EPIModel>> GetEPIModel(long id)
         {
             var ePIModel = await _context.EPIModels.FindAsync(id);
 
@@ -49,7 +49,7 @@ namespace EvitarBackEnd.Controllers
         [Route("view")]
         [Authorize] //Podem todos ver desde que estejam autenticados 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(int id)
+        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(long id)
         {
 
             var epiModelAux = await _context.EPIModelViews.ToListAsync();
@@ -70,7 +70,7 @@ namespace EvitarBackEnd.Controllers
         // more details see https://aka.ms/RazorPagesCRUD.
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEPIModel(int id, EPIModel ePIModel)
+        public async Task<IActionResult> PutEPIModel(long id, EPIModel ePIModel)
         {
             if (id != ePIModel.IdEPI)
             {
@@ -117,7 +117,7 @@ namespace EvitarBackEnd.Controllers
         // DELETE: api/EPI/5
         [Authorize(Roles = "1, 2, 3")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<EPIModel>> DeleteEPIModel(int id)
+        public async Task<ActionResult<EPIModel>> DeleteEPIModel(long id)
         {
             var ePIModel = await _context.EPIModels.FindAsync(id);
             if (ePIModel == null)
@@ -131,7 +131,7 @@ namespace EvitarBackEnd.Controllers
             return ePIModel;
         }
 
-        private bool EPIModelExists(int id)
+        private bool EPIModelExists(long id)
         {
             return _context.EPIModels.Any(e => e.IdEPI == id);
         }

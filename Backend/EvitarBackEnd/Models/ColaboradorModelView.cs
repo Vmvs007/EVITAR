@@ -6,7 +6,7 @@ namespace EvitarBackEnd.Models{
     public class ColaboradorModelView{
 
         [Key]
-        public int IdColaborador {get;set;}
+        public long IdColaborador {get;set;}
         public string NomeColaborador {get;set;}
         public string PrimeiroNomeCol {get;set;}
         public string UltimoNomeCol {get;set;}

@@ -10,7 +10,7 @@ namespace EvitarBackEnd.Services
 {
     public interface IUserService
     {
-        string userRole(int idColaborador);
+        string userRole(long idColaborador);
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
         User GetById(int id);
@@ -29,7 +29,7 @@ namespace EvitarBackEnd.Services
         }
 
 
-        public string userRole(int idColaborador)
+        public string userRole(long idColaborador)
         {
             var DB =  _context.ColaboradorModels.ToList();
             var roleT = (from x in DB where x.IdColaborador == idColaborador select x.IdCargo).Single();

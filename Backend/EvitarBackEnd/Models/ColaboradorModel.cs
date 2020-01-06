@@ -7,8 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EvitarBackEnd.Models
 {
     public class ColaboradorModel{
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int IdColaborador {get;set;}
+        [Key]
+        public long IdColaborador {get;set;}
         
         [StringLength(150)]
         public string NomeColaborador {get;set;}

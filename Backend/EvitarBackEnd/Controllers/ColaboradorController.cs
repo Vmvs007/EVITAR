@@ -34,7 +34,7 @@ namespace EvitarBackEnd.Controllers
         // GET: api/Colaborador/5
         [Authorize]//Toda a gente pode ver os colaboradores
         [HttpGet("{idColaborador}")]
-        public async Task<ActionResult<ColaboradorModel>> GetColaboradorModel(int idColaborador)
+        public async Task<ActionResult<ColaboradorModel>> GetColaboradorModel(long idColaborador)
         {
             var colaboradorModel = await _context.ColaboradorModels.FindAsync(idColaborador);
 
@@ -50,7 +50,7 @@ namespace EvitarBackEnd.Controllers
         //  [Authorize]//Toda a gente pode ver os colaboradores
         [Route("sensor/{idColaborador}")]
         [HttpGet]
-        public async Task<List<String>> GetEntradaColaborador(int idColaborador, [FromQuery] int[] idEPIs)
+        public async Task<List<String>> GetEntradaColaborador(long idColaborador, [FromQuery] long[] idEPIs)
         {
             List<String> Retorno = new List<String>();
             var colaboradorModel = await _context.ColaboradorModels.FindAsync(idColaborador);
@@ -88,6 +88,7 @@ namespace EvitarBackEnd.Controllers
 
             List<int> idEPIsFinal=new List<int>();
             List<int> EPIsInv=new List<int>();
+            
 
             for(int i=0;i<idEPIs.Length;i++){
                 
@@ -113,6 +114,7 @@ namespace EvitarBackEnd.Controllers
 
             //Comparação dos epis necessarios e os epis que passaram no sensor
 
+            
             var Compare = idEPIsFinal.SequenceEqual(epiNecessariosFinal);
             if (Compare == true)
             {
@@ -176,7 +178,7 @@ namespace EvitarBackEnd.Controllers
         // more details see https://aka.ms/RazorPagesCRUD.
         [Authorize(Roles = "1, 2")]//Pode editar Colaboradores Admins e RH
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutColaboradorModel(int id, ColaboradorModel colaboradorModel)
+        public async Task<IActionResult> PutColaboradorModel(long id, ColaboradorModel colaboradorModel)
         {
             if (id != colaboradorModel.IdColaborador)
             {
@@ -220,7 +222,7 @@ namespace EvitarBackEnd.Controllers
         // DELETE: api/Colaborador/5
         [Authorize(Roles = "1, 2")]//Pode remover colaborador os Admins e o RH
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ColaboradorModel>> DeleteColaboradorModel(int id)
+        public async Task<ActionResult<ColaboradorModel>> DeleteColaboradorModel(long id)
         {
 
             var colaboradorModel = await _context.ColaboradorModels.FindAsync(id);
@@ -235,7 +237,7 @@ namespace EvitarBackEnd.Controllers
             return colaboradorModel;
         }
 
-        private bool ColaboradorModelExists(int id)
+        private bool ColaboradorModelExists(long id)
         {
             return _context.ColaboradorModels.Any(e => e.IdColaborador == id);
         }
