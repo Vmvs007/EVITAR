@@ -125,8 +125,14 @@ namespace EvitarBackEnd.Controllers
 
                     }
                 }
-                 _context.MovimentoModels.Add(movimentoModel);
-                 await _context.SaveChangesAsync();
+                if (movAdded == false)
+                {
+                    movimentoModel.Check = 0;
+                    _context.MovimentoModels.Add(movimentoModel);
+                    await _context.SaveChangesAsync();
+                    movAdded = true;
+
+                }
             }
 
             return Retorno.Distinct().ToList(); //colaboradorModel.PrimeiroNomeCol.ToString();
