@@ -74,10 +74,12 @@ namespace EvitarBackEnd.Controllers
 
 
 
+
             var epiNecessarios = await _context.EPICargoNecModelViews.ToListAsync();
             var epiModel= await _context.EPIModels.ToListAsync();
 
             //Criação da query para verificar quais os epis necessarios para o cargo do Colaborador
+
 
             var epiNecessariosQuery = (from x in epiNecessarios where x.IdCargo == colaboradorModel.IdCargo select x.IdTipoEpi).ToList();
 
@@ -85,14 +87,29 @@ namespace EvitarBackEnd.Controllers
             var epiNecessariosFinal = epiNecessariosQuery.ToArray();
 
             List<int> idEPIsFinal=new List<int>();
+            List<int> EPIsInv=new List<int>();
 
             for(int i=0;i<idEPIs.Length;i++){
                 
-                var tipoepif = (from x in epiModel where x.IdEPI == idEPIs[i] select x.IdTipoEPI);
+                var tipoepif = (from x in epiModel where x.IdEPI == idEPIs[i] && x.Valido == 1 select x.IdTipoEPI).ToList();
                 
-                idEPIsFinal.Add(tipoepif.First());
+                if(tipoepif.Any()){
+                    idEPIsFinal.Add(tipoepif.First());
+                }
                 
             }
+
+
+             for(int i=0;i<idEPIs.Length;i++){
+                
+                var epiInvAux = (from x in epiModel where x.IdEPI == idEPIs[i] && x.Valido == 0 select x.IdTipoEPI).ToList();
+                
+                if(epiInvAux.Any()){
+                EPIsInv.Add(epiInvAux.First());
+                }
+            }
+
+
 
             //Comparação dos epis necessarios e os epis que passaram no sensor
 
@@ -107,8 +124,6 @@ namespace EvitarBackEnd.Controllers
 
             else if (Compare == false)
             {
-
-
                 MovEPIModel movEPI = new MovEPIModel();
                 for (int i = 0; i < epiNecessariosFinal.Length; i++)
                 {
@@ -145,6 +160,13 @@ namespace EvitarBackEnd.Controllers
 
                 }
             }
+            if(EPIsInv.ToArray().Length >0){
+            Retorno.Add("EPIs fora de validade:");
+            for(int i=0; i<EPIsInv.ToArray().Length; i++){
+                var epimodel = await _context.TipoEPIModels.FindAsync(EPIsInv.ToArray()[i]);
+                Retorno.Add(epimodel.NomeTipoEPI.ToString());
+            }
+        }
 
             return Retorno.Distinct().ToList(); //colaboradorModel.PrimeiroNomeCol.ToString();
         }
