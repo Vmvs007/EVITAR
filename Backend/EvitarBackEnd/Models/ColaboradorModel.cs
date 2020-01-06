@@ -2,11 +2,12 @@
 using System.Globalization;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; 
 
 namespace EvitarBackEnd.Models
 {
     public class ColaboradorModel{
-        [Key]
+        [Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int IdColaborador {get;set;}
         
         [StringLength(150)]

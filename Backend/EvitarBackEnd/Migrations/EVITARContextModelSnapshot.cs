@@ -69,9 +69,7 @@ namespace EvitarBackEnd.Migrations
             modelBuilder.Entity("EvitarBackEnd.Models.ColaboradorModel", b =>
                 {
                     b.Property<int>("IdColaborador")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataNasc")
                         .HasColumnType("datetime2");
@@ -138,9 +136,7 @@ namespace EvitarBackEnd.Migrations
             modelBuilder.Entity("EvitarBackEnd.Models.EPIModel", b =>
                 {
                     b.Property<int>("IdEPI")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataRegistoEPI")
                         .HasColumnType("datetime2");
