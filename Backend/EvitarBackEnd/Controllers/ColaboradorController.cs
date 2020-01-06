@@ -75,6 +75,7 @@ namespace EvitarBackEnd.Controllers
 
 
             var epiNecessarios = await _context.EPICargoNecModelViews.ToListAsync();
+            var epiModel= await _context.EPIModels.ToListAsync();
 
             //Criação da query para verificar quais os epis necessarios para o cargo do Colaborador
 
@@ -83,9 +84,19 @@ namespace EvitarBackEnd.Controllers
 
             var epiNecessariosFinal = epiNecessariosQuery.ToArray();
 
+            List<int> idEPIsFinal=new List<int>();
+
+            for(int i=0;i<idEPIs.Length;i++){
+                
+                var tipoepif = (from x in epiModel where x.IdEPI == idEPIs[i] select x.IdTipoEPI);
+                
+                idEPIsFinal.Add(tipoepif.First());
+                
+            }
+
             //Comparação dos epis necessarios e os epis que passaram no sensor
 
-            var Compare = idEPIs.SequenceEqual(epiNecessariosFinal);
+            var Compare = idEPIsFinal.SequenceEqual(epiNecessariosFinal);
             if (Compare == true)
             {
                 _context.MovimentoModels.Add(movimentoModel);
@@ -101,7 +112,7 @@ namespace EvitarBackEnd.Controllers
                 MovEPIModel movEPI = new MovEPIModel();
                 for (int i = 0; i < epiNecessariosFinal.Length; i++)
                 {
-                    if (idEPIs.ToList().Contains(epiNecessariosFinal[i]) == false)
+                    if (idEPIsFinal.ToList().Contains(epiNecessariosFinal[i]) == false)
                     {
 
                         if (movAdded == false)
