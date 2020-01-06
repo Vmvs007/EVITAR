@@ -17,6 +17,7 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
+import ErrorBoundary from './components/ErrorBoundary';
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
@@ -25,19 +26,23 @@ import "./assets/css/animate.min.css";
 import "./assets/sass/light-bootstrap-dashboard-react.scss?v=1.3.0";
 import "./assets/css/demo.css";
 import "./assets/css/pe-icon-7-stroke.css";
-import "./assets/css/css.css";
+
 import AdminLayout from "layouts/Admin.jsx";
 import Login from 'layouts/Login.jsx';
+import "./assets/css/css.css";
+
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Route path="/admin" render={props => <AdminLayout {...props} />} />
-      <Route path="/login" render={props => <Login {...props}/>}/>
-      <Redirect from="/" to="/admin/home" />
-      <Redirect from="/admin" to="/admin/user" />
-      <Redirect from="/admin/" to="/admin/user" />
-    </Switch>
-  </BrowserRouter>,
+  <ErrorBoundary>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/admin" render={props => <AdminLayout {...props} />} />
+        <Route path="/login" render={props => <Login {...props} />} />
+        <Redirect from="/" to="/admin/home" />
+        <Redirect from="/admin" to="/admin/user" />
+        <Redirect from="/admin/" to="/admin/user" />
+      </Switch>
+    </BrowserRouter>
+  </ErrorBoundary>,
   document.getElementById("root")
 );
 

@@ -17,14 +17,15 @@
 */
 import React, { Component } from "react";
 import { Grid, Row, Col, Table } from "react-bootstrap";
-import {Link } from "react-router-dom";
-import AuthService from "../components/Authentication/AuthService.js";
+//import { employees } from "variables/Variables.jsx";
+import AuthService from "components/Authentication/AuthService.js";
 import Card from "components/Card/Card.jsx";
+import {Link } from "react-router-dom";
 class TableList extends Component {
   constructor(props) {
     super(props);
     this.state={
-      thArray:["Nome","Zona","Details"],
+      thArray:["Nome","ID","Job","Details"],
       data:[],
       isLoading:false
     }
@@ -33,7 +34,7 @@ class TableList extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     const Auth = new AuthService();
-    Auth.fetch("https://evitar.azurewebsites.net/api/Cargo", {
+    Auth.fetch("https://evitar.azurewebsites.net/api/Colaborador/View", {
     method: 'GET'
 }).then(result => this.setState({
   data: result,
@@ -51,8 +52,9 @@ class TableList extends Component {
       <Grid fluid>
         <Row>
           <Col md={12}>
+            <Link className="right" to={"employees/register"}><i class="fa fa-plus "></i> Adicionar</Link>
             <Card
-              title="Job Management"
+              title="Employee Management"
               ctTableFullWidth
               ctTableResponsive
               content={
@@ -66,13 +68,15 @@ class TableList extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.data.map((prop, key) => {
-                      if(prop["idCargo"]===1)return null;
+                    {
+                    this.state.data.map(element => {
+                      if(element["idCargo"]===1)return null;
                       return (
-                        <tr key={key}>
-                    <td>{prop["nomeCargo"]}</td>
-                    <td>{prop["zonaCargo"]}</td>
-                    <td><Link to={"/admin/jobs/" + prop["idCargo"]}>Detalhes</Link></td>
+                        <tr>
+                    <td>{element["nomeColaborador"]}</td>
+                    <td>{element["idColaborador"]}</td>
+                    <td>{element["nomeCargo"]}</td>
+                    <td><Link to={"employees/"+element["idColaborador"]}>Details</Link></td>
                         </tr>
                       );
                     })}

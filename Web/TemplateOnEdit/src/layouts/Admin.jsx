@@ -22,7 +22,6 @@ import NotificationSystem from "react-notification-system";
 import AdminNavbar from "components/Navbars/AdminNavbar";
 //import Footer from "components/Footer/Footer";
 import Sidebar from "components/Sidebar/Sidebar";
-//import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 
 import { style } from "variables/Variables.jsx";
 
@@ -45,7 +44,7 @@ class Admin extends Component {
     };
     
   }
-  /*handleNotificationClick = position => {
+  handleNotificationClick = position => {
     var color = Math.floor(Math.random() * 4 + 1);
     var level;
     switch (color) {
@@ -76,7 +75,7 @@ class Admin extends Component {
       position: position,
       autoDismiss: 15
     });
-  };*/
+  };
   getRoutes = routes => {
     return routes.map((prop, key) => {
       if(Auth.roleInUsers(prop.users)){
@@ -149,40 +148,7 @@ class Admin extends Component {
         }
     }
 }
-  /*componentDidMount() {
-    this.setState({ _notificationSystem: this.refs.notificationSystem });
-    var _notificationSystem = this.refs.notificationSystem;
-    var color = Math.floor(Math.random() * 4 + 1);
-    var level;
-    switch (color) {
-      case 1:
-        level = "success";
-        break;
-      case 2:
-        level = "warning";
-        break;
-      case 3:
-        level = "error";
-        break;
-      case 4:
-        level = "info";
-        break;
-      default:
-        break;
-    }
-    _notificationSystem.addNotification({
-      title: <span data-notify="icon" className="pe-7s-gift" />,
-      message: (
-        <div>
-          Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for
-          every web developer.
-        </div>
-      ),
-      level: level,
-      position: "tr",
-      autoDismiss: 15
-    });//NOTIFICAÇAO POP UP 
-  }*/
+  
   componentDidUpdate(e) {
     if (
       window.innerWidth < 993 &&

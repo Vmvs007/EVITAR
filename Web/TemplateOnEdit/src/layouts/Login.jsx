@@ -19,14 +19,10 @@ class Login extends Component {
     handleFormSubmit(e){
         e.preventDefault();
       
-        console.log("ola")
         this.Auth.login(this.state.username,this.state.password)
             .then(res =>{
                 
                this.props.history.replace('/');
-            })
-            .catch(err =>{
-                alert(err);
             })
     }
     componentWillMount(){
@@ -36,8 +32,9 @@ class Login extends Component {
     render() {
         return (
             <div className="center">
-                <div className="card">
-                    <h1>Login</h1>
+                <div className="cardes">
+                    <h2 >EVITAR</h2>
+                    <p>Welcome back! Please login to your account.</p>
                     <form>
                         <input
                             className="form-item"

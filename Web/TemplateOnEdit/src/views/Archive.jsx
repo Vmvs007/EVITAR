@@ -20,22 +20,102 @@ import { Grid, Row, Col, Table } from "react-bootstrap";
 
 import Card from "components/Card/Card.jsx";
 import { StatsCard } from "components/StatsCard/StatsCard.jsx";
-import { thArray, tdArray } from "variables/Variables.jsx";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AuthService from "../components/Authentication/AuthService.js";
+import Moment from "moment";
 class TableList extends Component {
   state = {
+    thArray: ["Employee ID", "Name", "Date", "EPI Check"],
     ola: "coisaBoa",
-    startDate: new Date()
+    startDate: new Date(),
+    cards: {},
+    isLoading1: false,
+    isLoading2: false,
+    data: []
   };
 
   handleChange = date => {
     this.setState({
       startDate: date,
-      ola: date.toString()
+      ola: date.toString(),
+      isLoading1: true,
+      isLoading2: true
     });
+    const Auth = new AuthService();
+    Auth.fetch(
+      "https://evitar.azurewebsites.net/api/movimento/stats/" +
+        Moment(date).format("YYYY-MM-DD"),
+      {
+        method: "GET"
+      }
+    )
+      .then(result => {
+        this.setState({
+          cards: result,
+          isLoading1: false
+        });
+      })
+      .catch(error => alert("Error! " + error.message));
+    Auth.fetch(
+      "https://evitar.azurewebsites.net/api/movimento/entradas/" +
+        Moment(date).format("YYYY-MM-DD"),
+      {
+        method: "GET"
+      }
+    )
+      .then(result => {
+        console.log(result + "ola");
+        this.setState({
+          data: result,
+          isLoading2: false
+        });
+      })
+      .catch(error => alert("Error! " + error.message));
   };
+  componentDidMount() {
+    console.log("ola22222")
+    this.setState({ isLoading1: true, isLoading2: true });
+    const Auth = new AuthService();
+    Auth.fetch(
+      "https://evitar.azurewebsites.net/api/movimento/stats/" +
+        Moment(this.state.startDate).format("YYYY-MM-DD"),
+      {
+        method: "GET"
+      }
+    )
+      .then(result => {
+        this.setState({
+          cards: result,
+          isLoading1: false
+        });
+      })
+      .catch(error => alert("Error! " + error.message));
+    Auth.fetch(
+      "https://evitar.azurewebsites.net/api/movimento/entradas/" +
+        Moment(this.state.startDate).format("YYYY-MM-DD"),
+      {
+        method: "GET"
+      }
+    )
+      .then(result => {
+        this.setState({
+          data: result,
+          isLoading2: false
+        });
+      })
+      .catch(error => alert("Error! " + error.message));
+  }
   render() {
+    if (this.state.isLoading1 || this.state.isLoading2) {
+      return (
+        <div className="content">
+          <i className="fa fa-spinner fa-spin fa-3x"></i>
+          <p>isLoading...</p>
+        </div>
+      );
+    }
     return (
       <div className="content">
         <Grid fluid>
@@ -49,13 +129,14 @@ class TableList extends Component {
                     selected={this.state.startDate}
                     onChange={this.handleChange}
                   />
-                } />
+                }
+              />
             </Col>
             <Col lg={4} sm={4}>
               <StatsCard
                 bigIcon={<i className="pe-7s-id text-warning" />}
                 statsText="Employee Attendance"
-                statsValue="5.252"
+                statsValue={this.state.cards.movimentosDiarios}
                 statsIcon={<i className="fa fa-clock-o" />}
                 statsIconText="Day"
               />
@@ -64,7 +145,7 @@ class TableList extends Component {
               <StatsCard
                 bigIcon={<i className="pe-7s-global text-danger" />}
                 statsText="EPI Warnings"
-                statsValue="420"
+                statsValue={this.state.cards.alertasDiarios}
                 statsIcon={<i className="fa fa-clock-o" />}
                 statsIconText="Day"
               />
@@ -79,22 +160,38 @@ class TableList extends Component {
                 ctTableResponsive
                 content={
                   <div className="tabela">
-
                     <Table striped hover>
                       <thead>
                         <tr>
-                          {thArray.map((prop, key) => {
+                          {this.state.thArray.map((prop, key) => {
                             return <th key={key}>{prop}</th>;
                           })}
                         </tr>
                       </thead>
                       <tbody>
-                        {tdArray.map((prop, key) => {
+                        {this.state.data.map((prop, key) => {
                           return (
                             <tr key={key}>
-                              {prop.map((prop, key) => {
-                                return <td key={key}>{prop}</td>;
-                              })}
+                              <td>{prop["idColaborador"]}</td>
+                              <td>
+                                {prop["primeiroNomeCol"] +
+                                  " " +
+                                  prop["ultimoNomeCol"]}
+                              </td>
+                              <td>
+                                {Moment(prop["dataHora"]).format(
+                                  "DD-MM-YYYY HH:mm"
+                                )}
+                              </td>
+                              {prop["check"] === 0 ? (
+                                <td style={{ backgroundColor: "red" }}>
+                                  ALERT
+                                </td>
+                              ) : (
+                                <td style={{ backgroundColor: "green" }}>
+                                  Check
+                                </td>
+                              )}
                             </tr>
                           );
                         })}
@@ -104,8 +201,6 @@ class TableList extends Component {
                 }
               />
             </Col>
-
-
           </Row>
         </Grid>
       </div>

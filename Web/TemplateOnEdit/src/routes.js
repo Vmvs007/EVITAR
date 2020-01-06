@@ -22,23 +22,30 @@ import UserProfile from "views/UserProfile.jsx";
 //import Icons from "views/Icons.jsx";
 //import Maps from "views/Maps.jsx";
 //import Notifications from "views/Notifications.jsx";
-import JobManagement from "views/JobManagement.jsx";
-import EPIManagement from "views/EpiManagement.jsx";
-import EmployeeManagement from "views/EmployeeManagement.jsx";
+import JobManagement from "views/Jobs/JobManagement.jsx";
+import JobDetails from "views/Jobs/JobDetails.jsx";
+import JobRegister from "views/Jobs/JobRegister.jsx";
+import EPIManagement from "views/Epis/EpiManagement.jsx";
+import EpiDetails from "views/Epis/EpiDetails.jsx";
+import EpiRegister from "views/Epis/EpiRegister.jsx";
+import EpiTypes from "views/Epis/Types.jsx";
+import EmployeeManagement from "views/Employee/EmployeeManagement.jsx";
+import EmployeeDetails from "views/Employee/EmployeeDetails.jsx";
+import EmployeeRegister from "views/Employee/EmployeeRegister.jsx";
 import Upgrade from "views/Upgrade.jsx";
 import Archive from "views/Archive.jsx";
 import Home from "views/Home.jsx";
-import EpiDetails from "views/EpiDetails.jsx";
-import JobDetails from "views/JobDetails.jsx";
+
+
 const dashboardRoutes = [
-  
+
   {
     path: "/home",
     name: "Home",
     icon: "pe-7s-home",
     component: Home,
     layout: "/admin",
-    users:["1","2","4"]
+    users: ["1", "2", "4"]
   },
   {
     path: "/dashboard",
@@ -46,63 +53,100 @@ const dashboardRoutes = [
     icon: "pe-7s-graph",
     component: Dashboard,
     layout: "/admin",
-    users:["1","2","4"]
+    users: ["1", "2", "4"]
   },
   {
-    path:"/archive",
-    name:"Archive",
-    icon:"pe-7s-date",
+    path: "/archive",
+    name: "Archive",
+    icon: "pe-7s-date",
     component: Archive,
     layout: "/admin",
-    users:["1","2","4"]
-  },
-  {
-    path:"/jobs/:id",
-    name:"Job Details",
-    component:JobDetails,
+    users: ["1", "2", "4"]
+  },{
+    path: "/jobs/register",
+    name: "Job Register",
+    icon: "pe-7s-portfolio",
+    component: JobRegister,
     layout: "/admin",
-    users:["1","2"],
-    invisible:true
+    users: ["1", "2"],
+    invisible: true
   },
   {
-    path:"/jobs",
-    name:"Job Management",
-    icon:"pe-7s-portfolio",
+    path: "/jobs/:id",
+    name: "Job Details",
+    component: JobDetails,
+    layout: "/admin",
+    users: ["1", "2"],
+    invisible: true
+  },
+  {
+    path: "/jobs",
+    name: "Job Management",
+    icon: "pe-7s-portfolio",
     component: JobManagement,
     layout: "/admin",
-    users:["1","2"]
+    users: ["1", "2"]
   },
+  
   {
-    path:"/employees/:id",
-    name:"Employee Details",
-    component:EmployeeDetails,
+    path: "/employees/register",
+    name: "Employee Register",
+    icon: "pe-7s-id",
+    component: EmployeeRegister,
     layout: "/admin",
-    users:["1","2"],
-    invisible:true
+    users: ["1", "2"],
+    invisible: true
   },
   {
-    path:"/employees",
-    name:"Employee Management",
-    icon:"pe-7s-id",
+    path: "/employees/:id",
+    name: "Employee Details",
+    component: EmployeeDetails,
+    layout: "/admin",
+    users: ["1", "2"],
+    invisible: true
+  },
+  {
+    path: "/employees",
+    name: "Employee Management",
+    icon: "pe-7s-id",
     component: EmployeeManagement,
     layout: "/admin",
-    users:["1","2"]
+    users: ["1", "2"]
   },
   {
-    path:"/epis/:id",
-    name:"EPI Details",
-    component:EpiDetails,
+    path: "/epis/types",
+    name: "EPI Types",
+    icon: "pe-7s-global",
+    component: EpiTypes,
     layout: "/admin",
-    users:["1","3"],
-    invisible:true
+    users: ["1", "3"],
+    invisible: true
   },
   {
-    path:"/epis",
-    name:"EPI Management",
-    icon:"pe-7s-global",
+    path: "/epis/register",
+    name: "EPI Register",
+    icon: "pe-7s-global",
+    component: EpiRegister,
+    layout: "/admin",
+    users: ["1", "3"],
+    invisible: true
+  },
+  {
+    path: "/epis/:id",
+    name: "EPI Details",
+    component: EpiDetails,
+    layout: "/admin",
+    users: ["1", "3"],
+    invisible: true
+  },
+  
+  {
+    path: "/epis",
+    name: "EPI Management",
+    icon: "pe-7s-global",
     component: EPIManagement,
     layout: "/admin",
-    users:["1","3"]
+    users: ["1", "3"]
   },
   
   {
@@ -111,8 +155,8 @@ const dashboardRoutes = [
     icon: "pe-7s-user",
     component: UserProfile,
     layout: "/admin",
-    invisible:true,
-    users:["1","2","3","4"]
+    invisible: true,
+    users: ["1", "2", "3", "4"]
   },
   /*{
     path:"/",
@@ -164,11 +208,12 @@ const dashboardRoutes = [
     icon: "pe-7s-home",
     component: Upgrade,
     layout: "/admin",
-    invisible:true,
-    users:["1","2","4"]
-    
+    invisible: true,
+    users: ["1", "2", "4"]
+
   }
-  
+
 ];
 
 export default dashboardRoutes;
+

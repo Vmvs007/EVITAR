@@ -3,7 +3,8 @@
 .center{
     font-family: 'Raleway', sans-serif;
     background-image: url("../img/Background.png");
-    background-size: cover;
+    background-repeat:no-repeat;
+    background-size:  50%;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -12,20 +13,28 @@
     align-items: center;
 }
 
-.card{
+.cardes{
     background-color: #fff;
     padding:2rem;
+    margin-left:50%;
+    border:none;
+    box-shadow: none;
 }
 
-.card > form{
+.cardes > form{
     display: flex;
     flex-direction: column;
 }
 
-.card h1{
+.cardes h2{
     text-align: center;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom:10px;
+    color: #403c7f;
+}
+.cardes p{
+    color: lightgray;
+    margin-bottom: 20px;
 }
 
 .form-item{
@@ -33,19 +42,19 @@
     padding: 5px;
     margin-bottom: 2rem;
     height: 30px;
-    width: 30rem;
-    border: 1px solid grey;
+    width: 100%;
 }
 
 .form-submit{
     font-family: 'Raleway', sans-serif;
     height: 35px;
     color: #fff;
-    background-color:rgba(51, 31, 234, 1);
+    background-color: #403c7f;
     border: none;
     letter-spacing: 0.2rem;
     transition: 0.3s opacity ease;
     cursor: pointer;
+    width: 100%;
 }
 .form-submit:hover{
    opacity: 0.6;

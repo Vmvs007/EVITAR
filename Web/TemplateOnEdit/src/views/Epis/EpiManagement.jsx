@@ -15,45 +15,65 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { Grid, Row, Col, Table } from "react-bootstrap";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 //import { epis } from "variables/Variables.jsx";
 import Moment from "moment";
-import AuthService from "../components/Authentication/AuthService.js";
+import AuthService from "../../components/Authentication/AuthService.js";
 import Card from "components/Card/Card.jsx";
-class TableList extends Component {
-  
+class EpiManagement extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      thArray: ["Nome", "ID", "Data Registo", "Data Validade", "Inspetor", "Detalhes"],
+      thArray: [
+        "Name",
+        "ID",
+        "Date Register",
+        "Date Valid",
+        "Inspector",
+        "Details"
+      ],
       data: [],
       isLoading: false
-    }
-
+    };
   }
   componentDidMount() {
+    Moment.locale("en");
     this.setState({ isLoading: true });
     const Auth = new AuthService();
     Auth.fetch("https://evitar.azurewebsites.net/api/EPI", {
-      method: 'GET'
-    }).then(result => this.setState({
-      data: result,
-      isLoading: false
-    })).catch(error => alert('Error! ' + error.message));
-
+      method: "GET"
+    })
+      .then(result =>
+        this.setState({
+          data: result,
+          isLoading: false
+        })
+      )
+      .catch(error => alert("Error! " + error.message));
   }
   render() {
-    Moment.locale('en');
+    
     if (this.state.isLoading) {
-      return (<div className="content"><i class="fa fa-spinner  fa-3x fa-spin "></i><p>isLoading...</p></div>)
+      return (
+        <div className="content">
+          <i class="fa fa-spinner  fa-3x fa-spin "></i>
+          <p>isLoading...</p>
+        </div>
+      );
     }
     return (
       <div className="content">
         <Grid fluid>
           <Row>
             <Col md={12}>
+            <div className="right">
+            <Link to={"epis/types"}>Epi Types   </Link>|
+            <Link to={"epis/register"}><i class="fa fa-plus "></i> Add</Link>
+            
+            
+            </div>
               <Card
                 title="EPI Management"
                 ctTableFullWidth
@@ -75,12 +95,21 @@ class TableList extends Component {
                               <td>{prop["nomeEPI"]}</td>
                               <td>{prop["idEPI"]}</td>
                               <td>
-                                {Moment(prop["dataRegistoEPI"]).format('DD-MM-YYYY')}
-                                </td>
+                                {Moment(prop["dataRegistoEPI"]).format(
+                                  "DD-MM-YYYY"
+                                )}
+                              </td>
                               <td>
-                              {Moment(prop["dataValidadeEPI"]).format('DD-MM-YYYY')}</td>
-                              <td>{prop['idColaborador']}</td>
-                              <td><Link to={"/admin/epis/" + prop["idEPI"]}>Detalhes</Link></td>
+                                {Moment(prop["dataValidadeEPI"]).format(
+                                  "DD-MM-YYYY"
+                                )}
+                              </td>
+                              <td>{prop["idColaborador"]}</td>
+                              <td>
+                                <Link to={"/admin/epis/" + prop["idEPI"]}>
+                                  Detalhes
+                                </Link>
+                              </td>
                             </tr>
                           );
                         })}
@@ -90,8 +119,6 @@ class TableList extends Component {
                 }
               />
             </Col>
-
-
           </Row>
         </Grid>
       </div>
@@ -99,4 +126,4 @@ class TableList extends Component {
   }
 }
 
-export default TableList;
+export default EpiManagement;

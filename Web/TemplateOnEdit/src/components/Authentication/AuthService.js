@@ -4,7 +4,7 @@ require('isomorphic-fetch');
 export default class AuthService {
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'https://172.20.128.233:5001' // API server domain
+        this.domain = domain || 'https://evitar.azurewebsites.net/' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
@@ -12,8 +12,7 @@ export default class AuthService {
 
     login(username, password) {
         // Get a token from api server using the fetch api
-        
-        return this.fetch("https://172.20.128.233:5001/users/authenticate", {
+        return this.fetch("https://evitar.azurewebsites.net/users/authenticate", {
             method: 'POST',
             body: JSON.stringify({
                 "username":username,
@@ -23,7 +22,7 @@ export default class AuthService {
             this.setUser(res.id,res.username)
             this.setToken(res.token) // Setting the token in localStorage
             return Promise.resolve(res);
-        }).catch(error => alert('Error! ' + error.message))
+        }).catch(error => alert('Error! ' + error))
     }
 
     loggedIn() {
@@ -73,7 +72,12 @@ export default class AuthService {
         localStorage.removeItem('User');
         window.location.reload();
     }
-
+    getUser(){
+        return localStorage.getItem("User")
+    }
+    getIdUser(){
+        return localStorage.getItem("idUser");
+    }
     getProfile() {
         // Using jwt-decode npm package to decode the token
         return decode(this.getToken());
@@ -93,7 +97,7 @@ export default class AuthService {
         // performs api calls sending the required authentication headers
         const headers = {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=utf-8'
         }
 
         // Setting Authorization header
