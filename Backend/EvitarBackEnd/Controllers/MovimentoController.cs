@@ -101,8 +101,8 @@ namespace EvitarBackEnd.Controllers
             {
                 return NotFound();
             }
-        
-            var novo = movimentoModel.OrderByDescending(x=>x.IdMovimento).ToList();
+            var movimentoAlert = (from x in movimentoModel where (x.DataHora).Date == data select x).ToList();
+            var novo = movimentoAlert.OrderByDescending(x=>x.IdMovimento).ToList();
             return novo;
         }
 
