@@ -23,12 +23,15 @@ import com.example.evitar.LoginFolder.LoginActivity;
 import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.MovimentosFolder.MovimentoDialog;
 import com.example.evitar.MovimentosFolder.MovimentosFragment;
+import com.example.evitar.TipoEpiFolder.TipoEpiDialog;
+import com.example.evitar.TipoEpiFolder.TipoEpiFragment;
+import com.example.evitar.TipoEpiFolder.TipoEpis;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
 
 public class MenuActivity extends AppCompatActivity implements MovimentosFragment.OnFragmentInteractionListener, EpiFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener,
-        ArchiveDayFragment.OnFragmentInteractionListener{
+        ArchiveDayFragment.OnFragmentInteractionListener, TipoEpiFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener{
 
     private SpaceNavigationView navigationView;
     private Fragment fragment;
@@ -156,6 +159,15 @@ public class MenuActivity extends AppCompatActivity implements MovimentosFragmen
     public void openDialog(Epi epi) {
         EpiDialog epiDialog = new EpiDialog(epi);
         epiDialog.show(getSupportFragmentManager(), "epi dialog");
+    }
+
+    @Override
+    public void onButtonclick(TipoEpis epi) {
+        openDialog(epi);
+    }
+    public void openDialog(TipoEpis epi) {
+        TipoEpiDialog epiDialog = new TipoEpiDialog(epi);
+        epiDialog.show(getSupportFragmentManager(), "tipoepi dialog");
     }
 
     @Override

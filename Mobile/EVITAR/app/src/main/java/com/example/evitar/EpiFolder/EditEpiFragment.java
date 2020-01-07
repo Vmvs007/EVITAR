@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
+import com.example.evitar.TipoEpiFolder.TipoEpis;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,11 +38,11 @@ public class EditEpiFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private int idepi;
+    private Long idepi;
     private String nomeepi;
     private String regepi;
     private String valepi;
-    private int idcolab;
+    private Long idcolab;
     private int valido;
     private int idtipoepi;
     private String nometipoepi;
@@ -101,11 +102,11 @@ public class EditEpiFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            idepi = getArguments().getInt("idepi");
+            idepi = getArguments().getLong("idepi");
             nomeepi = getArguments().getString("nomeepi");
             regepi = getArguments().getString("regepi");
             valepi = getArguments().getString("valepi");
-            idcolab = getArguments().getInt("idcolab");
+            idcolab = getArguments().getLong("idcolab");
             valido = getArguments().getInt("valido");
             idtipoepi = getArguments().getInt("idtipoepi");
             nometipoepi = getArguments().getString("nometipoepi");
@@ -133,7 +134,7 @@ public class EditEpiFragment extends Fragment {
 
         pbar=mContentView.findViewById(R.id.progressBar);
         TextView nomeColab= (TextView) mContentView.findViewById(R.id.textView34);
-        Button addButton= (Button) mContentView.findViewById(R.id.adicionarbutton);
+        Button editButton= (Button) mContentView.findViewById(R.id.editarbutton);
         TextView edIdEpi = (TextView) mContentView.findViewById(R.id.idepi);
         TextView edNomeEpi = (TextView) mContentView.findViewById(R.id.nomeepi);
         TextView edDataReg = (TextView) mContentView.findViewById(R.id.dataregisto);
@@ -161,13 +162,13 @@ public class EditEpiFragment extends Fragment {
 
 
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        editButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 if (checkBox.isChecked()){
-                    epiEdit=new Epi(epi.getIdEPI(), epi.getNomeEPI(), epi.getDataRegistoEPI(), edDataVal.getText().toString(), mUser.getInt("user_id", 0), 1,tipo);
+                    epiEdit=new Epi(epi.getIdEPI(), epi.getNomeEPI(), epi.getDataRegistoEPI(), edDataVal.getText().toString(), mUser.getLong("user_id", 0), 1,tipo);
                 } else{
-                    epiEdit=new Epi(epi.getIdEPI(), epi.getNomeEPI(), epi.getDataRegistoEPI(), edDataVal.getText().toString(), mUser.getInt("user_id", 0), 0,tipo);
+                    epiEdit=new Epi(epi.getIdEPI(), epi.getNomeEPI(), epi.getDataRegistoEPI(), edDataVal.getText().toString(), mUser.getLong("user_id", 0), 0,tipo);
                 }
                 pbar.setVisibility(View.VISIBLE);
                 editEpi(epiEdit);

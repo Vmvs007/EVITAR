@@ -1,10 +1,11 @@
 package com.example.evitar.Services;
 
+import com.example.evitar.EpiFolder.EpiAlert;
 import com.example.evitar.HomeFolder.LastMonths;
 import com.example.evitar.LoginFolder.Colaborador;
 import com.example.evitar.EpiFolder.Epi;
-import com.example.evitar.EpiFolder.EpiAdd;
-import com.example.evitar.EpiFolder.TipoEpis;
+import com.example.evitar.TipoEpiFolder.AddTipoEpi;
+import com.example.evitar.TipoEpiFolder.TipoEpis;
 import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.LoginFolder.SignIn;
 import com.example.evitar.LoginFolder.User;
@@ -30,7 +31,7 @@ public interface Api {
     @GET("api/Colaborador/{id}")
     Call<Colaborador> getColab(
             @Header("Authorization") String token,
-            @Path("id") int id
+            @Path("id") Long id
     );
 
     @GET("api/EPI/view")
@@ -43,6 +44,19 @@ public interface Api {
             @Header("Authorization") String token
     );
 
+    @POST("api/TipoEPI")
+    Call<TipoEpis> addTipoEpi(
+            @Header("Authorization") String token,
+            @Body AddTipoEpi tipoepi
+    );
+
+    @PUT("api/TipoEPI/{id}")
+    Call<TipoEpis> editTipoEpi(
+            @Header("Authorization") String token,
+            @Path("id") int id,
+            @Body TipoEpis tipoepi
+    );
+
     @GET("api/TipoEPI/{id}")
     Call<TipoEpis> getTipoEpi(
             @Header("Authorization") String token,
@@ -52,15 +66,14 @@ public interface Api {
     @POST("api/EPI")
     Call<Epi> addEpi(
             @Header("Authorization") String token,
-            @Body EpiAdd epi
+            @Body Epi epi
     );
 
     @PUT("api/EPI/{id}")
     Call<Epi> editEpi(
             @Header("Authorization") String token,
-            @Path("id") int id,
+            @Path("id") Long id,
             @Body Epi epi
-
     );
 
 
@@ -85,6 +98,18 @@ public interface Api {
     Call<Stats> getStats(
             @Header("Authorization") String token,
             @Path("data") String data
+    );
+
+    @GET("api/Movimento/alert/{data}")
+    Call<List<Movimento>> getAllAlerts(
+            @Header("Authorization") String token,
+            @Path("data") String data
+    );
+
+    @GET("api/MovEpi/EpiWarningMov/{id}")
+    Call<List<EpiAlert>> getAlerts(
+            @Header("Authorization") String token,
+            @Path("id") int id
     );
 
 }

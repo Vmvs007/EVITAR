@@ -59,6 +59,8 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
 
         if (epi.getValido()==0){
             ll.setBackgroundColor(Color.RED);
+        }else{
+            ll.setBackgroundColor(Color.WHITE);
         }
 
 
@@ -85,6 +87,8 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
             nomeEpi.setText(epi.getNomeEPI());
             if (epi.getValido()==0){
                 ll.setBackgroundColor(Color.RED);
+            }else{
+                ll.setBackgroundColor(Color.WHITE);
             }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

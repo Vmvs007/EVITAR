@@ -1,4 +1,4 @@
-package com.example.evitar.EpiFolder;
+package com.example.evitar.TipoEpiFolder;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -16,9 +15,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.evitar.EpiFolder.AddEpiFragment;
+import com.example.evitar.EpiFolder.Epi;
+import com.example.evitar.EpiFolder.EpiAdapter;
+import com.example.evitar.EpiFolder.EpiDialog;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
-import com.example.evitar.TipoEpiFolder.TipoEpiFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -27,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogListener {
+public class TipoEpiFragment extends Fragment implements TipoEpiDialog.ExampleDialogListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -37,10 +39,10 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
     private String mParam2;
 
     private RecyclerView mRecyclerView;
-    private EpiAdapter mAdapter;
+    private TipoEpiAdapter mAdapter;
 
     private Context mContext;
-    private List<Epi> epis;
+    private List<TipoEpis> epis;
 
     private View mContentView;
     private ProgressBar pbar;
@@ -51,9 +53,9 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
 
 
 
-    private EpiFragment.OnFragmentInteractionListener mListener;
+    private TipoEpiFragment.OnFragmentInteractionListener mListener;
 
-    public EpiFragment() {
+    public TipoEpiFragment() {
         // Required empty public constructor
     }
 
@@ -66,8 +68,8 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
      * @return A new instance of fragment Fragment1.
      */
     // TODO: Rename and change types and number of parameters
-    public static EpiFragment newInstance(String param1, String param2) {
-        EpiFragment fragment = new EpiFragment();
+    public static TipoEpiFragment newInstance(String param1, String param2) {
+        TipoEpiFragment fragment = new TipoEpiFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -94,13 +96,12 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        mContentView = inflater.inflate(R.layout.epi_layout, container, false);
+        mContentView = inflater.inflate(R.layout.tipoepi_layout, container, false);
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
         pbar=mContentView.findViewById(R.id.progressBar);
         pbar.setVisibility(View.VISIBLE);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) mContentView.findViewById(R.id.floating_action_button);
-        Button epitypebutton=(Button) mContentView.findViewById(R.id.button);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -109,20 +110,10 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
             }
         });
 
-        epitypebutton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new TipoEpiFragment())
-                        .commit();
-            }
-        });
 
 
 
-
-        getEpisServer();
+        getTipoEpisServer();
 
 
 
@@ -157,19 +148,19 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
         return mContentView;
     }
 
-    private void getEpisServer() {
-        Call<List<Epi>> call = RetrofitClient
+    private void getTipoEpisServer() {
+        Call<List<TipoEpis>> call = RetrofitClient
                 .getInstance()
                 .getApi()
-                .getEpis("Bearer "+mUser.getString("token", ""));
-        call.enqueue(new Callback<List<Epi>>() {
+                .getTipoEpis("Bearer "+mUser.getString("token", ""));
+        call.enqueue(new Callback<List<TipoEpis>>() {
             @Override
-            public void onResponse(Call<List<Epi>> call, Response<List<Epi>> response) {
+            public void onResponse(Call<List<TipoEpis>> call, Response<List<TipoEpis>> response) {
                 if(response.code()==200){
                     epis=response.body();
 
-                    mAdapter=new EpiAdapter(mContext, epis ,new EpiAdapter.OnItemClickListener() {
-                        @Override public void onItemClick(Epi epi) {
+                    mAdapter=new TipoEpiAdapter(mContext, epis ,new TipoEpiAdapter.OnItemClickListener() {
+                        @Override public void onItemClick(TipoEpis epi) {
                             mListener.onButtonclick(epi);
                         }});
                     mRecyclerView=mContentView.findViewById(R.id.recycler_view);
@@ -188,7 +179,7 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
             }
 
             @Override
-            public void onFailure(Call<List<Epi>> call, Throwable t) {
+            public void onFailure(Call<List<TipoEpis>> call, Throwable t) {
                 Toast.makeText(mContext, "Pedidos epi Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
                 pbar.setVisibility(View.GONE);
             }
@@ -198,13 +189,13 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
     private void addEpi(){
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, new AddEpiFragment())
+                .replace(R.id.fragment_container, new AddTipoEpiFragment())
                 .commit();
 
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Epi epi) {
+    public void onButtonPressed(TipoEpis epi) {
         if (mListener != null) {
             mListener.onButtonclick(epi);
         }
@@ -213,8 +204,8 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof EpiFragment.OnFragmentInteractionListener) {
-            mListener = (EpiFragment.OnFragmentInteractionListener) context;
+        if (context instanceof TipoEpiFragment.OnFragmentInteractionListener) {
+            mListener = (TipoEpiFragment.OnFragmentInteractionListener) context;
         } else {/*
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");*/
@@ -227,7 +218,7 @@ public class EpiFragment extends Fragment implements EpiDialog.ExampleDialogList
         mListener = null;
     }
     public interface OnFragmentInteractionListener {
-        void onButtonclick(Epi epi);
+        void onButtonclick(TipoEpis epi);
     }
 
 

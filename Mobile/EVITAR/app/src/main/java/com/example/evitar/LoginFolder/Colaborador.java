@@ -2,7 +2,7 @@ package com.example.evitar.LoginFolder;
 
 public class Colaborador {
 
-    private int idColaborador;
+    private Long idColaborador;
     private String nomeColaborador;
     private String primeiroNomeCol;
     private String ultimoNomeCol;
@@ -16,7 +16,7 @@ public class Colaborador {
     private String dataRegistoCol;
     private int idCargo;
 
-    public Colaborador(int idColaborador, String nomeColaborador, String primeiroNomeCol, String ultimoNomeCol, String dataNasc, int ccColaborador, int nifColaborador, String generoCol, int telefoneCol, String moradaCol, String emailCol, String dataRegistoCol, int idCargo) {
+    public Colaborador(Long idColaborador, String nomeColaborador, String primeiroNomeCol, String ultimoNomeCol, String dataNasc, int ccColaborador, int nifColaborador, String generoCol, int telefoneCol, String moradaCol, String emailCol, String dataRegistoCol, int idCargo) {
         this.idColaborador = idColaborador;
         this.nomeColaborador = nomeColaborador;
         this.primeiroNomeCol = primeiroNomeCol;
@@ -32,11 +32,11 @@ public class Colaborador {
         this.idCargo = idCargo;
     }
 
-    public int getIdColaborador() {
+    public Long getIdColaborador() {
         return idColaborador;
     }
 
-    public void setIdColaborador(int idColaborador) {
+    public void setIdColaborador(Long idColaborador) {
         this.idColaborador = idColaborador;
     }
 

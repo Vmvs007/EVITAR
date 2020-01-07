@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL="https://evitar.azurewebsites.net/";//"https://10.0.2.2:5001/";
+    private static final String BASE_URL="https://evitarv2.azurewebsites.net/";//"https://10.0.2.2:5001/";
     private static RetrofitClient mInstance;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private Retrofit retrofit;

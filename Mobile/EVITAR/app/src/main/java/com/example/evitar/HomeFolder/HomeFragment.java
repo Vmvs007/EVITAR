@@ -2,30 +2,34 @@ package com.example.evitar.HomeFolder;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.evitar.DashFolder.Stats;
-import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiFragment;
+import com.example.evitar.MovimentosFolder.Movimento;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
-import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -61,6 +65,13 @@ public class HomeFragment extends Fragment {
 
     private Integer currentMes;
     private Date currentTime;
+
+    private List<Movimento> movList;
+
+    private ProgressBar pbar;
+
+    private RecyclerView mRecyclerView;
+    private HomeAlertAdapter mAdapter;
 
     private int count;
 
@@ -113,11 +124,11 @@ public class HomeFragment extends Fragment {
 
         mContentView = inflater.inflate(R.layout.home, container, false);
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
+        pbar=mContentView.findViewById(R.id.progressBar);
         getStats();
+        Button epibutton=(Button)mContentView.findViewById(R.id.button2);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) mContentView.findViewById(R.id.floating_action_button);
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener(){
+        epibutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 getFragmentManager()
@@ -126,6 +137,10 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
+
+        if(mUser.getInt("idcargo", 0)!=3 && mUser.getInt("idcargo", 0)!=1){
+            epibutton.setVisibility(View.GONE);
+        }
 
         TextView nome=mContentView.findViewById(R.id.nome);
         TextView timeday=mContentView.findViewById(R.id.timeday);
@@ -175,6 +190,17 @@ public class HomeFragment extends Fragment {
                     lm=response.body();
                     Integer[] warnings={lm.getMes5(),lm.getMes4(),lm.getMes3(),lm.getMes2(),lm.getMes1(),lm.getMes()};
                     count=0;
+                    TextView per=(TextView) mContentView.findViewById(R.id.textView40);
+                    int media=(warnings[0]+warnings[1]+warnings[2]+warnings[3]+warnings[4]+warnings[5])/6;
+                    if (warnings[5]>=media){
+                        int perce=(warnings[5]-media)*100/media;
+                        per.setText("+"+String.valueOf(perce)+"%");
+                        per.setTextColor(Color.GREEN);
+                    }else{
+                        int perce=(media-warnings[5])*100/media;
+                        per.setText("-"+String.valueOf(perce)+"%");
+                        per.setTextColor(Color.RED);
+                    }
 
                     LineChart chart = (LineChart) mContentView.findViewById(R.id.chart);
                     List<Entry> entries = new ArrayList<Entry>();
@@ -203,6 +229,8 @@ public class HomeFragment extends Fragment {
 
                     chart.setData(lineData);
                     chart.invalidate();
+
+                    getAllAlerts();
 
 
 
@@ -276,9 +304,56 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void getAllAlerts() {
+        Date currentTime = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        String strDate = dateFormat.format(currentTime);
+        Call<List<Movimento>> call = RetrofitClient
+                .getInstance()
+                .getApi()
+                .getAllAlerts("Bearer "+mUser.getString("token", ""), strDate);
+        call.enqueue(new Callback<List<Movimento>>() {
+            @Override
+            public void onResponse(Call<List<Movimento>> call, Response<List<Movimento>> response) {
+                if(response.code()==200){
+                    movList=response.body();
+
+                    mAdapter=new HomeAlertAdapter(mContext, movList,new HomeAlertAdapter.OnItemClickListener() {
+                        @Override public void onItemClick(Movimento notif) {
+                            mListener.onButtonclick(notif);
+                        }});
+
+                    mRecyclerView=mContentView.findViewById(R.id.recycler_view);
+                    mRecyclerView.setAdapter(mAdapter);
+
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
+                    RecyclerView.ItemDecoration itemDecoration=new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL);
+                    mRecyclerView.addItemDecoration(itemDecoration);
+
+
+                    pbar.setVisibility(View.GONE);
+
+
+                }else{
+                    Toast.makeText(mContext, "Fail" + response.message(), Toast.LENGTH_SHORT).show();
+                    pbar.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Movimento>> call, Throwable t) {
+                Toast.makeText(mContext, "Failed "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                pbar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Epi epi) {
+    public void onButtonPressed(Movimento notif) {
         if (mListener != null) {
         }
     }
@@ -300,6 +375,7 @@ public class HomeFragment extends Fragment {
         mListener = null;
     }
     public interface OnFragmentInteractionListener {
+        void onButtonclick(Movimento notif);
     }
 
 

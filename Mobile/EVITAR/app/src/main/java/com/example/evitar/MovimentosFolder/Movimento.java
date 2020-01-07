@@ -4,13 +4,13 @@ public class Movimento {
 
     private int idMovimento;
     private String typeMov;
-    private int idColaborador;
+    private Long idColaborador;
     private int check;
     private String dataHora;
     private String primeiroNomeCol;
     private String ultimoNomeCol;
 
-    public Movimento(int idMovimento, String typeMov, int idColaborador, int check, String dataHora, String primeiroNomeCol, String ultimoNomeCol) {
+    public Movimento(int idMovimento, String typeMov, Long idColaborador, int check, String dataHora, String primeiroNomeCol, String ultimoNomeCol) {
         this.idMovimento = idMovimento;
         this.typeMov = typeMov;
         this.idColaborador = idColaborador;
@@ -36,11 +36,11 @@ public class Movimento {
         this.typeMov = typeMov;
     }
 
-    public int getIdColaborador() {
+    public Long getIdColaborador() {
         return idColaborador;
     }
 
-    public void setIdColaborador(int idColaborador) {
+    public void setIdColaborador(Long idColaborador) {
         this.idColaborador = idColaborador;
     }
 

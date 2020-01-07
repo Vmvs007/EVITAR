@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
+import com.example.evitar.TipoEpiFolder.TipoEpis;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class AddEpiFragment extends Fragment {
 
     private EditText edNomeEpi;
     private EditText edDataVal;
+    private EditText edIdEpi;
 
     private int tipo;
 
@@ -117,6 +119,7 @@ public class AddEpiFragment extends Fragment {
         Button cancelButton= (Button) mContentView.findViewById(R.id.cancelbutton);
         edNomeEpi = (EditText) mContentView.findViewById(R.id.editText2);
         edDataVal = (EditText) mContentView.findViewById(R.id.editText4);
+        edIdEpi = (EditText) mContentView.findViewById(R.id.editText21);
 
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +130,7 @@ public class AddEpiFragment extends Fragment {
                 DateFormat dateFormat1 = new SimpleDateFormat("HH:mm:ss");
                 String strDate = dateFormat.format(currentTime)+"T"+dateFormat1.format(currentTime);
                 Log.d("cc", strDate);
-                EpiAdd epi=new EpiAdd(edNomeEpi.getText().toString(), strDate, edDataVal.getText().toString(), mUser.getInt("user_id", 0), 1, tipo);
+                Epi epi=new Epi(Long.parseLong(edIdEpi.getText().toString()),edNomeEpi.getText().toString(), strDate, edDataVal.getText().toString(), mUser.getLong("user_id", 0), 1, tipo);
                 pbar.setVisibility(View.VISIBLE);
                 addEpi(epi);
             }
@@ -147,7 +150,7 @@ public class AddEpiFragment extends Fragment {
         return mContentView;
     }
 
-    public void addEpi(EpiAdd epi){
+    public void addEpi(Epi epi){
         Call<Epi> call = RetrofitClient
                 .getInstance()
                 .getApi()

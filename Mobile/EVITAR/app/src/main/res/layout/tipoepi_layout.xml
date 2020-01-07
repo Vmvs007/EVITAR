@@ -24,16 +24,6 @@
             android:layout_height="423dp">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:background="@drawable/buttons_dark_style"
-            android:textColor="@color/colorAccent"
-            android:layout_margin="20dp"
-            android:text="EPI TYPE" />
     </FrameLayout>
 
     <ProgressBar

@@ -1,17 +1,17 @@
 package com.example.evitar.EpiFolder;
 
 public class Epi {
-    private int idEPI;
+    private Long idEPI;
     private String nomeEPI;
     private String dataRegistoEPI;
     private String dataValidadeEPI;
-    private int idColaborador;
+    private Long idColaborador;
     private int valido;
     private int idTipoEPI;
     private String nomeTipoEPI;
     private String nomeInspector;
 
-    public Epi(int idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador, int valido, int idTipoEPI, String nomeTipoEPI, String nomeInspector) {
+    public Epi(Long idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, Long idColaborador, int valido, int idTipoEPI, String nomeTipoEPI, String nomeInspector) {
         this.idEPI = idEPI;
         this.nomeEPI = nomeEPI;
         this.dataRegistoEPI = dataRegistoEPI;
@@ -22,7 +22,7 @@ public class Epi {
         this.nomeTipoEPI = nomeTipoEPI;
         this.nomeInspector = nomeInspector;
     }
-    public Epi(int idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, int idColaborador, int valido, int idTipoEPI) {
+    public Epi(Long idEPI, String nomeEPI, String dataRegistoEPI, String dataValidadeEPI, Long idColaborador, int valido, int idTipoEPI) {
         this.idEPI = idEPI;
         this.nomeEPI = nomeEPI;
         this.dataRegistoEPI = dataRegistoEPI;
@@ -32,11 +32,11 @@ public class Epi {
         this.idTipoEPI = idTipoEPI;
     }
 
-    public int getIdEPI() {
+    public Long getIdEPI() {
         return idEPI;
     }
 
-    public void setIdEPI(int idEPI) {
+    public void setIdEPI(Long idEPI) {
         this.idEPI = idEPI;
     }
 
@@ -64,11 +64,11 @@ public class Epi {
         this.dataValidadeEPI = dataValidadeEPI;
     }
 
-    public int getIdColaborador() {
+    public Long getIdColaborador() {
         return idColaborador;
     }
 
-    public void setIdColaborador(int idColaborador) {
+    public void setIdColaborador(Long idColaborador) {
         this.idColaborador = idColaborador;
     }
 

@@ -1,9 +1,8 @@
-package com.example.evitar.EpiFolder;
+package com.example.evitar.TipoEpiFolder;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,14 +14,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.evitar.EpiFolder.EditEpiFragment;
+import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.R;
 
-public class EpiDialog extends AppCompatDialogFragment {
+public class TipoEpiDialog extends AppCompatDialogFragment {
 
-    private EpiDialog.ExampleDialogListener listener;
-    private Epi epi;
+    private TipoEpiDialog.ExampleDialogListener listener;
+    private TipoEpis epi;
 
-    public EpiDialog(Epi epi) {
+    public TipoEpiDialog(TipoEpis epi) {
         this.epi = epi;
     }
 
@@ -31,27 +32,13 @@ public class EpiDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.epidialog, null);
+        View view = inflater.inflate(R.layout.tipoepidialog, null);
 
-        TextView idepi=(TextView) view.findViewById(R.id.idEpi);
-        TextView nomeepi=(TextView) view.findViewById(R.id.nomeEpi);
-        TextView reg=(TextView) view.findViewById(R.id.datareg);
-        TextView val=(TextView) view.findViewById(R.id.dataval);
-        TextView valido=(TextView) view.findViewById(R.id.valido);
-        TextView tipoepi=(TextView) view.findViewById(R.id.tipoEpi);
-        TextView colabname=(TextView) view.findViewById(R.id.colabName);
+        TextView idtipoepi=(TextView) view.findViewById(R.id.idTipoEpi);
+        TextView nometipoepi=(TextView) view.findViewById(R.id.nomeTipoEpi);
 
-        idepi.setText(String.valueOf(epi.getIdEPI()));
-        nomeepi.setText(epi.getNomeEPI());
-        reg.setText(epi.getDataRegistoEPI());
-        val.setText(epi.getDataValidadeEPI());
-        if(epi.getValido()==1){
-            valido.setText("YES");
-        }else{
-            valido.setText("NO");
-        }
-        tipoepi.setText(epi.getNomeTipoEPI());
-        colabname.setText(epi.getNomeInspector());
+        idtipoepi.setText(String.valueOf(epi.getIdTipoEPI()));
+        nometipoepi.setText(epi.getNomeTipoEPI());
 
 
 
@@ -66,16 +53,9 @@ public class EpiDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Bundle args=new Bundle();
-                        args.putLong("idepi", epi.getIdEPI());
-                        args.putString("nomeepi", epi.getNomeEPI());
-                        args.putString("regepi", epi.getDataRegistoEPI());
-                        args.putString("valepi", epi.getDataValidadeEPI());
-                        args.putLong("idcolab", epi.getIdColaborador());
-                        args.putInt("valido", epi.getValido());
                         args.putInt("idtipoepi", epi.getIdTipoEPI());
-                        args.putString("nomecolab", epi.getNomeInspector());
-                        args.putString("nometipoepi", epi.getNomeEPI());
-                        Fragment fragment=new EditEpiFragment();
+                        args.putString("nometipoepi", epi.getNomeTipoEPI());
+                        Fragment fragment=new EditTipoEpiFragment();
                         fragment.setArguments(args);
                         getFragmentManager()
                                 .beginTransaction()
@@ -106,7 +86,7 @@ public class EpiDialog extends AppCompatDialogFragment {
         super.onAttach(context);
 
         try {
-            listener = (EpiDialog.ExampleDialogListener) context;
+            listener = (TipoEpiDialog.ExampleDialogListener) context;
         } catch (ClassCastException e) {
 /*            throw new ClassCastException(context.toString() +
                     "must implement ExampleDialogListener");*/
