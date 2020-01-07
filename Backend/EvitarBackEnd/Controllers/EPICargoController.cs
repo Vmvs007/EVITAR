@@ -123,20 +123,23 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/EPICargo/5
-        [Authorize]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<EPICargoModel>> DeleteEPICargoModel(int id)
+        //[Authorize]
+        [HttpDelete("{idcargo}/{idTipo}")]
+        public async Task<String> DeleteEPICargoModel(int idcargo,int idTipo)
         {
-            var ePICargoModel = await _context.EPICargoModels.FindAsync(id);
+            var ePICargoModel = await _context.EPICargoModels.ToListAsync();
+
+            var epiquery=(from x in ePICargoModel where x.IdCargo==idcargo && x.IdTipoEPI==idTipo select x).ToList();
             if (ePICargoModel == null)
             {
-                return NotFound();
+                return null;
             }
-
-            _context.EPICargoModels.Remove(ePICargoModel);
+            for(int i=0;i<epiquery.ToArray().Length;i++){
+            _context.EPICargoModels.Remove(epiquery[i]);
             await _context.SaveChangesAsync();
-
-            return ePICargoModel;
+            }
+            string ola="Foi eliminado";
+            return ola;
         }
 
         private bool EPICargoModelExists(int id)

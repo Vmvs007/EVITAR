@@ -49,7 +49,7 @@ namespace EvitarBackEnd.Controllers
         [Route("view")]
         [Authorize] //Podem todos ver desde que estejam autenticados 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(long id)
+        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView()
         {
 
             var epiModelAux = await _context.EPIModelViews.ToListAsync();
