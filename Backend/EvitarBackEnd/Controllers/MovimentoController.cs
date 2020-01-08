@@ -114,6 +114,7 @@ namespace EvitarBackEnd.Controllers
         {
            
             var movimentoModel = await _context.MovimentoModelViews.ToListAsync();
+            //var movimentoModel1= await _context.MovimentoModelViews.FindAsync(data);
 
             if (movimentoModel == null)
             {
@@ -121,8 +122,8 @@ namespace EvitarBackEnd.Controllers
             }
         
             var movimentoAlert = (from x in movimentoModel where (x.DataHora).Date == data select x).ToList();
-            var novo = movimentoAlert.OrderByDescending(x=>x.IdMovimento).ToList();
-            return novo;
+            var newMovimentoAlert = movimentoAlert.OrderByDescending(x=>x.IdMovimento).ToList();
+            return newMovimentoAlert;
         }
 
         [Authorize] //Podem todos ver desde que estejam autenticados 

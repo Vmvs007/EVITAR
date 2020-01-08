@@ -64,6 +64,26 @@ namespace EvitarBackEnd.Controllers
 
             return epiModel;
         }
+        [Route("view/{idEpi}")]
+        //[Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(long idEpi)
+        {
+
+            var epiModelAux = await _context.EPIModelViews.ToListAsync();
+            //var epiModelAux1= await _context.EPIModelViews.FindAsync(idEpi);
+
+            var movimentoAlert = (from x in epiModelAux where x.IdEPI==idEpi select x).ToList();
+
+            if (epiModelAux == null)
+            {
+                return NotFound();
+            }
+            var epiModelQuery = (from x in epiModelAux where x.IdEPI==idEpi select x).ToList();
+            var epiModel = epiModelQuery.OrderByDescending(x=>x.Valido).ThenByDescending(y=>y.IdEPI).ToList();
+
+            return epiModel;
+        }
 
         // PUT: api/EPI/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
