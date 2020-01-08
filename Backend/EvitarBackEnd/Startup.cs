@@ -41,7 +41,7 @@ namespace EvitarBackEnd
             
            // string connectionString = "Server=tcp:evitar.database.windows.net,1433;Initial Catalog=EVITARDataBase;Persist Security Info=False;User ID=EVITAR;Password=Saudade15;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             //string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            services.AddDbContext<EVITARContext>(opt => opt.UseSqlServer("Server=tcp:evitar.database.windows.net,1433;Initial Catalog=EVITARDataBase;Persist Security Info=False;User ID=EVITAR;Password=Saudade15;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            services.AddDbContext<EVITARContext>(opt => opt.UseSqlServer("Server=tcp:evitarv2.database.windows.net,1433;Initial Catalog=EVITARDataBase;Persist Security Info=False;User ID=EVITAR;Password=Saudade15;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             services.AddControllers();
 
             services.AddCors();

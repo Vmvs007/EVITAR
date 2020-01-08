@@ -60,7 +60,7 @@ namespace EvitarBackEnd.Controllers
                 return NotFound();
             }
 
-            var epiModel = epiModelAux.OrderByDescending(x=>x.Valido).ThenByDescending(y=>y.IdEPI).ToList();
+            var epiModel = epiModelAux.OrderByDescending(x=>x.Valido).ThenByDescending(y=>y.DataRegistoEPI).ToList();
 
             return epiModel;
         }
