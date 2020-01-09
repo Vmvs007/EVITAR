@@ -125,6 +125,25 @@ public class HomeFragment extends Fragment {
         mContentView = inflater.inflate(R.layout.home, container, false);
         mUser= PreferenceManager.getDefaultSharedPreferences(mContext);
         pbar=mContentView.findViewById(R.id.progressBar);
+
+        TextView nome=mContentView.findViewById(R.id.nome);
+        TextView timeday=mContentView.findViewById(R.id.timeday);
+
+        currentTime = Calendar.getInstance().getTime();
+        DateFormat dateFormat1 = new SimpleDateFormat("HH");
+        Integer hora =Integer.parseInt(dateFormat1.format(currentTime));
+        String tipodia="Good Day,";
+
+        if (hora>6 && hora<13){
+            tipodia="Good Morning,";
+        }else if (hora>12 && hora<20){
+            tipodia="Good Afternoon,";
+        }else if ((hora>19 && hora<24)||(hora>=0 && hora<7) ){
+            tipodia="Good Night,";
+        }
+
+        timeday.setText(tipodia);
+        nome.setText(mUser.getString("nome", "Undefined"));
         getStats();
         Button epibutton=(Button)mContentView.findViewById(R.id.button2);
 
@@ -142,25 +161,9 @@ public class HomeFragment extends Fragment {
             epibutton.setVisibility(View.GONE);
         }
 
-        TextView nome=mContentView.findViewById(R.id.nome);
-        TextView timeday=mContentView.findViewById(R.id.timeday);
 
-        currentTime = Calendar.getInstance().getTime();
-        DateFormat dateFormat1 = new SimpleDateFormat("HH");
-        Integer hora =Integer.parseInt(dateFormat1.format(currentTime));
 
-        String tipodia="Good Day,";
 
-        if (hora>6 && hora<13){
-            tipodia="Good Morning,";
-        }else if (hora>12 && hora<20){
-            tipodia="Good Afternoon,";
-        }else if ((hora>19 && hora<24)||(hora>=0 && hora<7) ){
-            tipodia="Good Night,";
-        }
-
-        timeday.setText(tipodia);
-        nome.setText(mUser.getString("nome", "Undefined"));
 
 
 
