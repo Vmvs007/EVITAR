@@ -11,12 +11,26 @@
 
         <ImageView
             android:id="@+id/imageView11"
-            android:layout_width="match_parent"
-            android:layout_height="228dp"
+            android:layout_width="331dp"
+            android:layout_height="184dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/retangulobackground" />
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="331dp"
+            android:layout_height="184dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/retangulobackground" />
 
         <TextView
@@ -37,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="140dp"
-            android:text="Start from 30/06/2019"
+            android:text="Just choose a day"
             android:textColor="@color/colorAccent"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"

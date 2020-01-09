@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.evitar.LoginFolder.LoginActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT=3000;
@@ -59,6 +61,11 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         },SPLASH_TIME_OUT);
+
+    }
+
+    @Override
+    public void onBackPressed() {
 
     }
 }

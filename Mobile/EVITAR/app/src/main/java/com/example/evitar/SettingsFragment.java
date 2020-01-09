@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.evitar.EpiFolder.EpiFragment;
+
 public class SettingsFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -53,19 +55,7 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View mContentView = inflater.inflate(R.layout.settings, container, false);
-
-        epiButton=(Button) mContentView.findViewById(R.id.epibutton);
         switchNotif=(Switch) mContentView.findViewById(R.id.switch1);
-
-        epiButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new EpiFragment())
-                        .commit();
-            }
-        });
 
         switchNotif.setOnClickListener(new View.OnClickListener() {
             @Override
