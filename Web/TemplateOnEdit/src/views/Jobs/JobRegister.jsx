@@ -43,7 +43,7 @@ class JobRegister extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
 
-    this.Auth.fetch("https://evitar.azurewebsites.net/api/tipoepi", {
+    this.Auth.fetch("https://evitarv2.azurewebsites.net/api/tipoepi", {
       method: "GET"
     })
       .then(result => {
@@ -72,13 +72,13 @@ class JobRegister extends Component {
     });
   };
   handleSubmit = data => {
-    this.Auth.fetch("https://evitar.azurewebsites.net/api/cargo", {
+    this.Auth.fetch("https://evitarv2.azurewebsites.net/api/cargo", {
       method: "POST",
       body: JSON.stringify(data)
     })
       .then(res => {
         this.state.selected.map(element => {
-          this.Auth.fetch("https://evitar.azurewebsites.net/api/epicargo", {
+          this.Auth.fetch("https://evitarv2.azurewebsites.net/api/epicargo", {
             method: "POST",
             body: JSON.stringify({
               idCargo:parseInt(res["idCargo"]),

@@ -3,6 +3,6 @@
     "node_modules{,/**}",
     ".vscode{,/**}"
   ],
-  "appService.defaultWebAppToDeploy": "/subscriptions/d46b0465-8190-493a-8016-b8906ecf73e3/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/EvitarWeb",
-  "appService.deploySubpath": ""
+  "appService.deploySubpath": "build",
+  "appService.defaultWebAppToDeploy": "/subscriptions/d46b0465-8190-493a-8016-b8906ecf73e3/resourceGroups/EvitarWebv3/providers/Microsoft.Web/sites/EvitarWebv3"
 }

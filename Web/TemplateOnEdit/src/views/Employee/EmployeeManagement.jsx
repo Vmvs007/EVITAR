@@ -25,7 +25,7 @@ class TableList extends Component {
   constructor(props) {
     super(props);
     this.state={
-      thArray:["Nome","ID","Job","Details"],
+      thArray:["Name","ID","Job","Details"],
       data:[],
       isLoading:false
     }
@@ -34,7 +34,7 @@ class TableList extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     const Auth = new AuthService();
-    Auth.fetch("https://evitar.azurewebsites.net/api/Colaborador/View", {
+    Auth.fetch("https://evitarv2.azurewebsites.net/api/Colaborador/View", {
     method: 'GET'
 }).then(result => this.setState({
   data: result,
@@ -52,7 +52,7 @@ class TableList extends Component {
       <Grid fluid>
         <Row>
           <Col md={12}>
-            <Link className="right" to={"employees/register"}><i class="fa fa-plus "></i> Adicionar</Link>
+            <Link className="right" to={"employees/register"}><i class="fa fa-plus "></i> Add</Link>
             <Card
               title="Employee Management"
               ctTableFullWidth

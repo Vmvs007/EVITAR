@@ -264,3 +264,8 @@ width: 100%;
   .react-datepicker-wrapper{
     display:block;
   }
+  .modala{
+    background-color: lightgray;
+    border-radius: 6px;
+    padding:5px;
+  }

@@ -4,7 +4,7 @@ require('isomorphic-fetch');
 export default class AuthService {
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'https://evitar.azurewebsites.net/' // API server domain
+        this.domain = domain || 'https://evitarv2.azurewebsites.net/' // API server domain
         this.fetch = this.fetch.bind(this) // React binding stuff
         this.login = this.login.bind(this)
         this.getProfile = this.getProfile.bind(this)
@@ -12,14 +12,14 @@ export default class AuthService {
 
     login(username, password) {
         // Get a token from api server using the fetch api
-        return this.fetch("https://evitar.azurewebsites.net/users/authenticate", {
+        return this.fetch("https://evitarv2.azurewebsites.net/users/authenticate", {
             method: 'POST',
             body: JSON.stringify({
                 "username":username,
                 "password":password
             })
         }).then(res => {
-            this.setUser(res.id,res.username)
+            this.setUser(res.id,res.username,res.idColaborador)
             this.setToken(res.token) // Setting the token in localStorage
             return Promise.resolve(res);
         }).catch(error => alert('Error! ' + error))
@@ -53,10 +53,10 @@ export default class AuthService {
         // Saves user token to localStorage
         localStorage.setItem('id_token', idToken)
     }
-    setUser(idUser,user){
+    setUser(idUser,user,colaborador){
         localStorage.setItem("idUser",idUser)
         localStorage.setItem("User",user)
-        
+        localStorage.setItem("idColaborador",colaborador)
     }
 
     getToken() {
@@ -70,6 +70,7 @@ export default class AuthService {
         localStorage.removeItem('id_token');
         localStorage.removeItem('idUser');
         localStorage.removeItem('User');
+        localStorage.removeItem("idColaborador");
         window.location.reload();
     }
     getUser(){
@@ -77,6 +78,9 @@ export default class AuthService {
     }
     getIdUser(){
         return localStorage.getItem("idUser");
+    }
+    getIdColaborador(){
+        return localStorage.getItem("idColaborador");
     }
     getProfile() {
         // Using jwt-decode npm package to decode the token

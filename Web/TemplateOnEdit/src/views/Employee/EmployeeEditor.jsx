@@ -18,76 +18,77 @@
 import React, { Component } from "react";
 import { Grid, Row, Col, ControlLabel } from "react-bootstrap";
 import { Card } from "components/Card/Card.jsx";
-import { FormInputs } from "components/FormInputs/FormInputs.jsx";
 import Button from "components/CustomButton/CustomButton.jsx";
-import DatePicker from "react-datepicker";
 //import moment from "moment";
-import { withRouter } from 'react-router';
+import DatePicker from "react-datepicker";
+import { FormInputs } from "components/FormInputs/FormInputs.jsx";
+import { withRouter } from "react-router";
+import Moment from "moment";
 import AuthService from "components/Authentication/AuthService.js";
 //import axios from 'axios';
-class EpiRegister extends Component {
+class JobEditor extends Component {
   Auth = new AuthService();
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [],
-      isLoading: false,
-      formFields: {
-        idEPI:"",
-        nomeEPI: "",
-        dataRegistoEPI: new Date(),
-        dataValidadeEPI: new Date(),
-        idColaborador: parseInt(this.Auth.getIdColaborador()),
-        idTipoEPI: 9,
-        valido:1
-      }
+      data: {},
+      isLoading1: false,
+      inicial: []
     };
   }
   componentDidMount() {
-    this.setState({ isLoading: true });
+    let id = this.props.match.params.id;
 
-    this.Auth.fetch("https://evitarv2.azurewebsites.net/api/tipoepi", {
+    this.setState({ isLoading1: true });
+    this.Auth.fetch("https://evitarv2.azurewebsites.net/api/epi/" + id, {
       method: "GET"
     })
-      .then(result =>
+      .then(result => {
         this.setState({
           data: result,
-          isLoading: false
-        })
-      )
+          isLoading1: false
+        });
+      })
       .catch(error => alert("Error! " + error.message));
   }
   inputChangeHandler = e => {
-    let formFields = { ...this.state.formFields };
-    if (e.target.name === "idTipoEPI" || e.target.name==="idEPI")
-      formFields[e.target.name] = parseInt(e.target.value);
-    else formFields[e.target.name] = e.target.value;
+    let data = { ...this.state.data };
+    if (e.target.name === "valido") {
+      e.target.checked === true
+        ? (data[e.target.name] = 1)
+        : (data[e.target.name] = 0);
+    } else data[e.target.name] = e.target.value;
     this.setState({
-      formFields
+      data
     });
   };
   handleChange = date => {
-    let formFields = { ...this.state.formFields };
-    formFields["dataValidadeEPI"] = date;
+    let data = { ...this.state.data };
+    data["dataValidadeEPI"] = date;
 
     this.setState({
-      formFields
+      data
     });
   };
   handleSubmit = data => {
-    this.Auth.fetch("https://evitarv2.azurewebsites.net/api/EPI", {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-      .then(res => {
-        alert("Adicionado ");
-        this.props.history.push("/admin/epis/");
+    let id = this.props.match.params.id;
+    
+      this.Auth.fetch("https://evitarv2.azurewebsites.net/api/epi/" + id, {
+        method: "PUT",
+        body: JSON.stringify(
+          this.state.data
+        )
       })
-      .catch(error => alert("Error! 1 " + error));
+        .then(res => {
+          this.props.history.push("/admin/epis/" + id);
+        })
+        .catch(error => console.log(error));
+
+      return null;
   };
   render() {
-    if (this.state.isLoading) {
+    if (this.state.isLoading1) {
       return (
         <div className="content">
           <i className="fa fa-spinner fa-spin fa-3x"></i>
@@ -108,25 +109,12 @@ class EpiRegister extends Component {
                       ncols={["col-md-12"]}
                       properties={[
                         {
-                          name: "idEPI",
-                          label: "EPI Id",
-                          type: "text",
-                          bsClass: "form-control",
-                          placeholder: "EPI Id",
-                          required: true,
-                          onChange: this.inputChangeHandler
-                        }
-                      ]}
-                    />
-                    <FormInputs
-                      ncols={["col-md-12"]}
-                      properties={[
-                        {
                           name: "nomeEPI",
                           label: "EPI Name",
                           type: "text",
                           bsClass: "form-control",
                           placeholder: "EPI Name",
+                          value: this.state.data.nomeEPI,
                           required: true,
                           onChange: this.inputChangeHandler
                         }
@@ -139,28 +127,23 @@ class EpiRegister extends Component {
                       name="dataValidadeEPI"
                       id="dataValidadeEPI"
                       dateFormat="yyyy/MM/dd"
-                      selected={this.state.formFields.dataValidadeEPI}
+                      selected={Moment(
+                        this.state.data.dataValidadeEPI
+                      ).toDate()}
                       onChange={this.handleChange}
                       minDate={new Date()}
                       className={"form-control"}
                     />
                     <br></br>
-                    <ControlLabel>EPI Type</ControlLabel>
-                    <div>
-                      <select
-                        name="idTipoEPI"
-                        className="form-control"
-                        onChange={this.inputChangeHandler}
-                      >
-                        {this.state.data.map((element, key) => {
-                          return (
-                            <option key={key} value={element["idTipoEPI"]}>
-                              {element["nomeTipoEPI"]}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
+                    <ControlLabel htmlFor="valido">Valid</ControlLabel>
+                    <input
+                      type="checkbox"
+                      id="valido"
+                      name="valido"
+                      className="form-check-input"
+                      checked={this.state.data.valido}
+                      onChange={this.inputChangeHandler}
+                    />
                     <br></br>
 
                     <Button
@@ -183,4 +166,4 @@ class EpiRegister extends Component {
   }
 }
 
-export default withRouter(EpiRegister);
+export default withRouter(JobEditor);

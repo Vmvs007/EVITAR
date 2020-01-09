@@ -20,6 +20,8 @@ import { Grid, Row, Col, Table } from "react-bootstrap";
 //import { Link } from "react-router-dom";
 //import { epis } from "variables/Variables.jsx";
 import Popup from "reactjs-popup";
+import Button from "components/CustomButton/CustomButton.jsx";
+import { FormInputs } from "components/FormInputs/FormInputs.jsx";
 import Moment from "moment";
 import AuthService from "../../components/Authentication/AuthService.js";
 import Card from "components/Card/Card.jsx";
@@ -29,14 +31,43 @@ class Types extends Component {
     this.state = {
       thArray: ["Name"],
       data: [],
-      isLoading: false
+      isLoading: false,
+      nomeTipoEPI: ""
     };
   }
+  inputChangeHandler = e => {
+    this.setState({
+      nomeTipoEPI: e.target.value
+    });
+  };
+  handleSubmit = data => {
+    
+    const Auth = new AuthService();
+    Auth.fetch("https://evitarv2.azurewebsites.net/api/tipoepi", {
+      method: "POST",
+      body: JSON.stringify({"nomeTipoEPI":data})
+    })
+      .then(res => {
+        alert("Adicionado ");
+        this.setState({ isLoading: true });
+        Auth.fetch("https://evitarv2.azurewebsites.net/api/tipoepi", {
+          method: "GET"
+        })
+          .then(result =>
+            this.setState({
+              data: result,
+              isLoading: false
+            })
+          )
+          .catch(error => alert("Error! " + error.message));
+      })
+      .catch(error => alert("Error! 1 " + error));
+  };
   componentDidMount() {
     Moment.locale("en");
     this.setState({ isLoading: true });
     const Auth = new AuthService();
-    Auth.fetch("https://evitar.azurewebsites.net/api/tipoepi", {
+    Auth.fetch("https://evitarv2.azurewebsites.net/api/tipoepi", {
       method: "GET"
     })
       .then(result =>
@@ -68,13 +99,36 @@ class Types extends Component {
                 content={
                   <div className="tabela">
                     <Popup
-                      trigger={
-                        <button className="button right"> Open Modal </button>
-                      }
+                      trigger={<button className="button right"> Add </button>}
                       modal
                       closeOnDocumentClick
                     >
-                      <span> Modal content </span>
+                      <form>
+                        <FormInputs
+                          ncols={["col-md-12"]}
+                          properties={[
+                            {
+                              name: "nomeEPI",
+                              label: "EPI Type",
+                              type: "text",
+                              bsClass: "form-control",
+                              placeholder: "EPI Type",
+                              required: true,
+                              onChange: this.inputChangeHandler
+                            }
+                          ]}
+                        />
+                        <Button
+                          bsStyle="info"
+                          pullRight
+                          fill
+                          onClick={() =>
+                            this.handleSubmit(this.state.nomeTipoEPI)
+                          }
+                        >
+                          Submit
+                        </Button>
+                      </form>
                     </Popup>
                     <Table striped hover>
                       <thead>

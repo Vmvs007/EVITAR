@@ -20,7 +20,7 @@ import React, { Component } from "react";
 import { Card } from "components/Card/Card.jsx";
 import { StatsCard } from "components/StatsCard/StatsCard.jsx";
 import { Grid, Row, Col, Table } from "react-bootstrap";
-
+import Popup from "reactjs-popup";
 import AuthService from "../components/Authentication/AuthService.js";
 import Moment from "moment";
 class Dashboard extends Component {
@@ -31,14 +31,16 @@ class Dashboard extends Component {
     cards: {},
     isLoading1: false,
     isLoading2: false,
-    data: []
+    isLoading3: false,
+    data: [],
+    modalData: []
   };
 
   componentDidMount() {
     this.setState({ isLoading1: true, isLoading2: true });
     const Auth = new AuthService();
     Auth.fetch(
-      "https://evitar.azurewebsites.net/api/movimento/stats/" +
+      "https://evitarv2.azurewebsites.net/api/movimento/stats/" +
         Moment(this.state.startDate).format("YYYY-MM-DD"),
       {
         method: "GET"
@@ -52,7 +54,7 @@ class Dashboard extends Component {
       })
       .catch(error => alert("Error! " + error.message));
     Auth.fetch(
-      "https://evitar.azurewebsites.net/api/movimento/entradas/" +
+      "https://evitarv2.azurewebsites.net/api/movimento/entradas/" +
         Moment(this.state.startDate).format("YYYY-MM-DD"),
       {
         method: "GET"
@@ -65,10 +67,70 @@ class Dashboard extends Component {
         });
       })
       .catch(error => alert("Error! " + error.message));
+      this.myInterval = setInterval(() => {
+       this.aux()}, 5000)
   }
+  componentWillUnmount() {
+    clearInterval(this.myInterval);
+  }
+  aux() {
+    let cartas = {},
+      datas = [];
+    const Auth = new AuthService();
+    
+      Auth.fetch(
+        "https://evitarv2.azurewebsites.net/api/movimento/stats/" +
+          Moment(this.state.startDate).format("YYYY-MM-DD"),
+        {
+          method: "GET"
+        }
+      )
+        .then(result => {
+          cartas = result;
+          Auth.fetch(
+            "https://evitarv2.azurewebsites.net/api/movimento/entradas/" +
+              Moment(this.state.startDate).format("YYYY-MM-DD"),
+            {
+              method: "GET"
+            }
+          )
+            .then(result => {
+              datas = result;
+              if (this.state.cards === cartas) {
+              } else {
+                this.setState({
+                  isLoading1: true,
+                  isLoading2: true,
+                  cards: cartas,
+                  data: datas
+                });
+                this.setState({ isLoading1: false, isLoading2: false });
+              }
+            })
+            .catch(error => alert("Error! " + error.message))
+        })
+        .catch(error => alert("Error! " + error.message))
+      
+  }
+  search = id => {
+    this.setState({ isLoading3: true });
+    const Auth = new AuthService();
+    Auth.fetch(
+      "https://evitarv2.azurewebsites.net/api/movepi/epiwarningmov/" + id,
+      {
+        method: "GET"
+      }
+    )
+      .then(result => {
+        this.setState({
+          modalData: result,
+          isLoading3: false
+        });
+      })
+      .catch(error => alert("Error! " + error.message));
+  };
   render() {
     if (this.state.isLoading1 || this.state.isLoading2) {
-      
       return (
         <div className="content">
           <i className="fa fa-spinner fa-spin fa-3x"></i>
@@ -77,7 +139,7 @@ class Dashboard extends Component {
       );
     }
     return (
-      <div className="content" >
+      <div className="content">
         <Grid fluid>
           <Row>
             <Col lg={4} sm={4}>
@@ -93,7 +155,7 @@ class Dashboard extends Component {
               <StatsCard
                 bigIcon={<i className="pe-7s-id text-success" />}
                 statsText="Employee Attendance"
-                statsValue={this.state.cards.alertasDiarios}
+                statsValue={this.state.cards.movimentosSemanais}
                 statsIcon={<i className="fa fa-calendar-o" />}
                 statsIconText="Week"
               />
@@ -107,14 +169,12 @@ class Dashboard extends Component {
                 statsIconText="Day"
               />
             </Col>
-
           </Row>
 
           <Row>
             <Col md={12}>
-            <Card
-                title="Archive"
-                category="Here is a subtitle for this table"
+              <Card
+                title="Dashboard"
                 ctTableFullWidth
                 ctTableResponsive
                 content={
@@ -137,10 +197,62 @@ class Dashboard extends Component {
                                   " " +
                                   prop["ultimoNomeCol"]}
                               </td>
-                          <td>{Moment(prop["dataHora"]).format(
-                                  "DD-MM-YYYY HH:mm"
-                                )}</td>
-                                {prop['check']===0 ? <td style={{ backgroundColor: 'red' }}>ALERT</td> : <td style={{ backgroundColor: 'green' }}>Check</td>}
+                              <td>
+                                {Moment(prop["dataHora"]).format(
+                                  "DD-MM-YYYY HH:mm:ss"
+                                )}
+                              </td>
+                              {prop["check"] === 0 ? (
+                                <td style={{ backgroundColor: "red" }}>
+                                  <Popup
+                                    trigger={
+                                      <button
+                                        style={{
+                                          backgroundColor: "white",
+                                          marginLeft: "33%",
+                                          color: "black"
+                                        }}
+                                        className="btn btn-default"
+                                      >
+                                        ALERT
+                                      </button>
+                                    }
+                                    className="modal"
+                                    modal
+                                    closeOnDocumentClick
+                                    onOpen={() =>
+                                      this.search(prop["idMovimento"])
+                                    }
+                                  >
+                                    {this.state.isLoading3 ? (
+                                      <p>Loading</p>
+                                    ) : (
+                                      <div style={{ padding: 20 }}>
+                                        <h5>Falta:</h5>
+                                        <div className="modala">
+                                          {this.state.modalData.map(
+                                            (propes, key) => {
+                                              return (
+                                                <p>{propes["nomeTipoEPI"]}</p>
+                                              );
+                                            }
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </Popup>
+                                </td>
+                              ) : (
+                                <td
+                                  style={{
+                                    backgroundColor: "green",
+                                    color: "white",
+                                    textAlign: "center"
+                                  }}
+                                >
+                                  Check
+                                </td>
+                              )}
                             </tr>
                           );
                         })}
@@ -151,7 +263,6 @@ class Dashboard extends Component {
               />
             </Col>
           </Row>
-
         </Grid>
       </div>
     );

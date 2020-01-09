@@ -17,7 +17,7 @@
 */
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
 import AuthService from "../Authentication/AuthService.js";
 import logo from "assets/img/EVITAR.png";
@@ -56,14 +56,14 @@ class Sidebar extends Component {
             null
           )}
         <div className="logo">
-          <a
-            href="https://www.creative-tim.com?ref=lbd-sidebar"
+          <Link
+             to={"/admin/dashboard/"}
             className="simple-text logo-mini"
           >
             <div className="logo-img">
               <img src={logo} alt="logo_image" />
             </div>
-          </a>
+          </Link>
           
         </div>
         <div className="sidebar-wrapper">

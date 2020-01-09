@@ -42,7 +42,7 @@ class EpiManagement extends Component {
     Moment.locale("en");
     this.setState({ isLoading: true });
     const Auth = new AuthService();
-    Auth.fetch("https://evitar.azurewebsites.net/api/EPI", {
+    Auth.fetch("https://evitarv2.azurewebsites.net/api/EPI", {
       method: "GET"
     })
       .then(result =>

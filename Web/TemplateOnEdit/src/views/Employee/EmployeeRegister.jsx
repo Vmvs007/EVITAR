@@ -22,7 +22,7 @@ import { FormInputs } from "components/FormInputs/FormInputs.jsx";
 import Button from "components/CustomButton/CustomButton.jsx";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router";
 import AuthService from "components/Authentication/AuthService.js";
 //import axios from 'axios';
 class EmployeeRegister extends Component {
@@ -32,6 +32,7 @@ class EmployeeRegister extends Component {
       data: [],
       isLoading: false,
       formFields: {
+        idColaborador: "",
         nomeColaborador: "",
         primeiroNomeCol: "",
         ultimoNomeCol: "",
@@ -52,7 +53,7 @@ class EmployeeRegister extends Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     const Auth = new AuthService();
-    Auth.fetch("https://evitar.azurewebsites.net/api/Cargo", {
+    Auth.fetch("https://evitarv2.azurewebsites.net/api/Cargo", {
       method: "GET"
     })
       .then(result =>
@@ -69,7 +70,8 @@ class EmployeeRegister extends Component {
       e.target.name === "ccColaborador" ||
       e.target.name === "nifColaborador" ||
       e.target.name === "telefoneCol" ||
-      e.target.name === "idCargo"
+      e.target.name === "idCargo" ||
+      e.target.name === "idColaborador"
     )
       formFields[e.target.name] = parseInt(e.target.value);
     else formFields[e.target.name] = e.target.value;
@@ -87,13 +89,13 @@ class EmployeeRegister extends Component {
   };
   handleSubmit = data => {
     const Auth = new AuthService();
-    Auth.fetch("https://evitar.azurewebsites.net/api/Colaborador", {
+    Auth.fetch("https://evitarv2.azurewebsites.net/api/Colaborador", {
       method: "POST",
       body: JSON.stringify(data)
     })
       .then(res => {
         if (data.idCargo === 2 || data.idCargo === 3 || data.idCargo === 4) {
-          Auth.fetch("https://evitar.azurewebsites.net/Users/register", {
+          Auth.fetch("https://evitarv2.azurewebsites.net/Users/register", {
             method: "POST",
             body: JSON.stringify({
               username: String(res["idColaborador"]),
@@ -109,9 +111,12 @@ class EmployeeRegister extends Component {
                   res["idColaborador"] +
                   " \n e a password: password"
               );
-        this.props.history.push("/admin/employees/");
+              this.props.history.push("/admin/employees/");
             })
             .catch(error => alert("Error! 2" + error));
+        }else{
+          alert("Adicionado")
+          this.props.history.push("/admin/employees/");
         }
       })
       .catch(error => alert("Error! 1 " + error));
@@ -134,6 +139,20 @@ class EmployeeRegister extends Component {
                 title="Register Employee"
                 content={
                   <form>
+                    <FormInputs
+                      ncols={["col-md-12"]}
+                      properties={[
+                        {
+                          name: "idColaborador",
+                          label: "Employee Id",
+                          type: "text",
+                          bsClass: "form-control",
+                          placeholder: "Employee Id",
+                          required: true,
+                          onChange: this.inputChangeHandler
+                        }
+                      ]}
+                    />
                     <FormInputs
                       ncols={["col-md-5", "col-md-3", "col-md-4"]}
                       properties={[

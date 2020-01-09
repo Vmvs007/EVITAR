@@ -20,8 +20,9 @@ import { Grid, Row, Col, Table } from "react-bootstrap";
 
 import Card from "components/Card/Card.jsx";
 import { StatsCard } from "components/StatsCard/StatsCard.jsx";
-
+import Popup from "reactjs-popup";
 import DatePicker from "react-datepicker";
+//import Button from "components/CustomButton/CustomButton.jsx";
 import "react-datepicker/dist/react-datepicker.css";
 import AuthService from "../components/Authentication/AuthService.js";
 import Moment from "moment";
@@ -33,7 +34,9 @@ class TableList extends Component {
     cards: {},
     isLoading1: false,
     isLoading2: false,
-    data: []
+    isLoading3: false,
+    data: [],
+    modalData: []
   };
 
   handleChange = date => {
@@ -45,7 +48,7 @@ class TableList extends Component {
     });
     const Auth = new AuthService();
     Auth.fetch(
-      "https://evitar.azurewebsites.net/api/movimento/stats/" +
+      "https://evitarv2.azurewebsites.net/api/movimento/stats/" +
         Moment(date).format("YYYY-MM-DD"),
       {
         method: "GET"
@@ -59,7 +62,7 @@ class TableList extends Component {
       })
       .catch(error => alert("Error! " + error.message));
     Auth.fetch(
-      "https://evitar.azurewebsites.net/api/movimento/entradas/" +
+      "https://evitarv2.azurewebsites.net/api/movimento/entradas/" +
         Moment(date).format("YYYY-MM-DD"),
       {
         method: "GET"
@@ -74,12 +77,29 @@ class TableList extends Component {
       })
       .catch(error => alert("Error! " + error.message));
   };
+  search = id => {
+    console.log(id);
+    this.setState({ isLoading3: true });
+    const Auth = new AuthService();
+    Auth.fetch(
+      "https://evitarv2.azurewebsites.net/api/movepi/epiwarningmov/" + id,
+      {
+        method: "GET"
+      }
+    )
+      .then(result => {
+        this.setState({
+          modalData: result,
+          isLoading3: false
+        });
+      })
+      .catch(error => alert("Error! " + error.message));
+  };
   componentDidMount() {
-    console.log("ola22222")
     this.setState({ isLoading1: true, isLoading2: true });
     const Auth = new AuthService();
     Auth.fetch(
-      "https://evitar.azurewebsites.net/api/movimento/stats/" +
+      "https://evitarv2.azurewebsites.net/api/movimento/stats/" +
         Moment(this.state.startDate).format("YYYY-MM-DD"),
       {
         method: "GET"
@@ -93,7 +113,7 @@ class TableList extends Component {
       })
       .catch(error => alert("Error! " + error.message));
     Auth.fetch(
-      "https://evitar.azurewebsites.net/api/movimento/entradas/" +
+      "https://evitarv2.azurewebsites.net/api/movimento/entradas/" +
         Moment(this.state.startDate).format("YYYY-MM-DD"),
       {
         method: "GET"
@@ -128,6 +148,7 @@ class TableList extends Component {
                     dateFormat="yyyy/MM/dd"
                     selected={this.state.startDate}
                     onChange={this.handleChange}
+                    maxDate={Moment().toDate()}
                   />
                 }
               />
@@ -155,7 +176,6 @@ class TableList extends Component {
             <Col md={12}>
               <Card
                 title="Archive"
-                category="Here is a subtitle for this table"
                 ctTableFullWidth
                 ctTableResponsive
                 content={
@@ -185,10 +205,43 @@ class TableList extends Component {
                               </td>
                               {prop["check"] === 0 ? (
                                 <td style={{ backgroundColor: "red" }}>
-                                  ALERT
+                                  <Popup
+                                    trigger={
+                                      <button style={{backgroundColor:"white",marginLeft:"33%",color:"black"}} className="btn btn-default">ALERT</button>
+                                    }
+                                    className="modal"
+                                    modal
+                                    closeOnDocumentClick
+                                    onOpen={() =>
+                                      this.search(prop["idMovimento"])
+                                    }
+                                  >
+                                    {this.state.isLoading3 ? (
+                                      <p>Loading</p>
+                                    ) : (
+                                      <div style={{ padding: 20 }}>
+                                        <h5>Falta:</h5>
+                                        <div className="modala">
+                                          {this.state.modalData.map(
+                                            (propes, key) => {
+                                              return (
+                                                <p>{propes["nomeTipoEPI"]}</p>
+                                              );
+                                            }
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </Popup>
                                 </td>
                               ) : (
-                                <td style={{ backgroundColor: "green" }}>
+                                <td
+                                  style={{
+                                    backgroundColor: "green",
+                                    color: "white",
+                                    textAlign:"center"
+                                  }}
+                                >
                                   Check
                                 </td>
                               )}
