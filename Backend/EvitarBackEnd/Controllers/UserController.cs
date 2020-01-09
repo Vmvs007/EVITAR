@@ -132,7 +132,7 @@ namespace EvitarBackEnd.Controllers
             {
                 // update user 
                 _userService.Update(user, model.Password);
-                return Ok();
+                return Ok(new { message ="OK"});;
             }
             catch (AppException ex)
             {

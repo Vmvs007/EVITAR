@@ -115,7 +115,7 @@ namespace EvitarBackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(new { message ="OK"});
         }
 
         // POST: api/EPI

@@ -70,7 +70,7 @@ namespace EvitarBackEnd.Controllers
             /*   _context.MovimentoModels.Add(movimentoModel);
                await _context.SaveChangesAsync();*/
 
-            Retorno.Add("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol + ",está tudo correcto");
+            Retorno.Add(colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol);
 
 
 
@@ -141,9 +141,7 @@ namespace EvitarBackEnd.Controllers
 
                         }
                         var epimodel = await _context.TipoEPIModels.FindAsync(epiNecessariosFinal[i]);
-                        Retorno.Remove("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol + ",está tudo correcto");
-                        Retorno.Add("Bem Vindo," + colaboradorModel.PrimeiroNomeCol + " " + colaboradorModel.UltimoNomeCol);
-                        Retorno.Add("Falta:" + epimodel.NomeTipoEPI.ToString());
+                        Retorno.Add("Missing:" + epimodel.NomeTipoEPI.ToString());
 
                         //Criação do MovEPI devido a epi em falta
                         movEPI.IdMovimento = movimentoModel.IdMovimento;
@@ -155,7 +153,7 @@ namespace EvitarBackEnd.Controllers
                 }
                 if (movAdded == false)
                 {
-                    movimentoModel.Check = 0;
+                    movimentoModel.Check = 1;
                     _context.MovimentoModels.Add(movimentoModel);
                     await _context.SaveChangesAsync();
                     movAdded = true;
@@ -203,7 +201,7 @@ namespace EvitarBackEnd.Controllers
                 }
             }
 
-            return NoContent();
+           return Ok(new { message ="OK"});
         }
 
         // POST: api/Colaborador
