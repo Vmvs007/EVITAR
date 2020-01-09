@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    [Migration("20191203151039_MigrationDataBase_v2")]
+    [Migration("20200103165639_MigrationDataBase_v2")]
     partial class MigrationDataBase_v2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,10 +56,12 @@ namespace EvitarBackEnd.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("NomeCargo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("ZonaCargo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("IdCargo");
 
@@ -89,22 +91,26 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MoradaCol")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
                     b.Property<int>("NifColaborador")
                         .HasColumnType("int");
 
                     b.Property<string>("NomeColaborador")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
                     b.Property<string>("PrimeiroNomeCol")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<int>("TelefoneCol")
                         .HasColumnType("int");
 
                     b.Property<string>("UltimoNomeCol")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<int>("ccColaborador")
                         .HasColumnType("int");
@@ -121,12 +127,12 @@ namespace EvitarBackEnd.Migrations
                     b.Property<int>("IdCargo")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEPI")
+                    b.Property<int>("IdTipoEPI")
                         .HasColumnType("int");
 
-                    b.HasKey("IdCargo", "IdEPI");
+                    b.HasKey("IdCargo", "IdTipoEPI");
 
-                    b.HasIndex("IdEPI");
+                    b.HasIndex("IdTipoEPI");
 
                     b.ToTable("EPICargoModels");
                 });
@@ -147,13 +153,21 @@ namespace EvitarBackEnd.Migrations
                     b.Property<int>("IdColaborador")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdTipoEPI")
+                        .HasColumnType("int");
+
                     b.Property<string>("NomeEPI")
-                        .HasColumnType("nvarchar(2)")
-                        .HasMaxLength(2);
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("Valido")
+                        .HasColumnType("int");
 
                     b.HasKey("IdEPI");
 
                     b.HasIndex("IdColaborador");
+
+                    b.HasIndex("IdTipoEPI");
 
                     b.ToTable("EPIModels");
                 });
@@ -166,9 +180,12 @@ namespace EvitarBackEnd.Migrations
                     b.Property<int>("IdEPI")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IdTipoEPI")
+                        .HasColumnType("int");
+
                     b.HasKey("IdMovimento", "IdEPI");
 
-                    b.HasIndex("IdEPI");
+                    b.HasIndex("IdTipoEPI");
 
                     b.ToTable("MovEPIModels");
                 });
@@ -199,6 +216,21 @@ namespace EvitarBackEnd.Migrations
                     b.ToTable("MovimentoModels");
                 });
 
+            modelBuilder.Entity("EvitarBackEnd.Models.TipoEPIModel", b =>
+                {
+                    b.Property<int>("IdTipoEPI")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NomeTipoEPI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdTipoEPI");
+
+                    b.ToTable("TipoEPIModels");
+                });
+
             modelBuilder.Entity("EvitarBackEnd.Entities.User", b =>
                 {
                     b.HasOne("EvitarBackEnd.Models.ColaboradorModel", "IdColaboradorForeignKey")
@@ -225,9 +257,9 @@ namespace EvitarBackEnd.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
+                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
                         .WithMany()
-                        .HasForeignKey("IdEPI")
+                        .HasForeignKey("IdTipoEPI")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -239,21 +271,25 @@ namespace EvitarBackEnd.Migrations
                         .HasForeignKey("IdColaborador")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
+                        .WithMany()
+                        .HasForeignKey("IdTipoEPI")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EvitarBackEnd.Models.MovEPIModel", b =>
                 {
-                    b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
-                        .WithMany()
-                        .HasForeignKey("IdEPI")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
                         .WithMany()
                         .HasForeignKey("IdMovimento")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
+                        .WithMany()
+                        .HasForeignKey("IdTipoEPI");
                 });
 
             modelBuilder.Entity("EvitarBackEnd.Models.MovimentoModel", b =>

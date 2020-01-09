@@ -9,7 +9,7 @@ namespace EvitarBackEnd.Entities
 
         [StringLength(50)]
         public string Username { get; set; }
-        public int IdColaborador{get;set;}
+        public long IdColaborador{get;set;}
         [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdColaborador")]
         public ColaboradorModel IdColaboradorForeignKey {get;set;}
         public byte[] PasswordHash { get; set; }

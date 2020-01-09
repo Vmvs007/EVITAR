@@ -13,12 +13,25 @@ namespace EvitarBackEnd.Migrations
                 {
                     IdCargo = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeCargo = table.Column<string>(nullable: true),
-                    ZonaCargo = table.Column<string>(nullable: true)
+                    NomeCargo = table.Column<string>(maxLength: 100, nullable: true),
+                    ZonaCargo = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CargoModels", x => x.IdCargo);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoEPIModels",
+                columns: table => new
+                {
+                    IdTipoEPI = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NomeTipoEPI = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoEPIModels", x => x.IdTipoEPI);
                 });
 
             migrationBuilder.CreateTable(
@@ -27,15 +40,15 @@ namespace EvitarBackEnd.Migrations
                 {
                     IdColaborador = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeColaborador = table.Column<string>(nullable: true),
-                    PrimeiroNomeCol = table.Column<string>(nullable: true),
-                    UltimoNomeCol = table.Column<string>(nullable: true),
+                    NomeColaborador = table.Column<string>(maxLength: 150, nullable: true),
+                    PrimeiroNomeCol = table.Column<string>(maxLength: 50, nullable: true),
+                    UltimoNomeCol = table.Column<string>(maxLength: 50, nullable: true),
                     DataNasc = table.Column<DateTime>(nullable: false),
                     ccColaborador = table.Column<int>(nullable: false),
                     NifColaborador = table.Column<int>(nullable: false),
                     GeneroCol = table.Column<string>(nullable: true),
                     TelefoneCol = table.Column<int>(nullable: false),
-                    MoradaCol = table.Column<string>(nullable: true),
+                    MoradaCol = table.Column<string>(maxLength: 150, nullable: true),
                     EmailCol = table.Column<string>(nullable: true),
                     DataRegistoCol = table.Column<DateTime>(nullable: false),
                     IdCargo = table.Column<int>(nullable: false)
@@ -52,15 +65,41 @@ namespace EvitarBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EPICargoModels",
+                columns: table => new
+                {
+                    IdCargo = table.Column<int>(nullable: false),
+                    IdTipoEPI = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EPICargoModels", x => new { x.IdCargo, x.IdTipoEPI });
+                    table.ForeignKey(
+                        name: "FK_EPICargoModels_CargoModels_IdCargo",
+                        column: x => x.IdCargo,
+                        principalTable: "CargoModels",
+                        principalColumn: "IdCargo",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EPICargoModels_TipoEPIModels_IdTipoEPI",
+                        column: x => x.IdTipoEPI,
+                        principalTable: "TipoEPIModels",
+                        principalColumn: "IdTipoEPI",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EPIModels",
                 columns: table => new
                 {
                     IdEPI = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeEPI = table.Column<string>(nullable: true),
+                    NomeEPI = table.Column<string>(maxLength: 100, nullable: true),
                     DataRegistoEPI = table.Column<DateTime>(nullable: false),
                     DataValidadeEPI = table.Column<DateTime>(nullable: false),
-                    IdColaborador = table.Column<int>(nullable: false)
+                    IdColaborador = table.Column<int>(nullable: false),
+                    Valido = table.Column<int>(nullable: false),
+                    IdTipoEPI = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,6 +109,12 @@ namespace EvitarBackEnd.Migrations
                         column: x => x.IdColaborador,
                         principalTable: "ColaboradorModels",
                         principalColumn: "IdColaborador",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EPIModels_TipoEPIModels_IdTipoEPI",
+                        column: x => x.IdTipoEPI,
+                        principalTable: "TipoEPIModels",
+                        principalColumn: "IdTipoEPI",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -118,30 +163,6 @@ namespace EvitarBackEnd.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EPICargoModels",
-                columns: table => new
-                {
-                    IdCargo = table.Column<int>(nullable: false),
-                    IdEPI = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EPICargoModels", x => new { x.IdCargo, x.IdEPI });
-                    table.ForeignKey(
-                        name: "FK_EPICargoModels_CargoModels_IdCargo",
-                        column: x => x.IdCargo,
-                        principalTable: "CargoModels",
-                        principalColumn: "IdCargo",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EPICargoModels_EPIModels_IdEPI",
-                        column: x => x.IdEPI,
-                        principalTable: "EPIModels",
-                        principalColumn: "IdEPI",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "MovEPIModels",
                 columns: table => new
                 {
@@ -171,14 +192,19 @@ namespace EvitarBackEnd.Migrations
                 column: "IdCargo");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EPICargoModels_IdEPI",
+                name: "IX_EPICargoModels_IdTipoEPI",
                 table: "EPICargoModels",
-                column: "IdEPI");
+                column: "IdTipoEPI");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EPIModels_IdColaborador",
                 table: "EPIModels",
                 column: "IdColaborador");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EPIModels_IdTipoEPI",
+                table: "EPIModels",
+                column: "IdTipoEPI");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovEPIModels_IdEPI",
@@ -212,6 +238,9 @@ namespace EvitarBackEnd.Migrations
 
             migrationBuilder.DropTable(
                 name: "MovimentoModels");
+
+            migrationBuilder.DropTable(
+                name: "TipoEPIModels");
 
             migrationBuilder.DropTable(
                 name: "ColaboradorModels");

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
@@ -21,6 +22,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/EPICargo
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EPICargoModel>>> GetEPICargoModels()
         {
@@ -28,6 +30,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/EPICargo/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<EPICargoModel>> GetEPICargoModel(int id)
         {
@@ -41,9 +44,28 @@ namespace EvitarBackEnd.Controllers
             return ePICargoModel;
         }
 
+        // GET: api/EPICargo/5
+        [Authorize]
+        [Route("EPIs/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EPICargoNecModelView>>> GetEPICargoEPIs(int id)
+        {
+            var ePICargo = await _context.EPICargoNecModelViews.ToListAsync();
+
+            var query = (from x in ePICargo where x.IdCargo == id select x).ToList();
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            return query;
+        }
+
         // PUT: api/EPICargo/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEPICargoModel(int id, EPICargoModel ePICargoModel)
         {
@@ -76,6 +98,7 @@ namespace EvitarBackEnd.Controllers
         // POST: api/EPICargo
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<EPICargoModel>> PostEPICargoModel(EPICargoModel ePICargoModel)
         {
@@ -100,19 +123,23 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/EPICargo/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<EPICargoModel>> DeleteEPICargoModel(int id)
+        //[Authorize]
+        [HttpDelete("{idcargo}/{idTipo}")]
+        public async Task<String> DeleteEPICargoModel(int idcargo,int idTipo)
         {
-            var ePICargoModel = await _context.EPICargoModels.FindAsync(id);
+            var ePICargoModel = await _context.EPICargoModels.ToListAsync();
+
+            var epiquery=(from x in ePICargoModel where x.IdCargo==idcargo && x.IdTipoEPI==idTipo select x).ToList();
             if (ePICargoModel == null)
             {
-                return NotFound();
+                return null;
             }
-
-            _context.EPICargoModels.Remove(ePICargoModel);
+            for(int i=0;i<epiquery.ToArray().Length;i++){
+            _context.EPICargoModels.Remove(epiquery[i]);
             await _context.SaveChangesAsync();
-
-            return ePICargoModel;
+            }
+            string ola="Foi eliminado";
+            return ola;
         }
 
         private bool EPICargoModelExists(int id)

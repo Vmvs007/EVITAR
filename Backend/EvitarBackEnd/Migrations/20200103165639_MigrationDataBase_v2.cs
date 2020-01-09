@@ -2,10 +2,11 @@
 
 namespace EvitarBackEnd.Migrations
 {
-    public partial class MigrationDataBase_v3 : Migration
+    public partial class MigrationDataBase_v2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+        
 
         }
 

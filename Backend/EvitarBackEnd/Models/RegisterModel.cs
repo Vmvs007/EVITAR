@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-
 namespace EvitarBackEnd.Models.Users
 {
     public class RegisterModel
@@ -11,7 +10,7 @@ namespace EvitarBackEnd.Models.Users
         [Required]
         public string Password { get; set; }
 
-        public int IdColaborador{get;set;}
+        public long IdColaborador{get;set;}
         [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdColaborador")]
         public ColaboradorModel IdColaboradorForeignKey {get;set;}
     }

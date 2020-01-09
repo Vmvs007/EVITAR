@@ -4,14 +4,16 @@ using EvitarBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    partial class EVITARContextModelSnapshot : ModelSnapshot
+    [Migration("20191223185637_MigrationDataBase_v1")]
+    partial class MigrationDataBase_v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +28,8 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("IdColaborador")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdColaborador")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
@@ -68,9 +70,9 @@ namespace EvitarBackEnd.Migrations
 
             modelBuilder.Entity("EvitarBackEnd.Models.ColaboradorModel", b =>
                 {
-                    b.Property<long>("IdColaborador")
+                    b.Property<int>("IdColaborador")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataNasc")
@@ -137,9 +139,9 @@ namespace EvitarBackEnd.Migrations
 
             modelBuilder.Entity("EvitarBackEnd.Models.EPIModel", b =>
                 {
-                    b.Property<long>("IdEPI")
+                    b.Property<int>("IdEPI")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataRegistoEPI")
@@ -148,8 +150,8 @@ namespace EvitarBackEnd.Migrations
                     b.Property<DateTime>("DataValidadeEPI")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("IdColaborador")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdColaborador")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdTipoEPI")
                         .HasColumnType("int");
@@ -175,12 +177,12 @@ namespace EvitarBackEnd.Migrations
                     b.Property<int>("IdMovimento")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTipoEPI")
+                    b.Property<int>("IdEPI")
                         .HasColumnType("int");
 
-                    b.HasKey("IdMovimento", "IdTipoEPI");
+                    b.HasKey("IdMovimento", "IdEPI");
 
-                    b.HasIndex("IdTipoEPI");
+                    b.HasIndex("IdEPI");
 
                     b.ToTable("MovEPIModels");
                 });
@@ -198,8 +200,8 @@ namespace EvitarBackEnd.Migrations
                     b.Property<DateTime>("DataHora")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("IdColaborador")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdColaborador")
+                        .HasColumnType("int");
 
                     b.Property<string>("TypeMov")
                         .HasColumnType("nvarchar(max)");
@@ -276,16 +278,16 @@ namespace EvitarBackEnd.Migrations
 
             modelBuilder.Entity("EvitarBackEnd.Models.MovEPIModel", b =>
                 {
-                    b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
+                    b.HasOne("EvitarBackEnd.Models.EPIModel", "IdEPIForeignKey")
                         .WithMany()
-                        .HasForeignKey("IdMovimento")
+                        .HasForeignKey("IdEPI")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EvitarBackEnd.Models.TipoEPIModel", "IdTipoEPIForeignKey")
+                    b.HasOne("EvitarBackEnd.Models.MovimentoModel", "IdMovimentoForeignKey")
                         .WithMany()
-                        .HasForeignKey("IdTipoEPI")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdMovimento")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

@@ -12,15 +12,17 @@ namespace EvitarBackEnd.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            
             builder.Entity<EPICargoModel>().HasKey(table => new
             {
                 table.IdCargo,
-                table.IdEPI
+                table.IdTipoEPI
             });
+            
             builder.Entity<MovEPIModel>().HasKey(table => new
             {
                 table.IdMovimento,
-                table.IdEPI
+                table.IdTipoEPI
             });
 
             builder.Entity<MovimentoModelView>(eb =>
@@ -28,7 +30,37 @@ namespace EvitarBackEnd.Models
             eb.HasNoKey();
             eb.ToView("MovimentoModelViews");
         });
+         builder.Entity<AlertModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("AlertViews");
+        });
+            builder.Entity<ColaboradorModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("ColaboradorModelViews");
+        });
 
+         builder.Entity<EPIModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("EPIModelViews");
+        });
+        builder.Entity<MovEPIModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("MovEPIModelViews");
+        });
+         builder.Entity<EPICargoNecModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("EPICargoNecModelViews");
+        });
+         builder.Entity<WarningsMovModelView>(eb =>
+        {   
+            eb.HasNoKey();
+            eb.ToView("WarningsMovModelView");
+        });
         }
         
         public DbSet<ColaboradorModel> ColaboradorModels { get; set; }
@@ -38,9 +70,16 @@ namespace EvitarBackEnd.Models
         public DbSet<EPICargoModel> EPICargoModels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<MovEPIModel> MovEPIModels { get; set; }
+        public DbSet<TipoEPIModel> TipoEPIModels {get;set;}
 
         public DbSet<MovimentoModelView> MovimentoModelViews{get;set;}
+        public DbSet<ColaboradorModelView> ColaboradorModelViews{get;set;}
+        public DbSet<EPIModelView> EPIModelViews{get;set;}
+        public DbSet<MovEPIModelView> MovEPIModelViews{get;set;}
+        public DbSet<EPICargoNecModelView> EPICargoNecModelViews{get;set;}
 
+        public DbSet<WarningsMovModelView> WarningsMovModelViews{get;set;}
 
+        public DbSet<AlertModelView> AlertViews{get;set;}
     }
 }

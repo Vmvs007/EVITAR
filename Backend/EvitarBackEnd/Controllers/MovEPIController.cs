@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
@@ -21,13 +22,15 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/MovEPI
+        [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovEPIModel>>> GetMovEPIModels()
+        public async Task<ActionResult<IEnumerable<WarningsMovModelView>>> GetMovEPIModels()
         {
-            return await _context.MovEPIModels.ToListAsync();
+            return await _context.WarningsMovModelViews.ToListAsync();
         }
 
         // GET: api/MovEPI/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<MovEPIModel>> GetMovEPIModel(int id)
         {
@@ -41,9 +44,51 @@ namespace EvitarBackEnd.Controllers
             return movEPIModel;
         }
 
+        [Authorize]
+        [Route("EpiWarningMov/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<WarningsMovModelView>>> GetEpiWarningMov(int id)
+        {
+            
+           
+            var movEPIWarningModel = await _context.WarningsMovModelViews.ToListAsync();
+
+            if (movEPIWarningModel == null)
+            {
+                return null;
+            }
+        
+            var movimentoAlert = (from x in movEPIWarningModel where x.IdMovimento == id select x).ToList();
+            
+            
+            return movimentoAlert;
+        }
+
+
+        [Authorize]
+        [Route("EpiWarning/{data}")]
+        [HttpGet]
+        public async Task<int> GetMovEPIModel(DateTime data)
+        {
+            
+           
+            var movEPIWarningModel = await _context.MovEPIModelViews.ToListAsync();
+
+            if (movEPIWarningModel == null)
+            {
+                return 0;
+            }
+        
+            var movimentoAlert = (from x in movEPIWarningModel where x.TypeMov == "E" && (x.DataHora).Date >=data select ( x.IdEPI)).ToList();
+            var movimentoAlert1=movimentoAlert.Count();
+            
+            return movimentoAlert1;
+        }
+
         // PUT: api/MovEPI/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovEPIModel(int id, MovEPIModel movEPIModel)
         {
@@ -76,6 +121,7 @@ namespace EvitarBackEnd.Controllers
         // POST: api/MovEPI
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<MovEPIModel>> PostMovEPIModel(MovEPIModel movEPIModel)
         {
@@ -100,6 +146,7 @@ namespace EvitarBackEnd.Controllers
         }
 
         // DELETE: api/MovEPI/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<MovEPIModel>> DeleteMovEPIModel(int id)
         {

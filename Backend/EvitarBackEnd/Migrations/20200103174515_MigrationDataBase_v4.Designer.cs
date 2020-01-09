@@ -4,14 +4,16 @@ using EvitarBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EvitarBackEnd.Migrations
 {
     [DbContext(typeof(EVITARContext))]
-    partial class EVITARContextModelSnapshot : ModelSnapshot
+    [Migration("20200103174515_MigrationDataBase_v4")]
+    partial class MigrationDataBase_v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +28,8 @@ namespace EvitarBackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("IdColaborador")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdColaborador")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
@@ -68,9 +70,9 @@ namespace EvitarBackEnd.Migrations
 
             modelBuilder.Entity("EvitarBackEnd.Models.ColaboradorModel", b =>
                 {
-                    b.Property<long>("IdColaborador")
+                    b.Property<int>("IdColaborador")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataNasc")
@@ -137,9 +139,9 @@ namespace EvitarBackEnd.Migrations
 
             modelBuilder.Entity("EvitarBackEnd.Models.EPIModel", b =>
                 {
-                    b.Property<long>("IdEPI")
+                    b.Property<int>("IdEPI")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataRegistoEPI")
@@ -148,8 +150,8 @@ namespace EvitarBackEnd.Migrations
                     b.Property<DateTime>("DataValidadeEPI")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("IdColaborador")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdColaborador")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdTipoEPI")
                         .HasColumnType("int");
@@ -198,8 +200,8 @@ namespace EvitarBackEnd.Migrations
                     b.Property<DateTime>("DataHora")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("IdColaborador")
-                        .HasColumnType("bigint");
+                    b.Property<int>("IdColaborador")
+                        .HasColumnType("int");
 
                     b.Property<string>("TypeMov")
                         .HasColumnType("nvarchar(max)");

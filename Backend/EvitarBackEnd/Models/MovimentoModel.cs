@@ -10,7 +10,7 @@ namespace EvitarBackEnd.Models
 
         [RegularExpression(@"^E$|^S$")]
         public string TypeMov {get;set;}
-        public int IdColaborador {get;set;}
+        public long IdColaborador {get;set;}
         [System.ComponentModel.DataAnnotations.Schema.ForeignKey("IdColaborador")]
         public ColaboradorModel IdColaboradorForeignKey {get;set;}
         public int Check {get;set;}

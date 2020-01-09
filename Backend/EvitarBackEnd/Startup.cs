@@ -19,6 +19,9 @@ using EvitarBackEnd.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Configuration;
+
+
 
 namespace EvitarBackEnd
 {
@@ -27,6 +30,7 @@ namespace EvitarBackEnd
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -34,15 +38,17 @@ namespace EvitarBackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<EVITARContext>(opt => opt.UseSqlServer(connectionString));
+            
+           // string connectionString = "Server=tcp:evitar.database.windows.net,1433;Initial Catalog=EVITARDataBase;Persist Security Info=False;User ID=EVITAR;Password=Saudade15;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            //string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            services.AddDbContext<EVITARContext>(opt => opt.UseSqlServer("Server=tcp:evitarv2.database.windows.net,1433;Initial Catalog=EVITARDataBase;Persist Security Info=False;User ID=EVITAR;Password=Saudade15;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             services.AddControllers();
 
             services.AddCors();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddDbContext<EVITARContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("EVITARContext")));
+           // services.AddDbContext<EVITARContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("EVITARContext")));
 
             services.AddSwaggerGen(c =>
             {
@@ -50,12 +56,13 @@ namespace EvitarBackEnd
             });
 
             // configure strongly typed settings objects
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
+            //var appSettingsSection = Configuration.GetSection(ConfigurationManager.AppSettings[]);
+            //services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            //var appSettings = appSettingsSection.Get<AppSettings>();
+           // var key = Encoding.ASCII.GetBytes(ConfigurationManager.AppSettings["AppSettings:Secret"]);
+            var key = Encoding.ASCII.GetBytes("saudadeeeeeeeeee");
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

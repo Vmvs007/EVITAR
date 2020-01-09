@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EvitarBackEnd.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EvitarBackEnd.Controllers
 {
@@ -21,15 +22,19 @@ namespace EvitarBackEnd.Controllers
         }
 
         // GET: api/EPI
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EPIModel>>> GetEPIModels()
         {
-            return await _context.EPIModels.ToListAsync();
+            var epis= await _context.EPIModels.ToListAsync();
+            var TodosEpis= epis.OrderByDescending(x=>x.Valido).ToList();
+            return TodosEpis;
         }
 
         // GET: api/EPI/5
+        [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<EPIModel>> GetEPIModel(int id)
+        public async Task<ActionResult<EPIModel>> GetEPIModel(long id)
         {
             var ePIModel = await _context.EPIModels.FindAsync(id);
 
@@ -41,11 +46,51 @@ namespace EvitarBackEnd.Controllers
             return ePIModel;
         }
 
+        [Route("view")]
+        [Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView()
+        {
+
+            var epiModelAux = await _context.EPIModelViews.ToListAsync();
+            
+
+            if (epiModelAux == null)
+            {
+                return NotFound();
+            }
+
+            var epiModel = epiModelAux.OrderByDescending(x=>x.Valido).ThenByDescending(y=>y.DataRegistoEPI).ToList();
+
+            return epiModel;
+        }
+        [Route("view/{idEpi}")]
+        //[Authorize] //Podem todos ver desde que estejam autenticados 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EPIModelView>>> GetEPIModelView(long idEpi)
+        {
+
+            var epiModelAux = await _context.EPIModelViews.ToListAsync();
+            //var epiModelAux1= await _context.EPIModelViews.FindAsync(idEpi);
+
+            var movimentoAlert = (from x in epiModelAux where x.IdEPI==idEpi select x).ToList();
+
+            if (epiModelAux == null)
+            {
+                return NotFound();
+            }
+            var epiModelQuery = (from x in epiModelAux where x.IdEPI==idEpi select x).ToList();
+            var epiModel = epiModelQuery.OrderByDescending(x=>x.Valido).ThenByDescending(y=>y.IdEPI).ToList();
+
+            return epiModel;
+        }
+
         // PUT: api/EPI/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEPIModel(int id, EPIModel ePIModel)
+        public async Task<IActionResult> PutEPIModel(long id, EPIModel ePIModel)
         {
             if (id != ePIModel.IdEPI)
             {
@@ -70,25 +115,29 @@ namespace EvitarBackEnd.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(new { message ="OK"});
         }
 
         // POST: api/EPI
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        [Authorize(Roles = "1, 2, 3")]
         [HttpPost]
         public async Task<ActionResult<EPIModel>> PostEPIModel(EPIModel ePIModel)
         {
             
             _context.EPIModels.Add(ePIModel);
+            _context.SaveChanges();
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEPIModel", new { id = ePIModel.IdEPI }, ePIModel);
+
         }
 
         // DELETE: api/EPI/5
+        [Authorize(Roles = "1, 2, 3")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<EPIModel>> DeleteEPIModel(int id)
+        public async Task<ActionResult<EPIModel>> DeleteEPIModel(long id)
         {
             var ePIModel = await _context.EPIModels.FindAsync(id);
             if (ePIModel == null)
@@ -102,7 +151,7 @@ namespace EvitarBackEnd.Controllers
             return ePIModel;
         }
 
-        private bool EPIModelExists(int id)
+        private bool EPIModelExists(long id)
         {
             return _context.EPIModels.Any(e => e.IdEPI == id);
         }
