@@ -16,7 +16,7 @@
                 android:layout_height="322dp">
 
                 <LinearLayout
-                    android:layout_width="306dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="53dp"
@@ -39,7 +39,7 @@
                         android:paddingBottom="10dp"
                         android:text="Employee Attendance (Day)"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20dp" />
+                        android:textSize="15dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="306dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="53dp"
@@ -79,7 +79,7 @@
                         android:paddingBottom="10dp"
                         android:text="Employee Attendance(Week)"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20dp" />
+                        android:textSize="15dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="306dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="53dp"
@@ -120,7 +120,7 @@
                         android:paddingBottom="10dp"
                         android:text="EPI Warnings (Day)"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20dp" />
+                        android:textSize="15dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

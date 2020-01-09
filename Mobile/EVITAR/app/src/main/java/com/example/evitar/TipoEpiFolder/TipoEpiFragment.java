@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.example.evitar.EpiFolder.AddEpiFragment;
 import com.example.evitar.EpiFolder.Epi;
 import com.example.evitar.EpiFolder.EpiAdapter;
 import com.example.evitar.EpiFolder.EpiDialog;
+import com.example.evitar.EpiFolder.EpiFragment;
 import com.example.evitar.R;
 import com.example.evitar.Services.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -107,6 +109,18 @@ public class TipoEpiFragment extends Fragment implements TipoEpiDialog.ExampleDi
             @Override
             public void onClick(View view) {
                 addEpi();
+            }
+        });
+
+        Button backbutton=(Button) mContentView.findViewById(R.id.button3);
+
+        backbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new EpiFragment())
+                        .commit();
             }
         });
 

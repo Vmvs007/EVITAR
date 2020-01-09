@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:ems="13"
             android:textColor="@color/colorPrimaryDark"
-            android:inputType="textPersonName"/>
+            android:inputType="number"/>
     </LinearLayout>
 
     <LinearLayout

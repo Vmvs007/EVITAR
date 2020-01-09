@@ -191,15 +191,23 @@ public class HomeFragment extends Fragment {
                     Integer[] warnings={lm.getMes5(),lm.getMes4(),lm.getMes3(),lm.getMes2(),lm.getMes1(),lm.getMes()};
                     count=0;
                     TextView per=(TextView) mContentView.findViewById(R.id.textView40);
-                    int media=(warnings[0]+warnings[1]+warnings[2]+warnings[3]+warnings[4]+warnings[5])/6;
-                    if (warnings[5]>=media){
-                        int perce=(warnings[5]-media)*100/media;
+                    int media=(warnings[0]+warnings[1]+warnings[2]+warnings[3]+warnings[4])/5;
+                    Log.d("cc", String.valueOf(media));
+                    if (media==0){
+                        int perce=warnings[5];
                         per.setText("+"+String.valueOf(perce)+"%");
-                        per.setTextColor(Color.GREEN);
-                    }else{
-                        int perce=(media-warnings[5])*100/media;
-                        per.setText("-"+String.valueOf(perce)+"%");
                         per.setTextColor(Color.RED);
+                    } else{
+                        if (warnings[5]>=media){
+                            int perce=(warnings[5]-media)*100/media;
+                            Log.d("cc", String.valueOf(perce));
+                            per.setText("+"+String.valueOf(perce)+"%");
+                            per.setTextColor(Color.RED);
+                        }else{
+                            int perce=(media-warnings[5])*100/media;
+                            per.setText("-"+String.valueOf(perce)+"%");
+                            per.setTextColor(Color.GREEN);
+                        }
                     }
 
                     LineChart chart = (LineChart) mContentView.findViewById(R.id.chart);

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -168,11 +169,13 @@ public class AddEpiFragment extends Fragment {
                     pbar.setVisibility(View.GONE);
                 }else{
                     pbar.setVisibility(View.GONE);
+                    Toast.makeText(mContext, "Something happened! Try again!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Epi> call, Throwable t) {
+                Toast.makeText(mContext, "Erro!", Toast.LENGTH_SHORT).show();
                 Log.d("cc", t.getMessage());
                 pbar.setVisibility(View.GONE);
             }

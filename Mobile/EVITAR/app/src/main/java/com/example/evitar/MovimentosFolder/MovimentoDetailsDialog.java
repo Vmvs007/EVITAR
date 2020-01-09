@@ -111,7 +111,7 @@ public class MovimentoDetailsDialog extends AppCompatDialogFragment {
                     String s=new StringBuilder().append("Missing ").toString();
 
                     if (epiList.size()==1){
-                        epis.setText("Missing "+epiList.get(0).getNomeTipoEPI());
+                        epis.setText("Missing "+epiList.get(0).getNomeTipoEPI()+"!");
                     }else{
                         int count=0;
                         for(EpiAlert epi:epiList) {

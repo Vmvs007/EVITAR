@@ -1,5 +1,7 @@
 package com.example.evitar.Services;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.evitar.EpiFolder.EpiAlert;
 import com.example.evitar.HomeFolder.LastMonths;
 import com.example.evitar.LoginFolder.Colaborador;
@@ -81,6 +83,7 @@ public interface Api {
     Call<List<Movimento>> getNotifications(
             @Header("Authorization") String token
     );
+
 
     @GET("api/Movimento/Entradas/{data}")
     Call<List<Movimento>> getMovimentosporDia(

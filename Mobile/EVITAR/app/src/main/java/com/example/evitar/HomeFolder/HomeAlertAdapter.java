@@ -145,7 +145,7 @@ public class HomeAlertAdapter extends RecyclerView.Adapter<HomeAlertAdapter.Noti
                         String s=new StringBuilder().append("Missing ").toString();
 
                         if (epiList.size()==1){
-                            tipo.setText("Missing "+epiList.get(0).getNomeTipoEPI());
+                            tipo.setText("Missing "+epiList.get(0).getNomeTipoEPI()+"!");
                         }else{
                             int count=0;
                             for(EpiAlert epi:epiList) {

@@ -9,6 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="507dp">
 
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="154dp"
+            android:layout_height="85dp"
+            android:layout_gravity="bottom|left"
+            android:text="BACK"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15dp" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_action_button"
             android:layout_width="wrap_content"
