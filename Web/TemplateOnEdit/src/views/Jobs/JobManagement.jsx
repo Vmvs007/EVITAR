@@ -17,19 +17,43 @@
 */
 import React, { Component } from "react";
 import { Grid, Row, Col, Table } from "react-bootstrap";
-import { employees } from "variables/Variables.jsx";
-
+import {Link } from "react-router-dom";
+import AuthService from "../../components/Authentication/AuthService.js";
 import Card from "components/Card/Card.jsx";
 class TableList extends Component {
-  thArray=["Nome","ID","Job","Details"];
+  constructor(props) {
+    super(props);
+    this.state={
+      thArray:["Name","Zone","Details"],
+      data:[],
+      isLoading:false
+    }
+    
+  }
+  componentDidMount() {
+    this.setState({ isLoading: true });
+    const Auth = new AuthService();
+    Auth.fetch("https://evitarv2.azurewebsites.net/api/Cargo", {
+    method: 'GET'
+}).then(result => this.setState({
+  data: result,
+  isLoading: false
+})).catch(error => alert('Error! ' + error.message));
+
+}
+  
   render() {
+    if (this.state.isLoading) {
+      return (<div className="content"><i class="fa fa-spinner fa-spin fa-3x"></i><p>isLoading...</p></div>)
+    }
     return (
       <div className="content">
       <Grid fluid>
         <Row>
           <Col md={12}>
+          <Link className="right" to={"jobs/register"}><i class="fa fa-plus "></i> Add</Link>
             <Card
-              title="Employee Management"
+              title="Job Management"
               ctTableFullWidth
               ctTableResponsive
               content={
@@ -37,19 +61,19 @@ class TableList extends Component {
                 <Table striped hover>
                   <thead>
                     <tr>
-                      {this.thArray.map((prop, key) => {
+                      {this.state.thArray.map((prop, key) => {
                         return <th key={key}>{prop}</th>;
                       })}
                     </tr>
                   </thead>
                   <tbody>
-                    {employees.map((prop, key) => {
+                    {this.state.data.map((prop, key) => {
+                      if(prop["idCargo"]===1)return null;
                       return (
                         <tr key={key}>
-                    <td>{prop[0]}</td>
-                    <td>{prop[1]}</td>
-                    <td>{prop[2]}</td>
-                    <td><a href={"/employee/"+prop[1]}>Details</a></td>
+                    <td>{prop["nomeCargo"]}</td>
+                    <td>{prop["zonaCargo"]}</td>
+                    <td><Link to={"/admin/jobs/" + prop["idCargo"]}>Details</Link></td>
                         </tr>
                       );
                     })}

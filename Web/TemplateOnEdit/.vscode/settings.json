@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.deploySubpath": "build",
+  "appService.defaultWebAppToDeploy": "/subscriptions/d46b0465-8190-493a-8016-b8906ecf73e3/resourceGroups/EvitarWebv3/providers/Microsoft.Web/sites/EvitarWebv3"
+}

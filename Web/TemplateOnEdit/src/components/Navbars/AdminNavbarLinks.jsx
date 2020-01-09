@@ -16,53 +16,37 @@
 
 */
 import React, { Component } from "react";
-import { NavItem, Nav, NavDropdown, MenuItem } from "react-bootstrap";
-
+import { withRouter } from "react-router";
+import { Nav, NavDropdown, MenuItem } from "react-bootstrap";
+import AuthService from "../Authentication/AuthService.js";
 class AdminNavbarLinks extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: window.innerWidth
+    };
+
+    this.Auth = new AuthService();
+  }
+
+  sourceSelected = () => {
+    this.Auth.logout();
+  };
+
   render() {
-    const notification = (
-      <div>
-        <i className="fa fa-globe" />
-        <b className="caret" />
-        <span className="notification">5</span>
-        <p className="hidden-lg hidden-md">Notification</p>
-      </div>
-    );
     return (
       <div>
-        <Nav>
-          
-          <NavItem eventKey={3} href="#">
-            <i className="fa fa-search" />
-            <p className="hidden-lg hidden-md">Search</p>
-          </NavItem>
-        </Nav>
         <Nav pullRight>
-          
-          <NavDropdown
-            eventKey={2}
-            title={notification}
-            noCaret
-            id="basic-nav-dropdown"
-          >
-            <MenuItem eventKey={2.1}>Notification 1</MenuItem>
-            <MenuItem eventKey={2.2}>Notification 2</MenuItem>
-            <MenuItem eventKey={2.3}>Notification 3</MenuItem>
-            <MenuItem eventKey={2.4}>Notification 4</MenuItem>
-            <MenuItem eventKey={2.5}>Another notifications</MenuItem>
-          </NavDropdown>
           <NavDropdown
             eventKey={2}
             title="Account"
             id="basic-nav-dropdown-right"
           >
-            <MenuItem eventKey={2.1}>Action</MenuItem>
-            <MenuItem eventKey={2.2}>Another action</MenuItem>
-            <MenuItem eventKey={2.3}>Something</MenuItem>
-            <MenuItem eventKey={2.4}>Another action</MenuItem>
-            <MenuItem eventKey={2.5}>Something</MenuItem>
+            <MenuItem onClick={() => this.props.history.push("/admin/user")}>
+              Profile
+            </MenuItem>
             <MenuItem divider />
-            <MenuItem eventKey={2.5}>Separated link</MenuItem>
+            <MenuItem onClick={this.sourceSelected}>Logout</MenuItem>
           </NavDropdown>
         </Nav>
       </div>
@@ -70,4 +54,4 @@ class AdminNavbarLinks extends Component {
   }
 }
 
-export default AdminNavbarLinks;
+export default withRouter(AdminNavbarLinks);
