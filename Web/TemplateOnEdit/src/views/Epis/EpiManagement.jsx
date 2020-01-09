@@ -31,6 +31,7 @@ class EpiManagement extends Component {
         "ID",
         "Date Register",
         "Date Valid",
+        "Valid",
         "Inspector",
         "Details"
       ],
@@ -104,6 +105,7 @@ class EpiManagement extends Component {
                                   "DD-MM-YYYY"
                                 )}
                               </td>
+                              <td>{prop["valido"]===0?("NOT"):("YES")}</td>
                               <td>{prop["idColaborador"]}</td>
                               <td>
                                 <Link to={"/admin/epis/" + prop["idEPI"]}>
